@@ -237,7 +237,7 @@ flowchart TD
 
 ### 一、Node体系结构分析
 
-### 1.1 Node接口
+#### 1.1 Node接口
 
 Node接口是Sentinel中所有统计节点的顶层抽象，定义了统一的统计方法和操作规范。
 
@@ -450,7 +450,7 @@ public interface Node extends OccupySupport, DebugSupport {
 }
 ```
 
-#### 方法含义解析：
+##### 方法含义解析：
 
 | 方法签名 | 统计含义 |
 |---------|---------|
@@ -480,7 +480,7 @@ public interface Node extends OccupySupport, DebugSupport {
 | `void decreaseThreadNum()` | 减少活跃线程数 |
 | `void reset()` | 重置内部计数器 |
 
-### 1.2 StatisticNode实现
+#### 1.2 StatisticNode实现
 
 StatisticNode是Node接口的核心实现类，提供了完整的统计功能，包含秒级和分钟级两个滑动窗口，以及当前线程数统计。
 
@@ -826,7 +826,7 @@ public class StatisticNode implements Node {
 }
 ```
 
-#### 核心组件分析：
+##### 核心组件分析：
 
 1. **滑动窗口**：
    - `rollingCounterInSecond`：秒级滑动窗口，保存最近1秒（可配置）的统计数据，默认分为2个窗口（每个窗口500ms）
@@ -840,7 +840,7 @@ public class StatisticNode implements Node {
    - 线程数的增减通过`LongAdder`的increment()和decrement()方法实现
    - 所有的统计操作都会同时更新秒级和分钟级窗口
 
-### 1.3 DefaultNode实现
+#### 1.3 DefaultNode实现
 
 DefaultNode是具体资源的统计节点，每个资源在每个Context中对应一个DefaultNode，它继承自StatisticNode并扩展了子节点和集群节点的关联。
 
@@ -1018,7 +1018,7 @@ public class DefaultNode extends StatisticNode {
 }
 ```
 
-#### 核心扩展：
+##### 核心扩展：
 
 1. **资源关联**：
    - `id`：当前节点关联的资源包装类
@@ -1032,7 +1032,7 @@ public class DefaultNode extends StatisticNode {
 3. **统计转发**：
    - 重写了所有统计方法，将统计操作同时转发到集群节点，实现全局统计和局部统计的分离
 
-### 1.4 ClusterNode实现
+#### 1.4 ClusterNode实现
 
 ClusterNode是集群全局统计节点，同一个资源在所有Context中共享同一个ClusterNode，保存全局的统计信息。
 
@@ -1166,7 +1166,7 @@ public class ClusterNode extends StatisticNode {
 }
 ```
 
-#### 核心功能：
+##### 核心功能：
 
 1. **来源统计**：
    - `originCountMap`：保存不同来源的统计节点，key为来源标识（通常是服务消费者的应用名）
@@ -1175,7 +1175,7 @@ public class ClusterNode extends StatisticNode {
 2. **来源节点获取**：
    - `getOrCreateOriginNode(String)`：获取或创建指定来源的统计节点，使用双重检查锁和ReentrantLock保证线程安全
 
-### 1.5 EntranceNode实现
+#### 1.5 EntranceNode实现
 
 EntranceNode是调用树的入口节点，每个Context对应一个EntranceNode，用于聚合所有子节点的统计信息。
 
@@ -1311,13 +1311,13 @@ public class EntranceNode extends DefaultNode {
 }
 ```
 
-#### 入口节点的作用：
+##### 入口节点的作用：
 
 1. **调用树入口**：EntranceNode是每个调用链的入口，代表一个Context的根节点
 2. **统计聚合**：重写了所有统计方法，将所有子节点的统计信息进行聚合，得到整个Context的统计数据
 3. **上下文关联**：每个Context对应一个EntranceNode，相同的Context名称共享同一个EntranceNode
 
-### 1.6 Node继承关系图
+#### 1.6 Node继承关系图
 
 ```mermaid
 classDiagram
@@ -1454,7 +1454,7 @@ classDiagram
 
 ### 二、滑动窗口LeapArray算法分析
 
-### 2.1 LeapArray核心类
+#### 2.1 LeapArray核心类
 
 LeapArray是滑动窗口的核心数据结构，实现了基于时间的滑动窗口算法，支持按时间分片统计。
 
@@ -1883,7 +1883,7 @@ public abstract class LeapArray<T> {
 }
 ```
 
-#### 核心字段分析：
+##### 核心字段分析：
 
 | 字段名 | 类型 | 含义 |
 |-------|------|------|
@@ -1894,7 +1894,7 @@ public abstract class LeapArray<T> {
 | `array` | AtomicReferenceArray<WindowWrap<T>> | 窗口数组，使用原子引用数组保证线程安全 |
 | `updateLock` | ReentrantLock | 更新锁，用于窗口过期时的并发更新 |
 
-#### 关键方法解析：
+##### 关键方法解析：
 
 1. **calculateTimeIdx(long timeMillis)** - 时间到数组索引的映射：
 ```java
@@ -1977,7 +1977,7 @@ public boolean isWindowDeprecated(long time, WindowWrap<T> windowWrap) {
 - 判断窗口是否已经过期
 - 当前时间与窗口起始时间的差超过总时间间隔，则认为窗口过期
 
-### 2.2 WindowWrap内部类
+#### 2.2 WindowWrap内部类
 
 WindowWrap是对单个时间窗口的包装，包含窗口的时间信息和统计数据。
 
@@ -2085,16 +2085,16 @@ public class WindowWrap<T> {
 }
 ```
 
-#### 核心字段：
+##### 核心字段：
 - `windowLengthInMs`：窗口的时间长度
 - `windowStart`：窗口的起始时间戳
 - `value`：窗口的统计数据，泛型T
 
-#### 核心方法：
+##### 核心方法：
 - `resetTo(long startTime)`：重置窗口的起始时间
 - `isTimeInWindow(long timeMillis)`：判断给定时间是否在当前窗口内
 
-### 2.3 BucketLeapArray子类
+#### 2.3 BucketLeapArray子类
 
 BucketLeapArray是LeapArray的具体实现，用于存储MetricBucket类型的统计数据。
 
@@ -2150,11 +2150,11 @@ public class BucketLeapArray extends LeapArray<MetricBucket> {
 }
 ```
 
-#### 实现细节：
+##### 实现细节：
 - `newEmptyBucket(long time)`：创建新的空MetricBucket
 - `resetWindowTo(WindowWrap<MetricBucket>, long startTime)`：重置窗口，更新起始时间并重置统计数据
 
-### 2.4 OccupiableBucketLeapArray子类
+#### 2.4 OccupiableBucketLeapArray子类
 
 OccupiableBucketLeapArray是支持未来配额占用的滑动窗口实现，用于流量控制中的提前占用。
 
@@ -2264,13 +2264,13 @@ public class OccupiableBucketLeapArray extends LeapArray<MetricBucket> {
 }
 ```
 
-#### 未来配额占用机制：
+##### 未来配额占用机制：
 - `borrowArray`：未来窗口数组，用于记录提前占用的配额
 - `addWaiting(long time, int acquireCount)`：将等待的请求添加到未来窗口
 - `currentWaiting()`：计算当前等待的总配额
 - 当创建新窗口或重置窗口时，会将未来窗口的配额转移到当前窗口
 
-### 2.5 滑动窗口时序图
+#### 2.5 滑动窗口时序图
 
 ```mermaid
 sequenceDiagram
@@ -2311,7 +2311,7 @@ sequenceDiagram
 
 ### 三、MetricBucket和MetricItem
 
-### 3.1 MetricBucket
+#### 3.1 MetricBucket
 
 MetricBucket是单个时间窗口内的具体统计数据，包含各种指标的计数。
 
@@ -2459,7 +2459,7 @@ public class MetricBucket {
 }
 ```
 
-#### 核心组件分析：
+##### 核心组件分析：
 
 1. **MetricEvent枚举**：
 ```java
@@ -2497,12 +2497,12 @@ public enum MetricEvent {
 - 最小响应时间，初始值为SentinelConfig.statisticMaxRt()，默认是5000ms
 - 在addRT方法中更新最小响应时间，虽然不是线程安全的，但在高并发下影响不大
 
-#### 核心方法：
+##### 核心方法：
 - `add(MetricEvent event, long n)`：增加指定事件的计数
 - `get(MetricEvent event)`：获取指定事件的计数总和
 - `addRT(long rt)`：添加响应时间并更新最小响应时间
 
-### 3.2 MetricItem
+#### 3.2 MetricItem
 
 MetricItem是可序列化的统计对象，用于传输和存储统计数据。
 
@@ -2617,12 +2617,12 @@ public class MetricNode implements Serializable {
 }
 ```
 
-#### 设计特点：
+##### 设计特点：
 - 实现了Serializable接口，支持序列化
 - 包含了所有核心统计指标：时间戳、拒绝QPS、异常QPS、成功QPS、通过QPS、响应时间、占用通过QPS
 - 用于在不同组件之间传输统计数据，比如监控系统
 
-### 3.3 ArrayMetric
+#### 3.3 ArrayMetric
 
 ArrayMetric是Metric接口的具体实现，使用LeapArray封装了MetricBucket的统计操作。
 
@@ -2968,7 +2968,7 @@ public class ArrayMetric implements Metric {
 }
 ```
 
-#### 核心功能：
+##### 核心功能：
 1. **指标统计**：
    - 实现了所有Metric接口的方法，包括success()、exception()、block()、pass()、rt()等
    - 所有统计方法都会先获取当前窗口，然后聚合所有有效窗口的值
@@ -2983,7 +2983,7 @@ public class ArrayMetric implements Metric {
 
 ### 四、滑动窗口配置和关键流程
 
-### 4.1 默认配置
+#### 4.1 默认配置
 
 在StatisticNode中，默认的滑动窗口配置如下：
 
@@ -3008,7 +3008,7 @@ private transient Metric rollingCounterInMinute = new ArrayMetric(60, 60 * 1000,
 - `SampleCountProperty`：修改每秒的窗口数量
 - `IntervalProperty`：修改统计间隔时间
 
-### 4.2 请求统计完整流程
+#### 4.2 请求统计完整流程
 
 从`SphU.entry()`到滑动窗口更新的完整链路：
 
@@ -3046,7 +3046,7 @@ sequenceDiagram
     Note over StatisticSlot,LeapArray: 统计流程：通过请求计数 → 更新MetricBucket → 更新滑动窗口
 ```
 
-### 4.3 QPS计算流程
+#### 4.3 QPS计算流程
 
 passQps()方法从滑动窗口中聚合计算QPS的流程：
 
@@ -3084,7 +3084,7 @@ public long pass() {
 }
 ```
 
-### 4.4 并发处理机制
+#### 4.4 并发处理机制
 
 1. **CAS更新窗口**：
 在LeapArray的currentWindow方法中，当创建新窗口时使用CAS操作：
@@ -4359,7 +4359,7 @@ Sentinel 通过 Slot Chain 机制实现了流量控制和熔断降级功能的�
 
 ### 一、核心接口和抽象类
 
-### 1.1 ReadableDataSource接口
+#### 1.1 ReadableDataSource接口
 **文件路径**：`sentinel-extension/sentinel-datasource-extension/src/main/java/com/alibaba/csp/sentinel/datasource/ReadableDataSource.java`
 
 ```java
@@ -4430,7 +4430,7 @@ public interface ReadableDataSource<S, T> {
 3.  **`SentinelProperty<T> getProperty()`**：获取与数据源绑定的SentinelProperty对象，用于监听配置变更
 4.  **`void close() throws Exception`**：关闭数据源并释放资源
 
-### 1.2 WritableDataSource接口
+#### 1.2 WritableDataSource接口
 **文件路径**：`sentinel-extension/sentinel-datasource-extension/src/main/java/com/alibaba/csp/sentinel/datasource/WritableDataSource.java`
 
 ```java
@@ -4480,7 +4480,7 @@ public interface WritableDataSource<T> {
 1.  **`void write(T value) throws Exception`**：将规则对象写入到数据源
 2.  **`void close() throws Exception`**：关闭数据源并释放资源
 
-### 1.3 AbstractDataSource抽象类
+#### 1.3 AbstractDataSource抽象类
 **文件路径**：`sentinel-extension/sentinel-datasource-extension/src/main/java/com/alibaba/csp/sentinel/datasource/AbstractDataSource.java`
 
 ```java
@@ -4550,7 +4550,7 @@ public abstract class AbstractDataSource<S, T> implements ReadableDataSource<S, 
 5.  **`loadConfig(S conf)`**：带参版本，直接使用传入的原始数据通过转换器转换为目标类型
 6.  **`getProperty()`**：返回SentinelProperty对象，供外部注册监听器
 
-### 1.4 AutoRefreshDataSource抽象类
+#### 1.4 AutoRefreshDataSource抽象类
 **文件路径**：`sentinel-extension/sentinel-datasource-extension/src/main/java/com/alibaba/csp/sentinel/datasource/AutoRefreshDataSource.java`
 
 ```java
@@ -4660,7 +4660,7 @@ public abstract class AutoRefreshDataSource<S, T> extends AbstractDataSource<S, 
 
 ### 二、文件数据源FileRefreshableDataSource
 
-### 2.1 完整实现
+#### 2.1 完整实现
 **文件路径**：`sentinel-extension/sentinel-datasource-extension/src/main/java/com/alibaba/csp/sentinel/datasource/FileRefreshableDataSource.java`
 
 ```java
@@ -4846,7 +4846,7 @@ FileRefreshableDataSource使用**轮询方式**检测文件变更，而不是Jav
 **FirstLoaderListener机制**：
 在构造函数的末尾调用了`firstLoad()`方法，该方法会调用`loadConfig()`加载初始配置，并通过`getProperty().updateValue(newValue)`更新规则，完成初始规则加载。
 
-### 2.2 文件数据源时序图
+#### 2.2 文件数据源时序图
 
 ```mermaid
 sequenceDiagram
@@ -4903,7 +4903,7 @@ sequenceDiagram
 
 ### 三、Nacos数据源
 
-### 3.1 NacosDataSource实现
+#### 3.1 NacosDataSource实现
 **文件路径**：`sentinel-extension/sentinel-datasource-nacos/src/main/java/com/alibaba/csp/sentinel/datasource/nacos/NacosDataSource.java`
 
 ```java
@@ -5103,7 +5103,7 @@ public class NacosDataSource<T> extends AbstractDataSource<String, T> {
 **initNacosListener方法**：
 该方法负责初始化Nacos配置服务和添加配置监听器，是Nacos数据源的核心初始化方法。
 
-### 3.2 Nacos数据源时序图
+#### 3.2 Nacos数据源时序图
 
 ```mermaid
 sequenceDiagram
@@ -5150,7 +5150,7 @@ sequenceDiagram
 
 ### 四、Apollo数据源
 
-### 4.1 ApolloDataSource实现
+#### 4.1 ApolloDataSource实现
 **文件路径**：`sentinel-extension/sentinel-datasource-apollo/src/main/java/com/alibaba/csp/sentinel/datasource/apollo/ApolloDataSource.java`
 
 ```java
@@ -5285,7 +5285,7 @@ Apollo的配置变更监听器，当配置发生变化时会调用`onChange`方�
 
 ### 五、ZooKeeper数据源
 
-### 5.1 ZookeeperDataSource实现
+#### 5.1 ZookeeperDataSource实现
 **文件路径**：`sentinel-extension/sentinel-datasource-zookeeper/src/main/java/com/alibaba/csp/sentinel/datasource/zookeeper/ZookeeperDataSource.java`
 
 ```java
@@ -5542,7 +5542,7 @@ public class ZookeeperDataSource<T> extends AbstractDataSource<String, T> {
 
 ### 六、Redis数据源
 
-### 6.1 RedisDataSource实现
+#### 6.1 RedisDataSource实现
 **文件路径**：`sentinel-extension/sentinel-datasource-redis/src/main/java/com/alibaba/csp/sentinel/datasource/redis/RedisDataSource.java`
 
 ```java
@@ -5870,7 +5870,7 @@ public class RedisDataSource<T> extends AbstractDataSource<String, T> {
 
 ### 七、Converter转换器
 
-### 7.1 Converter接口
+#### 7.1 Converter接口
 **文件路径**：`sentinel-extension/sentinel-datasource-extension/src/main/java/com/alibaba/csp/sentinel/datasource/Converter.java`
 
 ```java
@@ -5912,7 +5912,7 @@ public interface Converter<S, T> {
 **方法分析**：
 - **`T convert(S source)`**：将源类型S的对象转换为目标类型T的对象
 
-### 7.2 JsonConverter实现
+#### 7.2 JsonConverter实现
 虽然没有找到直接的JsonConverter实现类，但可以推断其实现逻辑：
 1.  接收原始的JSON字符串作为源类型S
 2.  使用JSON库（如fastjson或Jackson）将JSON字符串解析为目标类型T的对象
@@ -5971,7 +5971,7 @@ public class JsonConverter<T> implements Converter<String, T> {
 
 ### 八、规则注册机制
 
-### 8.1 SentinelProperty和SentinelListener
+#### 8.1 SentinelProperty和SentinelListener
 **SentinelProperty接口**：
 **文件路径**：`sentinel-core/src/main/java/com/alibaba/csp/sentinel/property/SentinelProperty.java`
 
@@ -6186,7 +6186,7 @@ public class DynamicSentinelProperty<T> implements SentinelProperty<T> {
 **addListener机制**：
 在`DynamicSentinelProperty.addListener`方法中，将监听器添加到监听器集合中，然后立即调用监听器的`configLoad`方法，传入当前的配置值，完成初始配置加载。
 
-### 8.2 FlowRuleManager.loadRules()
+#### 8.2 FlowRuleManager.loadRules()
 **文件路径**：`sentinel-core/src/main/java/com/alibaba/csp/sentinel/slots/block/flow/FlowRuleManager.java`
 
 ```java
@@ -6380,7 +6380,7 @@ public class FlowRuleManager {
 6.  调用`flowRules.updateRules(rules)`更新规则管理器中的规则
 7.  记录日志，输出更新后的规则
 
-### 8.3 DegradeRuleManager.loadRules()
+#### 8.3 DegradeRuleManager.loadRules()
 **文件路径**：`sentinel-core/src/main/java/com/alibaba/csp/sentinel/slots/block/degrade/DegradeRuleManager.java`
 
 ```java
@@ -6670,7 +6670,7 @@ public final class DegradeRuleManager {
 
 ### 九、关键流程分析
 
-### 9.1 数据源初始化时序图
+#### 9.1 数据源初始化时序图
 
 ```mermaid
 sequenceDiagram
@@ -6703,7 +6703,7 @@ sequenceDiagram
     Note over DataSource,RuleManager: 对于AutoRefreshDataSource子类，还会启动定时刷新任务
 ```
 
-### 9.2 配置变更处理流程图
+#### 9.2 配置变更处理流程图
 
 ```mermaid
 flowchart TD
@@ -6719,7 +6719,7 @@ flowchart TD
     J --> K[新规则生效]
 ```
 
-### 9.3 各种数据源对比
+#### 9.3 各种数据源对比
 
 | 数据源类型 | 实现类 | 配置监听方式 | 优点 | 缺点 | 使用场景 |
 |---------|---------|---------|---------|---------|---------|
@@ -6871,14 +6871,14 @@ Sentinel的动态数据源实现提供了一种灵活的方式来从不同的配
 
 ### 一、集群限流架构
 
-### 1.1 整体架构
+#### 1.1 整体架构
 Sentinel集群限流采用客户端-服务端（C/S）架构，主要包含以下核心角色：
 
 - **Token Client**：集群限流客户端，运行在业务应用中，负责向Token Server申请令牌，并根据返回结果进行流量控制
 - **Token Server**：集群限流服务端，负责集中管理所有集群限流规则，并统一分配令牌
 - **集群规则存储**：集中存储所有集群限流规则，支持动态更新
 
-#### 部署模式
+##### 部署模式
 Sentinel集群限流支持两种部署模式：
 1. **嵌入模式（Embedded）**：Token Server嵌入在业务应用内部，与业务应用共享进程资源
 2. **独立模式（Standalone）**：Token Server作为独立的服务进程运行，多个业务应用可以连接到同一个Token Server
@@ -6918,7 +6918,7 @@ graph TD
 - 灵活的部署模式：支持嵌入模式和独立模式两种部署方式
 - 自动故障转移：客户端支持自动重连和服务发现
 
-### 1.2 ClusterFlowConfig配置
+#### 1.2 ClusterFlowConfig配置
 `ClusterFlowConfig`是集群限流规则的核心配置类，定义了集群限流的各种参数。
 
 ```java
@@ -7008,7 +7008,7 @@ public class ClusterFlowConfig {
 
 ### 二、Token Client实现
 
-### 2.1 DefaultClusterTokenClient
+#### 2.1 DefaultClusterTokenClient
 `DefaultClusterTokenClient`是Token Client的默认实现类，负责与Token Server通信，申请令牌。
 
 ```java
@@ -7142,7 +7142,7 @@ public class DefaultClusterTokenClient implements ClusterTokenClient {
      - 发送请求并等待响应
      - 解析响应数据，封装为TokenResult返回
 
-### 2.2 客户端启动和连接
+#### 2.2 客户端启动和连接
 客户端的连接管理由`NettyTransportClient`实现，基于Netty NIO框架实现高效的网络通信。
 
 ```java
@@ -7372,7 +7372,7 @@ sequenceDiagram
 
 ### 三、Token Server实现
 
-### 3.1 DefaultClusterTokenServer
+#### 3.1 DefaultClusterTokenServer
 `SentinelDefaultTokenServer`是Token Server的默认实现类，支持嵌入模式和独立模式两种部署方式。
 
 ```java
@@ -7492,7 +7492,7 @@ public class SentinelDefaultTokenServer implements ClusterTokenServer {
 }
 ```
 
-### 3.2 NettyTransportServer
+#### 3.2 NettyTransportServer
 `NettyTransportServer`是基于Netty的服务端实现，负责监听客户端连接并处理请求。
 
 ```java
@@ -7625,7 +7625,7 @@ public class NettyTransportServer implements ClusterTokenServer {
 }
 ```
 
-### 3.3 TokenServiceImpl
+#### 3.3 TokenServiceImpl
 `DefaultTokenService`是Token服务的默认实现，负责处理客户端的令牌请求。
 
 ```java
@@ -7726,7 +7726,7 @@ sequenceDiagram
 
 ### 四、通信协议
 
-### 4.1 请求和响应数据结构
+#### 4.1 请求和响应数据结构
 Sentinel集群通信使用自定义的二进制协议，主要包含`ClusterRequest`和`ClusterResponse`两个核心类。
 
 **ClusterRequest.java**
@@ -7831,7 +7831,7 @@ public class ClusterResponse<T> implements Response {
 - `MSG_TYPE_PING(2)`: 心跳请求
 - `MSG_TYPE_CONCURRENT(3)`: 并发限流请求
 
-### 4.2 序列化机制
+#### 4.2 序列化机制
 Sentinel集群通信使用基于Netty的编解码器，实现请求和响应的序列化和反序列化。
 
 **主要编解码器类**：
@@ -7852,7 +7852,7 @@ pipeline.addLast(new TokenServerHandler(connectionPool));
 
 ### 五、集群限流规则
 
-### 5.1 FlowRule的clusterMode
+#### 5.1 FlowRule的clusterMode
 在Sentinel中，普通的`FlowRule`可以通过`clusterMode`字段配置为集群限流规则：
 
 ```java
@@ -7866,7 +7866,7 @@ public class FlowRule extends AbstractRule {
 
 当`clusterMode`设置为true时，该规则将采用集群限流模式，流量统计和限流决策将在Token Server端完成。
 
-### 5.2 规则在服务端的存储
+#### 5.2 规则在服务端的存储
 `ClusterFlowRuleManager`是集群限流规则的管理类，负责加载、存储和更新集群限流规则。
 
 ```java
@@ -8010,7 +8010,7 @@ public final class ClusterFlowRuleManager {
 
 ### 六、Token请求和分配流程
 
-### 6.1 ClusterFlowChecker
+#### 6.1 ClusterFlowChecker
 `ClusterFlowChecker`是集群限流的核心检查类，负责实际的令牌分配和流量统计。
 
 ```java
@@ -8151,7 +8151,7 @@ flowchart TD
     M -->|占用失败| K
 ```
 
-### 6.2 集群滑动窗口统计
+#### 6.2 集群滑动窗口统计
 `ClusterMetric`是集群限流的滑动窗口统计实现，负责统计资源的QPS和延迟等信息。
 
 ```java
@@ -8198,7 +8198,7 @@ public class ClusterMetric {
 - 实时计算当前时间窗口内的总流量
 - 支持QPS、并发数等多种统计维度
 
-### 6.3 Token分配流程图
+#### 6.3 Token分配流程图
 ```mermaid
 sequenceDiagram
     participant Client as 客户端应用
@@ -8226,7 +8226,7 @@ sequenceDiagram
 
 ### 七、集群通信Transport
 
-### 7.1 NettyTransportClient
+#### 7.1 NettyTransportClient
 `NettyTransportClient`是Sentinel集群通信的客户端实现，基于Netty NIO框架。
 
 **核心功能**：
@@ -8235,7 +8235,7 @@ sequenceDiagram
 - 自动重连机制
 - 请求超时处理
 
-### 7.2 NettyServerTransport
+#### 7.2 NettyServerTransport
 `NettyTransportServer`是Sentinel集群通信的服务端实现，基于Netty NIO框架。
 
 **核心功能**：
@@ -8244,7 +8244,7 @@ sequenceDiagram
 - 管理客户端连接池
 - 支持动态配置更新
 
-### 7.3 编解码器
+#### 7.3 编解码器
 Sentinel集群通信使用自定义的编解码器，实现高效的二进制数据传输：
 
 1. **LengthFieldBasedFrameDecoder**：解决TCP粘包/拆包问题，基于长度字段解码
@@ -8263,7 +8263,7 @@ pipeline.addLast(clientHandler);
 
 ### 八、关键流程
 
-### 8.1 集群限流整体时序图
+#### 8.1 集群限流整体时序图
 ```mermaid
 sequenceDiagram
     participant ClientApp as 客户端应用
@@ -8299,7 +8299,7 @@ sequenceDiagram
     end
 ```
 
-### 8.2 集群规则同步流程
+#### 8.2 集群规则同步流程
 ```mermaid
 flowchart TD
     A[规则配置中心] --> B[动态数据源]
@@ -8319,7 +8319,7 @@ flowchart TD
     end
 ```
 
-### 8.3 嵌入模式vs独立模式对比
+#### 8.3 嵌入模式vs独立模式对比
 
 | 特性 | 嵌入模式 | 独立模式 |
 |------|----------|----------|
@@ -8332,7 +8332,7 @@ flowchart TD
 
 ### 九、集群限流的状态管理
 
-### 9.1 集群节点状态
+#### 9.1 集群节点状态
 `ClusterStateManager`负责管理集群节点的状态，包括节点角色（Client/Server）和连接状态。
 
 ```java
@@ -8362,7 +8362,7 @@ public class ClusterStateManager {
 - `CLUSTER_MODE_CLIENT(1)`: 客户端模式
 - `CLUSTER_MODE_SERVER(2)`: 服务端模式
 
-### 9.2 集群流量统计
+#### 9.2 集群流量统计
 `ClusterMetricStatistics`是全局的集群流量统计管理器，负责维护所有资源的流量统计数据。
 
 ```java
@@ -8417,7 +8417,7 @@ Sentinel的集群限流模块为微服务架构提供了强大的流量保护能
 
 Sentinel 客户端与 Dashboard 的通信采用**客户端主动注册 + 双向命令交互**的架构模式。客户端内嵌一个 HTTP 服务器，Dashboard 通过 HTTP 调用客户端暴露的命令接口来实现监控数据拉取和规则下发。
 
-### 1.1 整体架构
+#### 1.1 整体架构
 
 ```mermaid
 graph TB
@@ -8459,7 +8459,7 @@ graph TB
 | 客户端 -> Dashboard | HTTP POST | 心跳注册、上报状态 |
 | Dashboard -> 客户端 | HTTP GET/POST | 拉取监控数据、下发规则、查询Node树 |
 
-### 1.2 模块组成
+#### 1.2 模块组成
 
 | 模块 | 职责 | 核心类 |
 | --- | --- | --- |
@@ -8467,7 +8467,7 @@ graph TB
 | **sentinel-transport-simple-http** | 基于 Java 原生 Socket 的轻量级 HTTP 实现 | `SimpleHttpCommandCenter`、`SimpleHttpHeartbeatSender`、`HttpEventTask` |
 | **sentinel-transport-netty-http** | 基于 Netty NIO 的高性能 HTTP 实现 | `NettyHttpCommandCenter`、`HttpServer`、`HttpServerHandler` |
 
-### 1.3 通信架构图
+#### 1.3 通信架构图
 
 ```mermaid
 graph LR
