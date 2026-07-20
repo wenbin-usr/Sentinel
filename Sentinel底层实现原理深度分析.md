@@ -3052,12 +3052,12 @@ passQps()方法从滑动窗口中聚合计算QPS的流程：
 
 ```mermaid
 flowchart TD
-    A[调用passQps()] --> B[获取当前秒级滑动窗口]
-    B --> C[调用rollingCounterInSecond.pass()]
+    A["调用passQps()"] --> B[获取当前秒级滑动窗口]
+    B --> C["调用rollingCounterInSecond.pass()"]
     C --> D[获取所有有效窗口的MetricBucket列表]
     D --> E[遍历所有MetricBucket]
     E --> F[累加每个bucket的pass计数]
-    F --> G[总和除以窗口间隔时间(秒)]
+    F --> G["总和除以窗口间隔时间(秒)"]
     G --> H[返回QPS值]
 ```
 
@@ -6708,8 +6708,8 @@ sequenceDiagram
 ```mermaid
 flowchart TD
     A[配置变更] --> B[数据源监听器收到通知]
-    B --> C[调用loadConfig()加载并转换配置]
-    C --> D[调用getProperty().updateValue(newValue)]
+    B --> C["调用loadConfig()加载并转换配置"]
+    C --> D["调用getProperty().updateValue(newValue)"]
     D --> E{新旧值是否相同?}
     E -- 相同 --> F[不做任何处理]
     E -- 不同 --> G[更新本地配置值]
