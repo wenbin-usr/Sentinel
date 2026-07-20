@@ -9370,3 +9370,587 @@ Sentinel 客户端与 Dashboard 的通信机制采用了模块化、可扩展的
 
 
 ---
+
+## 第七章 Guava RateLimiter 原理及与 Sentinel 限流对比
+
+### 一、Guava RateLimiter 概述
+
+Google Guava 的 `RateLimiter` 是 Java 生态中最经典的单机限流器实现，基于**令牌桶算法**。Sentinel 的 `WarmUpController` 预热限流算法正是参考了 Guava `SmoothWarmingUp` 的设计思路。理解 Guava RateLimiter 的实现原理，有助于更深入地理解 Sentinel 限流的设计取舍。
+
+**核心思想**：以稳定速率向令牌桶中发放令牌，请求消费令牌；桶满则停止发放，桶空则请求需要等待。
+
+### 二、类继承体系
+
+```mermaid
+classDiagram
+    class RateLimiter {
+        <<abstract>>
+        -SleepingStopwatch stopwatch
+        -volatile Object mutexDoNotUseDirectly
+        +acquire(int) double
+        +tryAcquire(int, long, TimeUnit) boolean
+        +setRate(double) void
+        +getRate() double
+        +create(double) RateLimiter
+        +create(double, long, TimeUnit) RateLimiter
+    }
+    class SleepingStopwatch {
+        <<abstract>>
+        +readMicros() long
+        +sleepMicrosUninterruptibly(long) void
+    }
+    class SmoothRateLimiter {
+        <<abstract>>
+        #double storedPermits
+        #double maxPermits
+        #double stableIntervalMicros
+        -long nextFreeTicketMicros
+        #resync(long) void
+        #reserveEarliestAvailable(int, long) long
+    }
+    class SmoothBursty {
+        +final double maxBurstSeconds
+    }
+    class SmoothWarmingUp {
+        -long warmupPeriodMicros
+        -double slope
+        -double thresholdPermits
+        -double coldFactor
+    }
+
+    RateLimiter --> SleepingStopwatch
+    SmoothRateLimiter --|> RateLimiter
+    SmoothBursty --|> SmoothRateLimiter
+    SmoothWarmingUp --|> SmoothRateLimiter
+```
+
+**层次说明**：
+
+- **RateLimiter**：抽象基类，定义公共 API（`acquire`、`tryAcquire`、`setRate`），持有时间源 `SleepingStopwatch`，通过 `mutex` 实现线程安全
+- **SmoothRateLimiter**：实现令牌桶核心逻辑（`storedPermits`、`maxPermits`、`stableIntervalMicros`、`nextFreeTicketMicros`）
+- **SmoothBursty**：支持突发流量的实现，存储令牌"免费"消费，允许最多 `maxBurstSeconds` 秒的突发
+- **SmoothWarmingUp**：带预热期的实现，使用梯形模型计算存储令牌的等待时间
+
+### 三、核心字段解析
+
+```mermaid
+flowchart LR
+    subgraph SmoothRateLimiter 字段
+        A["storedPermits<br/>当前存储令牌数"]
+        B["maxPermits<br/>最大存储令牌数"]
+        C["stableIntervalMicros<br/>稳定发放间隔(微秒)<br/>= 1000000 / permitsPerSecond"]
+        D["nextFreeTicketMicros<br/>下一次可发放令牌的时间点"]
+    end
+    subgraph SmoothBursty 特有
+        E["maxBurstSeconds<br/>允许突发秒数<br/>默认 1.0"]
+    end
+    subgraph SmoothWarmingUp 特有
+        F["warmupPeriodMicros<br/>预热周期(微秒)"]
+        G["slope<br/>预热区等待时间斜率"]
+        H["thresholdPermits<br/>预热阈值令牌数"]
+        I["coldFactor<br/>冷启动因子<br/>默认 3.0"]
+    end
+```
+
+**字段关系**：
+
+- `storedPermits`：桶中当前令牌数，会随时间增长（最大到 `maxPermits`）
+- `maxPermits`：桶容量上限。SmoothBursty 中 `maxPermits = maxBurstSeconds * permitsPerSecond`；SmoothWarmingUp 中由预热参数计算
+- `stableIntervalMicros`：两个令牌之间的稳定间隔时间（微秒），是令牌发放速率的倒数
+- `nextFreeTicketMicros`：下一个"免费"令牌可用的时间点，是请求排队的核心状态
+
+### 四、令牌桶算法核心实现
+
+#### 4.1 令牌桶模型
+
+```mermaid
+flowchart TB
+    subgraph 令牌桶模型
+        direction TB
+        T1["稳定速率发放令牌<br/>每 stableIntervalMicros 一个"]
+        T1 --> T2["令牌桶<br/>storedPermits ≤ maxPermits"]
+        T2 --> T3{桶满?}
+        T3 -- 是 --> T4["丢弃多余令牌"]
+        T3 -- 否 --> T2
+        T5["请求到来"] --> T6{桶中有令牌?}
+        T6 -- 是 --> T7["消费存储令牌"]
+        T6 -- 否 --> T8["生成新令牌<br/>按 stableIntervalMicros 等待"]
+        T7 --> T9["计算等待时间"]
+        T8 --> T9
+        T9 --> T10["线程休眠等待"]
+        T10 --> T11["返回令牌"]
+    end
+```
+
+#### 4.2 acquire 阻塞获取流程
+
+```mermaid
+sequenceDiagram
+    participant Caller as 调用线程
+    participant RL as RateLimiter
+    participant SW as SleepingStopwatch
+
+    Caller->>RL: acquire(permits)
+    RL->>RL: mutex 同步
+    RL->>SW: readMicros()
+    SW-->>RL: nowMicros
+    RL->>RL: reserveEarliestAvailable(permits, nowMicros)
+    Note over RL: 1. resync 同步令牌<br/>2. 计算等待时间 waitMicros<br/>3. 更新 nextFreeTicketMicros<br/>4. 扣减 storedPermits
+    RL-->>Caller: waitMicros
+    Caller->>SW: sleepMicrosUninterruptibly(waitMicros)
+    Note over SW: 线程阻塞等待
+    SW-->>Caller: 返回
+    Caller->>Caller: 返回等待秒数
+```
+
+`acquire()` 方法**永远成功**，只是阻塞调用线程直到令牌可用。核心方法 `reserveEarliestAvailable` 的实现：
+
+```java
+final long reserveEarliestAvailable(int requiredPermits, long nowMicros) {
+    resync(nowMicros);                                    // 1. 懒加载同步令牌
+    long returnValue = nextFreeTicketMicros;               // 2. 记录返回时间点
+
+    double storedPermitsToSpend = min(requiredPermits, storedPermits);  // 3. 优先消费存储令牌
+    double freshPermits = requiredPermits - storedPermitsToSpend;       // 4. 不足部分需新生成
+
+    long waitMicros = storedPermitsToWaitTime(storedPermits, storedPermitsToSpend)  // 5. 存储令牌等待时间
+                   + (long)(freshPermits * stableIntervalMicros);      // 6. 新令牌等待时间
+
+    nextFreeTicketMicros = saturatedAdd(nextFreeTicketMicros, waitMicros);  // 7. 推进时间点
+    storedPermits -= storedPermitsToSpend;                 // 8. 扣减存储令牌
+    return returnValue;                                   // 9. 返回旧时间点（关键!）
+}
+```
+
+**关键设计**：方法返回的是**旧的** `nextFreeTicketMicros`，而不是更新后的值。这意味着：
+
+- 多个并发调用者各自获得自己令牌可用的时间点
+- 先到的请求先获得令牌，后到的请求排队等待
+- 每个调用者只需等待自己预约的时间，不会因为后续请求而等待更久
+
+#### 4.3 tryAcquire 非阻塞获取流程
+
+```mermaid
+sequenceDiagram
+    participant Caller as 调用线程
+    participant RL as RateLimiter
+    participant SW as SleepingStopwatch
+
+    Caller->>RL: tryAcquire(permits, timeout, unit)
+    RL->>RL: mutex 同步
+    RL->>SW: readMicros()
+    SW-->>RL: nowMicros
+    RL->>RL: canAcquire(nowMicros, timeoutMicros)?
+    Note over RL: 检查: nextFreeTicketMicros - timeoutMicros ≤ nowMicros?
+    alt 不可获取
+        RL-->>Caller: false
+        Note over Caller: 立即返回，不阻塞
+    else 可获取
+        RL->>RL: reserveAndGetWaitLength(permits, nowMicros)
+        RL-->>Caller: waitMicros
+        Caller->>SW: sleepMicrosUninterruptibly(waitMicros)
+        SW-->>Caller: 返回
+        Caller->>Caller: 返回 true
+    end
+```
+
+`tryAcquire()` 的 `canAcquire` 判断逻辑：
+
+```java
+private boolean canAcquire(long nowMicros, long timeoutMicros) {
+    return queryEarliestAvailable() - timeoutMicros <= nowMicros;
+    // queryEarliestAvailable() 返回 nextFreeTicketMicros
+}
+```
+
+- `tryAcquire()` 无参版本等价于 `tryAcquire(1, 0, MICROSECONDS)`，即仅当令牌立即可用时才返回 true
+- `tryAcquire(permits, timeout, unit)` 允许在超时时间内等待
+
+#### 4.4 resync 懒加载同步机制
+
+Guava RateLimiter **不会**通过后台线程持续发放令牌，而是采用**懒加载**机制：每次操作时根据时间差同步令牌数。
+
+```java
+void resync(long nowMicros) {
+    if (nowMicros > nextFreeTicketMicros) {
+        // 计算自上次发放以来新增的令牌数
+        double newPermits = (nowMicros - nextFreeTicketMicros) / coolDownIntervalMicros();
+        storedPermits = min(maxPermits, storedPermits + newPermits);
+        nextFreeTicketMicros = nowMicros;
+    }
+    // 如果 nowMicros <= nextFreeTicketMicros，说明上次请求还在排队，不新增令牌
+}
+```
+
+```mermaid
+flowchart TD
+    A["操作触发 resync"] --> B{"nowMicros > nextFreeTicketMicros?"}
+    B -- 是 --> C["计算新增令牌<br/>newPermits = 时间差 / coolDownInterval"]
+    C --> D["storedPermits = min(maxPermits, storedPermits + newPermits)"]
+    D --> E["nextFreeTicketMicros = nowMicros"]
+    B -- 否 --> F["不修改<br/>上次请求仍在排队中"]
+```
+
+**coolDownIntervalMicros** 的差异：
+
+- **SmoothBursty**：返回 `stableIntervalMicros`，即令牌以稳定速率累积
+- **SmoothWarmingUp**：返回 `warmupPeriodMicros / maxPermits`，预热周期内令牌匀速累积
+
+### 五、SmoothBursty 突发流量实现
+
+#### 5.1 核心特点
+
+SmoothBursty 允许系统在空闲后处理突发请求，最多允许 `maxBurstSeconds`（默认 1 秒）的突发流量。
+
+```java
+void doSetRate(double permitsPerSecond, double stableIntervalMicros) {
+    double oldMaxPermits = this.maxPermits;
+    maxPermits = maxBurstSeconds * permitsPerSecond;    // 桶容量 = 突发秒数 × QPS
+    if (oldMaxPermits == Double.POSITIVE_INFINITY) {
+        storedPermits = maxPermits;                       // 首次创建：桶满
+    } else {
+        storedPermits = storedPermits * maxPermits / oldMaxPermits;  // 按比例缩放
+    }
+}
+
+// 关键：存储令牌的等待时间为 0
+long storedPermitsToWaitTime(double storedPermits, double permitsToTake) {
+    return 0L;
+}
+```
+
+#### 5.2 突发流量示例
+
+```mermaid
+flowchart LR
+    subgraph scene1["场景: QPS=5 maxBurstSeconds=1"]
+        A["系统空闲后<br/>桶中有 5 个令牌"] --> B["突发 10 个请求"]
+        B --> C["前 5 个：立即通过<br/>waitTime = 0"]
+        B --> D["后 5 个：每个等待<br/>200ms (stableInterval)"]
+        D --> E["总等待 1 秒"]
+    end
+```
+
+**分析**：
+- 系统空闲时，令牌桶会累积到 `maxPermits = 5`（1 秒 × 5 QPS）
+- 突发 10 个请求时，前 5 个消费存储令牌（等待时间为 0），立即通过
+- 后 5 个需要"新生成"令牌，每个等待 `stableIntervalMicros = 200,000 微秒`（200ms）
+- 总等待时间：5 × 200ms = 1 秒
+
+### 六、SmoothWarmingUp 预热实现
+
+#### 6.1 梯形模型
+
+SmoothWarmingUp 使用**梯形模型**：存储令牌数越多（系统越冷），消费每个令牌的等待时间越长。
+
+```mermaid
+flowchart TB
+    subgraph 等待时间函数
+        direction LR
+        A["storedPermits = maxPermits<br/>(最冷)"] --> B["等待时间 = coldInterval<br/>= stableInterval × coldFactor<br/>= 3 × stableInterval"]
+        B --> C["storedPermits 递减<br/>(预热中)"]
+        C --> D["storedPermits = thresholdPermits<br/>(预热完成)"]
+        D --> E["等待时间 = stableInterval<br/>(稳定速率)"]
+        E --> F["storedPermits < thresholdPermits<br/>(稳定区)"]
+        F --> G["等待时间 = stableInterval<br/>(不变)"]
+    end
+```
+
+```mermaid
+graph LR
+    subgraph storedPermits与等待时间关系
+        direction TB
+        P1["横轴: storedPermits (令牌数)"]
+        P2["0 → thresholdPermits → maxPermits"]
+        P3["纵轴: 每令牌等待时间"]
+        P4["stableInterval → stableInterval → coldInterval (3x)"]
+        P5["稳定区: 恒定 stableInterval"]
+        P6["预热区: 线性增长 stableInterval 到 coldInterval"]
+    end
+```
+
+#### 6.2 参数计算
+
+```java
+void doSetRate(double permitsPerSecond, double stableIntervalMicros) {
+    double oldMaxPermits = this.maxPermits;
+    double coldIntervalMicros = stableIntervalMicros * coldFactor;    // cold = 3 × stable
+
+    // 预热阈值：预热周期的一半对应的令牌数
+    thresholdPermits = 0.5 * warmupPeriodMicros / stableIntervalMicros;
+    // 最大令牌数：梯形面积公式
+    maxPermits = thresholdPermits + 2.0 * warmupPeriodMicros / (stableIntervalMicros + coldIntervalMicros);
+    // 斜率：(coldInterval - stableInterval) / (maxPermits - thresholdPermits)
+    slope = (coldIntervalMicros - stableIntervalMicros) / (maxPermits - thresholdPermits);
+
+    if (oldMaxPermits == Double.POSITIVE_INFINITY) {
+        storedPermits = 0.0;    // 关键：冷启动时桶为空
+    } else {
+        storedPermits = storedPermits * maxPermits / oldMaxPermits;
+    }
+}
+```
+
+**与 SmoothBursty 的关键区别**：
+
+1. **初始令牌数为 0**（SmoothBursty 初始为 `maxPermits`），系统从"最冷"状态启动
+2. **存储令牌有等待时间**（SmoothBursty 为 0），预热区的令牌需要更长时间消费
+3. **冷启动因子 `coldFactor`** 默认为 3，最冷时每个令牌等待时间是稳定时的 3 倍
+
+#### 6.3 等待时间计算（梯形积分）
+
+```java
+long storedPermitsToWaitTime(double storedPermits, double permitsToTake) {
+    long availablePermitsAboveThreshold = storedPermits - thresholdPermits;
+    long micros = 0;
+
+    if (availablePermitsAboveThreshold > 0) {
+        // 预热区：令牌高于阈值，等待时间线性增长
+        double permitsAboveThresholdToTake = min(availablePermitsAboveThreshold, permitsToTake);
+
+        // 梯形面积 = (上底 + 下底) × 高 / 2
+        double heightAtTop = permitsToTime(availablePermitsAboveThreshold);
+        double heightAtBottom = permitsToTime(availablePermitsAboveThreshold - permitsAboveThresholdToTake);
+        micros = (long)(permitsAboveThresholdToTake * (heightAtTop + heightAtBottom) / 2.0);
+
+        permitsToTake -= permitsAboveThresholdToTake;
+    }
+
+    // 稳定区：令牌低于阈值，等待时间恒定
+    micros += (long)(stableIntervalMicros * permitsToTake);
+    return micros;
+}
+
+// 线性函数：令牌数 -> 每令牌等待时间
+private double permitsToTime(double permits) {
+    return stableIntervalMicros + permits * slope;
+}
+```
+
+```mermaid
+flowchart TD
+    A["消费 permitsToTake 个令牌"] --> B{"storedPermits > thresholdPermits?"}
+    B -- 是 预热区 --> C["计算预热区消费量<br/>permitsAboveThresholdToTake"]
+    C --> D["梯形积分<br/>micros = permitsAboveThresholdToTake ×<br/>(heightAtTop + heightAtBottom) / 2"]
+    D --> E["剩余 permitsToTake 进入稳定区"]
+    E --> F["稳定区等待<br/>micros += stableInterval × 剩余量"]
+    B -- 否 稳定区 --> F
+    F --> G["返回总等待时间"]
+```
+
+### 七、线程同步模型
+
+Guava RateLimiter 使用**单一全局锁**（mutex）保证线程安全，所有操作同步执行：
+
+```java
+private Object mutex() {
+    Object mutex = mutexDoNotUseDirectly;
+    if (mutex == null) {
+        synchronized (this) {
+            mutex = mutexDoNotUseDirectly;
+            if (mutex == null) {
+                mutexDoNotUseDirectly = mutex = new Object();
+            }
+        }
+    }
+    return mutex;
+}
+
+// 所有公共方法都加锁
+public double acquire(int permits) {
+    long microsToWait;
+    synchronized (mutex()) {
+        microsToWait = reserve(permits);
+    }
+    stopwatch.sleepMicrosUninterruptibly(microsToWait);
+    return 1.0 * microsToWait / SECONDS.toMicros(1L);
+}
+```
+
+**特点**：
+- 双重检查锁（double-checked locking）延迟初始化 mutex
+- 所有 `acquire`、`tryAcquire`、`setRate` 操作都争抢同一把锁
+- 锁内只做计算（reserve），锁外做休眠（sleep），减少锁持有时间
+
+```mermaid
+flowchart LR
+    T1["线程1"] --> M["mutex 全局锁"]
+    T2["线程2"] --> M
+    T3["线程3"] --> M
+    M --> S1["串行执行 reserve"]
+    S1 --> S2["锁外并行 sleep"]
+```
+
+### 八、Guava RateLimiter 与 Sentinel 限流对比
+
+#### 8.1 架构设计对比
+
+```mermaid
+graph TB
+    subgraph Guava RateLimiter
+        GA["统计与控制耦合<br/>storedPermits 既是统计也是控制状态"]
+        GA --> GB["基于时间间隔<br/>stableIntervalMicros"]
+        GB --> GC["单机限流<br/>无分布式支持"]
+        GC --> GD["线程阻塞<br/>acquire 休眠等待"]
+    end
+
+    subgraph Sentinel
+        SA["统计与控制分离<br/>StatisticNode 独立统计"]
+        SA --> SB["基于 QPS 计数<br/>滑动窗口聚合"]
+        SB --> SC["单机 + 集群限流<br/>Token Server 架构"]
+        SC --> SD["多种控制行为<br/>拒绝/排队/预热/降级"]
+    end
+```
+
+#### 8.2 核心差异对比表
+
+| 对比维度 | Guava RateLimiter | Sentinel |
+|---------|-------------------|----------|
+| **限流算法** | 令牌桶（时间间隔模型） | 滑动窗口统计 + 多种控制器 |
+| **统计方式** | 内部状态 `storedPermits`、`nextFreeTicketMicros` | 独立 `StatisticNode` 滑动窗口（LeapArray + MetricBucket） |
+| **控制行为** | 仅阻塞等待（`acquire`）或立即返回（`tryAcquire`） | 快速失败、匀速排队、预热、预热+匀速、熔断降级 |
+| **限流维度** | 仅按 QPS（permitsPerSecond） | 按 QPS 或并发线程数，支持调用者、关联资源、链路限流 |
+| **分布式** | 仅单机 | 支持集群限流（Token Client/Server） |
+| **动态配置** | `setRate()` 手动调用 | 动态数据源（Nacos/Apollo/ZooKeeper/文件）自动推送 |
+| **预热实现** | `SmoothWarmingUp` 梯形模型，连续微秒级 | `WarmUpController` 借鉴 Guava，但按秒级 QPS 同步 |
+| **突发处理** | `SmoothBursty` 支持突发（maxBurstSeconds） | `DefaultController` 直接拒绝，不支持突发 |
+| **线程安全** | 单一 mutex 全局锁 | CAS + ReentrantLock（LeapArray） |
+| **时间精度** | 微秒级（`System.nanoTime`） | 毫秒级（`TimeUtil.currentTimeMillis`） |
+| **资源模型** | 单个 RateLimiter 实例对应一个限流点 | 资源名 + Slot Chain，一个资源可有多条规则 |
+| **上下文** | 无上下文概念 | Context + Entry，支持调用链路追踪 |
+
+#### 8.3 限流算法实现对比
+
+```mermaid
+flowchart TB
+    subgraph Guava 限流流程
+        G1["请求到来"] --> G2["resync 同步令牌"]
+        G2 --> G3["计算 storedPermitsToSpend<br/>和 freshPermits"]
+        G3 --> G4["计算等待时间<br/>storedPermitsToWaitTime + fresh × stableInterval"]
+        G4 --> G5["更新 nextFreeTicketMicros"]
+        G5 --> G6["线程 sleep 等待"]
+        G6 --> G7["返回令牌"]
+    end
+
+    subgraph Sentinel 限流流程
+        S1["请求到来"] --> S2["StatisticSlot 统计<br/>滑动窗口记录 passQps"]
+        S2 --> S3["FlowSlot 检查规则"]
+        S3 --> S4["选择 TrafficShapingController"]
+        S4 --> S5["根据控制器类型判断"]
+        S5 --> S6["快速失败: passQps > count?"]
+        S5 --> S7["匀速排队: 计算间隔等待"]
+        S5 --> S8["预热: 令牌桶 + QPS 阈值"]
+        S6 --> S9["拒绝 或 通过"]
+        S7 --> S9
+        S8 --> S9
+    end
+```
+
+#### 8.4 预热算法对比
+
+Sentinel 的 `WarmUpController` 明确注释了参考 Guava `SmoothWarmingUp` 的设计，但实现方式不同：
+
+```mermaid
+graph TB
+    subgraph Guava SmoothWarmingUp
+        GA["冷启动: storedPermits = 0"] --> GB["请求消费令牌"]
+        GB --> GC["storedPermits 增长<br/>系统逐渐变冷"]
+        GC --> GD["梯形积分计算等待时间<br/>storedPermitsToWaitTime"]
+        GD --> GE["微秒级连续控制"]
+    end
+
+    subgraph Sentinel WarmUpController
+        SA["冷启动: storedTokens = maxToken"] --> SB["请求消费令牌"]
+        SB --> SC["每秒同步令牌<br/>syncToken(previousQps)"]
+        SC --> SD["storedTokens >= warningToken?"]
+        SD -- 是 预热 --> SE["通过率低<br/>warningQps = 1/(slope×aboveToken + 1/count)"]
+        SD -- 否 正常 --> SF["通过率 = count"]
+        SE --> SG["秒级离散控制"]
+        SF --> SG
+    end
+```
+
+**关键差异**：
+
+1. **令牌初始状态相反**：
+   - Guava：`storedPermits = 0`（空桶），随时间累积令牌，令牌越多系统越冷
+   - Sentinel：`storedTokens = maxToken`（满桶），随请求消费令牌，令牌越少系统越热
+
+2. **同步时机**：
+   - Guava：每次请求都 `resync`，微秒级精度
+   - Sentinel：每秒 `syncToken` 一次，基于上一秒 QPS
+
+3. **控制方式**：
+   - Guava：通过**等待时间**控制（计算每个请求需要 sleep 多久）
+   - Sentinel：通过**QPS 阈值**控制（当前 passQps 是否超过动态阈值）
+
+4. **冷启动因子**：
+   - 两者都默认 `coldFactor = 3`
+   - Guava 用于计算 `coldIntervalMicros = stableInterval × 3`
+   - Sentinel 用于计算 `slope = (coldFactor - 1) / count / (maxToken - warningToken)`
+
+#### 8.5 匀速排队对比
+
+```mermaid
+graph TB
+    subgraph Guava SmoothBursty
+        GB1["基于 nextFreeTicketMicros<br/>记录下次可发令牌时间"]
+        GB1 --> GB2["存储令牌免费消费<br/>waitTime = 0"]
+        GB2 --> GB3["新令牌按 stableInterval 等待"]
+        GB3 --> GB4["支持突发: 最多 maxBurstSeconds 秒"]
+    end
+
+    subgraph Sentinel ThrottlingController
+        ST1["基于 latestPassedTime<br/>记录上次通过时间"]
+        ST1 --> ST2["计算 costTime = acquireCount / count × statDuration"]
+        ST2 --> ST3["expectedTime = costTime + latestPassedTime"]
+        ST3 --> ST4["超过 maxQueueingTimeMs 则拒绝"]
+        ST4 --> ST5["否则 sleep 后通过"]
+    end
+```
+
+**差异分析**：
+
+| 方面 | Guava SmoothBursty | Sentinel ThrottlingController |
+|------|-------------------|-------------------------------|
+| 状态变量 | `nextFreeTicketMicros`（微秒级时间点） | `latestPassedTime`（毫秒级时间点） |
+| 突发支持 | 支持（存储令牌免费消费） | 不支持（每次都计算间隔） |
+| 等待上限 | 无上限（`acquire` 永远等待） | `maxQueueingTimeMs` 超时拒绝 |
+| 时间精度 | 微秒 | 毫秒 |
+| 并发控制 | mutex 全局锁 | AtomicLong CAS |
+
+#### 8.6 适用场景对比
+
+```mermaid
+graph TB
+    subgraph Guava RateLimiter 适用场景
+        G1["单机 API 限流"]
+        G2["需要突发流量支持"]
+        G3["简单阻塞式限流"]
+        G4["微秒级精度控制"]
+        G5["无需动态配置变更"]
+    end
+
+    subgraph Sentinel 适用场景
+        S1["微服务集群限流"]
+        S2["多维度流控<br/>QPS/线程数/调用者/关联资源"]
+        S3["需要熔断降级"]
+        S4["动态规则推送"]
+        S5["监控可视化"]
+        S6["预热启动保护"]
+    end
+```
+
+### 九、总结
+
+Guava RateLimiter 和 Sentinel 在限流领域各有侧重：
+
+1. **Guava RateLimiter**：轻量、精确、单机，基于令牌桶的时间间隔模型，`SmoothBursty` 支持突发流量，`SmoothWarmingUp` 提供梯形预热模型，适合简单单机限流场景
+
+2. **Sentinel**：重量级、多维、集群化，统计与控制分离，滑动窗口 + 多种控制器，支持集群限流和动态配置，适合微服务生产环境
+
+3. **设计渊源**：Sentinel 的 `WarmUpController` 明确参考了 Guava `SmoothWarmingUp` 的令牌桶 + 冷启动思路，但将其从"时间间隔等待"模型改造为"QPS 阈值判断"模型，以适配 Sentinel 的滑动窗口统计架构
+
+4. **核心差异本质**：
+   - Guava 是**时间驱动**：令牌按时间生成，请求按时间间隔放行
+   - Sentinel 是**统计驱动**：滑动窗口统计 QPS，根据统计值判断是否放行
