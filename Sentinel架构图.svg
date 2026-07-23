@@ -399,55 +399,55 @@
   <text x="1000" y="640" font-size="9.5" fill="#92400e" opacity="0.8">ResponseTimeCircuitBreaker(慢调用RT) · ExceptionCircuitBreaker(异常比例/数)</text>
 
   <!-- ============ 第五层：动态数据源 ============ -->
-  <rect x="40" y="668" width="1480" height="120" rx="16" fill="#ecfdf5" opacity="0.85" stroke="#6ee7b7" stroke-width="1"/>
-  <text x="240" y="694" font-size="16" font-weight="700" fill="#047857">⑤ 动态数据源 · SPI 扩展 (sentinel-extension)</text>
-  <text x="240" y="712" text-anchor="middle" font-size="10.5" fill="#059669" opacity="0.85">监听配置变更 -> 转换为规则 -> 调用 RuleManager.loadRules() 热更新</text>
+  <rect x="40" y="680" width="1480" height="108" rx="16" fill="#ecfdf5" opacity="0.85" stroke="#6ee7b7" stroke-width="1"/>
+  <text x="240" y="706" font-size="16" font-weight="700" fill="#047857">⑤ 动态数据源 · SPI 扩展 (sentinel-extension)</text>
+  <text x="240" y="724" text-anchor="middle" font-size="10.5" fill="#059669" opacity="0.85">监听配置变更 -> 转换为规则 -> 调用 RuleManager.loadRules() 热更新</text>
 
   <g filter="url(#shadow)">
-    <rect x="80" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="155" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">FileRefreshDataSource</text>
-    <text x="155" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">本地文件定时轮询</text>
+    <rect x="80" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="155" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">FileRefreshDataSource</text>
+    <text x="155" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">本地文件定时轮询</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="244" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="319" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">NacosDataSource</text>
-    <text x="319" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Nacos 监听</text>
+    <rect x="244" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="319" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">NacosDataSource</text>
+    <text x="319" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">Nacos 监听</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="408" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="483" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ApolloDataSource</text>
-    <text x="483" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Apollo Config</text>
+    <rect x="408" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="483" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ApolloDataSource</text>
+    <text x="483" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">Apollo Config</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="572" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="647" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ZookeeperDataSource</text>
-    <text x="647" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">ZK Watcher</text>
+    <rect x="572" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="647" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ZookeeperDataSource</text>
+    <text x="647" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">ZK Watcher</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="736" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="811" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">RedisDataSource</text>
-    <text x="811" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Redis Pub/Sub</text>
+    <rect x="736" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="811" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">RedisDataSource</text>
+    <text x="811" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">Redis Pub/Sub</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="900" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="975" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ConsulDataSource</text>
-    <text x="975" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Consul KV</text>
+    <rect x="900" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="975" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ConsulDataSource</text>
+    <text x="975" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">Consul KV</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="1064" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
-    <text x="1139" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">EtcdDataSource</text>
-    <text x="1139" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Etcd Watch</text>
+    <rect x="1064" y="732" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="1139" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">EtcdDataSource</text>
+    <text x="1139" y="768" text-anchor="middle" font-size="9.5" fill="#064e3b">Etcd Watch</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="1228" y="724" width="270" height="48" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1" stroke-dasharray="4,3"/>
-    <text x="1363" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#064e3b">ReadableDataSource&lt;T,S&gt;</text>
-    <text x="1363" y="760" text-anchor="middle" font-size="9.5" fill="#047857">SPI 统一抽象 · loadConfig() 转换器</text>
+    <rect x="1228" y="732" width="270" height="48" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="1363" y="752" text-anchor="middle" font-size="11.5" font-weight="700" fill="#064e3b">ReadableDataSource&lt;T,S&gt;</text>
+    <text x="1363" y="768" text-anchor="middle" font-size="9.5" fill="#047857">SPI 统一抽象 · loadConfig() 转换器</text>
   </g>
   <!-- 数据源 -> 规则 箭头 -->
   <g stroke="#059669" stroke-width="1.6" fill="none" marker-end="url(#arrG)" opacity="0.75">
-    <path d="M1250 668 V660 H1385 V434" stroke-dasharray="5,4"/>
+    <path d="M1250 680 V664 H1385 V434" stroke-dasharray="5,4"/>
   </g>
-  <text x="1380" y="652" font-size="9" fill="#047857" opacity="0.9">规则热更新</text>
+  <text x="1320" y="674" text-anchor="middle" font-size="9" fill="#047857" opacity="0.9">规则热更新</text>
 
   <!-- ============ 第六层：Transport + Dashboard + Cluster ============ -->
   <!-- Transport -->
