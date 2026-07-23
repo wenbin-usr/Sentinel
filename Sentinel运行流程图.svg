@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1452" viewBox="0 0 1560 1452" font-family="'Microsoft YaHei','PingFang SC','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/><stop offset="0.5" stop-color="#eef2f7"/><stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.18" cy="0.08" r="0.55"><stop offset="0" stop-color="#dbeafe" stop-opacity="0.5"/><stop offset="1" stop-color="#dbeafe" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow2" cx="0.88" cy="0.1" r="0.5"><stop offset="0" stop-color="#ede9fe" stop-opacity="0.45"/><stop offset="1" stop-color="#ede9fe" stop-opacity="0"/></radialGradient>
+
+    <linearGradient id="gEntry" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+    <linearGradient id="gExit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="gSlot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+    <linearGradient id="gErr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fb7185"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
+    <linearGradient id="gBiz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbd5e1"/><stop offset="1" stop-color="#94a3b8"/></linearGradient>
+    <linearGradient id="gDec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/></linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset="0.5" stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.4"/>
+      <feOffset dx="0" dy="2" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e11d48"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <marker id="aVs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+    <marker id="aBs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+  </defs>
+
+  <rect width="1560" height="1440" fill="url(#bgGrad)"/>
+  <rect width="1560" height="1440" fill="url(#glow1)"/>
+  <rect width="1560" height="1440" fill="url(#glow2)"/>
+  <g stroke="#cbd5e1" stroke-width="0.5" opacity="0.5"><path d="M0 200 H1560 M0 400 H1560 M0 600 H1560 M0 800 H1560 M0 1000 H1560 M0 1200 H1560"/></g>
+
+  <!-- 标题 -->
+  <text x="780" y="52" text-anchor="middle" font-size="36" font-weight="800" fill="url(#titleGrad)">Sentinel 请求运行流程图</text>
+  <text x="780" y="80" text-anchor="middle" font-size="14" fill="#0369a1" opacity="0.9">SphU.entry() → 责任链正向 entry → 业务执行 → Entry.exit() → 责任链反向 exit · 含 BlockException 异常传播路径</text>
+  <line x1="500" y1="94" x2="1060" y2="94" stroke="#a78bfa" stroke-width="1" opacity="0.55"/>
+
+  <!-- 阶段进度条 -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="108" width="490" height="40" rx="20" fill="url(#gEntry)"/>
+    <text x="285" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#022c22">① Entry 准备 + 责任链正向 entry</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="545" y="108" width="490" height="40" rx="20" fill="url(#gDec)"/>
+    <text x="790" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#451a03">② 业务执行 + 责任链反向 exit</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1050" y="108" width="470" height="40" rx="20" fill="url(#gErr)"/>
+    <text x="1285" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#4c0519">③ BlockException 异常传播</text>
+  </g>
+
+  <!-- ============ 左栏：Entry 正向流程 ============ -->
+  <rect x="30" y="160" width="500" height="1000" rx="14" fill="#ecfdf5" opacity="0.55" stroke="#a7f3d0" stroke-width="1"/>
+  <text x="280" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#047857">▎Entry 正向流程 · entryWithPriority()</text>
+
+  <!-- 1. SphU.entry -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="200" width="440" height="52" rx="10" fill="url(#gEntry)"/>
+    <rect x="60" y="200" width="6" height="52" rx="2" fill="#a7f3d0"/>
+    <text x="82" y="223" font-size="13.5" font-weight="700" fill="#fff">① SphU.entry(resource, args)</text>
+    <text x="82" y="241" font-size="10.5" fill="#d1fae5">业务调用入口 · CtSph.entry()</text>
+    <text x="488" y="231" text-anchor="end" font-size="9.5" fill="#a7f3d0">CtSph.java:175</text>
+  </g>
+  <path d="M280 252 V264" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+
+  <!-- 2. entryWithPriority -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="266" width="440" height="60" rx="10" fill="url(#gEntry)"/>
+    <rect x="60" y="266" width="6" height="60" rx="2" fill="#a7f3d0"/>
+    <text x="82" y="289" font-size="13.5" font-weight="700" fill="#fff">② CtSph.entryWithPriority()</text>
+    <text x="82" y="307" font-size="10.5" fill="#d1fae5">ContextUtil.getContext() · NullContext/默认上下文</text>
+    <text x="82" y="320" font-size="10.5" fill="#d1fae5">Constants.ON 全局开关检查</text>
+    <text x="488" y="300" text-anchor="end" font-size="9.5" fill="#a7f3d0">CtSph.java:117</text>
+  </g>
+  <path d="M280 326 V338" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+
+  <!-- 3. lookProcessChain -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="340" width="440" height="74" rx="10" fill="url(#gEntry)"/>
+    <rect x="60" y="340" width="6" height="74" rx="2" fill="#fde68a"/>
+    <text x="82" y="363" font-size="13.5" font-weight="700" fill="#fff">③ lookProcessChain(resource) ★</text>
+    <text x="82" y="381" font-size="10.5" fill="#d1fae5">chainMap.get(resource)  → 命中直接返回</text>
+    <text x="82" y="395" font-size="10.5" fill="#fef3c7">未命中 → SlotChainProvider.newSlotChain()</text>
+    <text x="82" y="408" font-size="10.5" fill="#fef3c7">  └ SPI 排序构建 · CoW+双检锁 · MAX_SLOT_CHAIN_SIZE 限制</text>
+    <text x="488" y="360" text-anchor="end" font-size="9.5" fill="#a7f3d0">CtSph.java:194</text>
+  </g>
+  <path d="M280 414 V426" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+
+  <!-- 4. new CtEntry -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="428" width="440" height="52" rx="10" fill="url(#gEntry)"/>
+    <rect x="60" y="428" width="6" height="52" rx="2" fill="#a7f3d0"/>
+    <text x="82" y="451" font-size="13.5" font-weight="700" fill="#fff">④ new CtEntry(resource, chain, context)</text>
+    <text x="82" y="469" font-size="10.5" fill="#d1fae5">创建 Entry · 入栈 Context · 绑定 SlotChain</text>
+    <text x="488" y="459" text-anchor="end" font-size="9.5" fill="#a7f3d0">CtSph.java:146</text>
+  </g>
+  <path d="M280 480 V492" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+
+  <!-- 5. chain.entry -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="494" width="440" height="52" rx="10" fill="url(#gEntry)"/>
+    <rect x="60" y="494" width="6" height="52" rx="2" fill="#a7f3d0"/>
+    <text x="82" y="517" font-size="13.5" font-weight="700" fill="#fff">⑤ chain.entry(ctx, res, null, count, ...)</text>
+    <text x="82" y="535" font-size="10.5" fill="#d1fae5">DefaultProcessorSlotChain.entry → first.transformEntry()</text>
+    <text x="488" y="525" text-anchor="end" font-size="9.5" fill="#a7f3d0">DefaultProcessorSlotChain.java:73</text>
+  </g>
+  <path d="M280 546 V558" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+
+  <!-- 责任链分组虚线框 -->
+  <rect x="50" y="560" width="480" height="440" rx="10" fill="#faf5ff" opacity="0.6" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="290" y="580" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6d28d9">⑥ 责任链正向 entry · fireEntry 递归下降</text>
+  <text x="290" y="596" text-anchor="middle" font-size="9.5" fill="#7c3aed" opacity="0.85">每个 slot: 先做事 → fireEntry(context,...) → next.transformEntry → next.entry</text>
+
+  <!-- Slot 节点 (紧凑) -->
+  <!-- NodeSelectorSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="606" width="440" height="32" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="606" width="6" height="32" rx="2" fill="#ede9fe"/>
+    <text x="88" y="623" font-size="12" font-weight="700" fill="#fff">NodeSelectorSlot.entry</text>
+    <text x="88" y="635" font-size="9.5" fill="#f5f3ff">建 DefaultNode · 组装调用树 · setCurNode</text>
+    <text x="500" y="627" text-anchor="end" font-size="9" fill="#fde68a">order -10000</text>
+  </g>
+  <path d="M290 638 V650" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- ClusterBuilderSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="650" width="440" height="32" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="650" width="6" height="32" rx="2" fill="#ede9fe"/>
+    <text x="88" y="667" font-size="12" font-weight="700" fill="#fff">ClusterBuilderSlot.entry</text>
+    <text x="88" y="679" font-size="9.5" fill="#f5f3ff">建/取 ClusterNode(全局唯一) · originNode</text>
+    <text x="500" y="671" text-anchor="end" font-size="9" fill="#fde68a">order -9000</text>
+  </g>
+  <path d="M290 682 V694" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- LogSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="694" width="440" height="32" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="694" width="6" height="32" rx="2" fill="#fbcfe8"/>
+    <text x="88" y="711" font-size="12" font-weight="700" fill="#fff">LogSlot.entry</text>
+    <text x="88" y="723" font-size="9.5" fill="#fdf2f8">try { fireEntry } catch(BlockException){ EagleEye 记录 }</text>
+    <text x="500" y="715" text-anchor="end" font-size="9" fill="#fde68a">order -8000</text>
+  </g>
+  <path d="M290 726 V738" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- StatisticSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="738" width="440" height="44" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="738" width="6" height="44" rx="2" fill="#fde68a"/>
+    <text x="88" y="755" font-size="12" font-weight="700" fill="#fff">StatisticSlot.entry ★</text>
+    <text x="88" y="769" font-size="9.5" fill="#fef3c7">try { fireEntry; pass++/线程++ } catch(BlockException){ block++; throw }</text>
+    <text x="88" y="779" font-size="9" fill="#fef9c3">catch(PriorityWaitException){ 线程++ } catch(Throwable){ setError; throw }</text>
+    <text x="500" y="763" text-anchor="end" font-size="9" fill="#fde68a">order -7000</text>
+  </g>
+  <path d="M290 782 V794" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- AuthoritySlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="794" width="440" height="32" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="794" width="6" height="32" rx="2" fill="#ede9fe"/>
+    <text x="88" y="811" font-size="12" font-weight="700" fill="#fff">AuthoritySlot.entry</text>
+    <text x="88" y="823" font-size="9.5" fill="#f5f3ff">黑白名单 · AuthorityRuleChecker.passCheck</text>
+    <text x="500" y="815" text-anchor="end" font-size="9" fill="#fde68a">-6000</text>
+  </g>
+  <path d="M290 826 V838" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- SystemSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="838" width="440" height="32" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="838" width="6" height="32" rx="2" fill="#ede9fe"/>
+    <text x="88" y="855" font-size="12" font-weight="700" fill="#fff">SystemSlot.entry</text>
+    <text x="88" y="867" font-size="9.5" fill="#f5f3ff">系统规则 · SystemRuleManager.checkSystem (CPU/Load/RT)</text>
+    <text x="500" y="859" text-anchor="end" font-size="9" fill="#fde68a">-5000</text>
+  </g>
+  <path d="M290 870 V882" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- FlowSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="882" width="440" height="32" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="882" width="6" height="32" rx="2" fill="#fde68a"/>
+    <text x="88" y="899" font-size="12" font-weight="700" fill="#fff">FlowSlot.entry ★</text>
+    <text x="88" y="911" font-size="9.5" fill="#fef3c7">限流 · FlowRuleChecker.canPassForCheck → TrafficShapingController</text>
+    <text x="500" y="903" text-anchor="end" font-size="9" fill="#fde68a">order -2000</text>
+  </g>
+  <path d="M290 914 V926" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- DefaultCircuitBreakerSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="926" width="440" height="32" rx="8" fill="url(#gSlot)" stroke="#f472b6" stroke-width="1" stroke-opacity="0.5"/>
+    <rect x="70" y="926" width="6" height="32" rx="2" fill="#fbcfe8"/>
+    <text x="88" y="943" font-size="11.5" font-weight="700" fill="#fff">DefaultCircuitBreakerSlot.entry</text>
+    <text x="88" y="955" font-size="9.5" fill="#fdf2f8">默认熔断(2.0) · 用户已配 degrade 则跳过</text>
+    <text x="500" y="947" text-anchor="end" font-size="9" fill="#fde68a">-1500</text>
+  </g>
+  <path d="M290 958 V970" stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aVs)" opacity="0.8"/>
+
+  <!-- DegradeSlot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="970" width="440" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="970" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="88" y="987" font-size="12" font-weight="700" fill="#fff">DegradeSlot.entry</text>
+    <text x="88" y="996" font-size="9.5" fill="#f5f3ff">用户熔断 · CircuitBreaker.tryPass (CLOSED/OPEN/HALF_OPEN)</text>
+    <text x="500" y="988" text-anchor="end" font-size="9" fill="#fde68a">order -1000</text>
+  </g>
+
+  <!-- 分支判断 -->
+  <path d="M290 998 V1010" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+  <g filter="url(#shadow)">
+    <path d="M290 1010 L430 1050 L290 1090 L150 1050 Z" fill="url(#gDec)"/>
+    <text x="290" y="1047" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">所有规则</text>
+    <text x="290" y="1063" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">校验通过?</text>
+  </g>
+
+  <!-- 通过分支：向右 -->
+  <path d="M430 1050 H560 V470 H780" stroke="#059669" stroke-width="2.4" fill="none" marker-end="url(#aG)"/>
+  <text x="495" y="1040" font-size="11" font-weight="700" fill="#059669">✓ 通过</text>
+  <text x="568" y="462" font-size="9.5" fill="#059669">fireEntry 链路逐层返回</text>
+
+  <!-- 拦截分支：向下进入异常路径 -->
+  <path d="M150 1050 H90 V1140" stroke="#e11d48" stroke-width="2.4" fill="none" marker-end="url(#aR)"/>
+  <text x="120" y="1040" font-size="11" font-weight="700" fill="#e11d48">✗ 拦截</text>
+  <text x="90" y="1132" text-anchor="middle" font-size="9.5" fill="#e11d48">抛 BlockException</text>
+
+  <!-- ============ 右栏：业务执行 + Exit 反向 ============ -->
+  <rect x="545" y="160" width="500" height="1000" rx="14" fill="#eff6ff" opacity="0.55" stroke="#93c5fd" stroke-width="1"/>
+  <text x="795" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#1d4ed8">▎业务执行 + Exit 反向流程</text>
+
+  <!-- 业务返回 Entry -->
+  <g filter="url(#shadow)">
+    <rect x="575" y="444" width="440" height="50" rx="10" fill="url(#gExit)"/>
+    <rect x="575" y="444" width="6" height="50" rx="2" fill="#bfdbfe"/>
+    <text x="597" y="466" font-size="13.5" font-weight="700" fill="#fff">⑦ 返回 Entry 给业务</text>
+    <text x="597" y="483" font-size="10.5" fill="#dbeafe">责任链全部通过 · CtSph 返回 CtEntry</text>
+    <text x="1003" y="475" text-anchor="end" font-size="9.5" fill="#bfdbfe">CtSph.java:156</text>
+  </g>
+  <path d="M795 494 V506" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#aO)"/>
+
+  <!-- 业务执行 -->
+  <g filter="url(#shadow)">
+    <rect x="575" y="508" width="440" height="52" rx="10" fill="url(#gBiz)"/>
+    <rect x="575" y="508" width="6" height="52" rx="2" fill="#e2e8f0"/>
+    <text x="597" y="531" font-size="13.5" font-weight="700" fill="#fff">⑧ 业务执行 doBusiness()</text>
+    <text x="597" y="549" font-size="10.5" fill="#f1f5f9">受保护的业务逻辑 · 期间 Entry 在栈中持有</text>
+    <text x="1003" y="538" text-anchor="end" font-size="9.5" fill="#e2e8f0">用户代码</text>
+  </g>
+  <path d="M795 560 V572" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+
+  <!-- Entry.exit -->
+  <g filter="url(#shadow)">
+    <rect x="575" y="574" width="440" height="52" rx="10" fill="url(#gExit)"/>
+    <rect x="575" y="574" width="6" height="52" rx="2" fill="#fde68a"/>
+    <text x="597" y="597" font-size="13.5" font-weight="700" fill="#fff">⑨ entry.exit(count, args)</text>
+    <text x="597" y="615" font-size="10.5" fill="#dbeafe">CtEntry.trueExit → exitForContext → chain.exit()</text>
+    <text x="1003" y="604" text-anchor="end" font-size="9.5" fill="#bfdbfe">CtEntry.java:69</text>
+  </g>
+  <path d="M795 626 V638" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+
+  <!-- exit 责任链分组 -->
+  <rect x="555" y="640" width="480" height="350" rx="10" fill="#f0f9ff" opacity="0.6" stroke="#93c5fd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="795" y="660" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1d4ed8">⑩ 责任链反向 exit · fireExit 递归回溯</text>
+  <text x="795" y="676" text-anchor="middle" font-size="9.5" fill="#2563eb" opacity="0.85">顺序与 entry 相反 · 从 DegradeSlot 反向回到 NodeSelectorSlot</text>
+
+  <!-- exit 节点 -->
+  <g filter="url(#shadow)">
+    <rect x="575" y="686" width="440" height="34" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="686" width="6" height="34" rx="2" fill="#fde68a"/>
+    <text x="593" y="703" font-size="11.5" font-weight="700" fill="#fff">DegradeSlot.exit ★</text>
+    <text x="593" y="715" font-size="9.5" fill="#dbeafe">CircuitBreaker.onRequestComplete(ctx) · 更新状态机</text>
+  </g>
+  <path d="M795 716 V726" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#aBs)" opacity="0.8"/>
+
+  <g filter="url(#shadow)">
+    <rect x="575" y="726" width="440" height="30" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="726" width="6" height="30" rx="2" fill="#bfdbfe"/>
+    <text x="593" y="740" font-size="11" font-weight="700" fill="#fff">DefaultCircuitBreakerSlot.exit</text>
+    <text x="593" y="752" font-size="9" fill="#dbeafe">同上 · 仅在无用户配置时生效</text>
+  </g>
+  <path d="M795 752 V762" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#aBs)" opacity="0.8"/>
+
+  <g filter="url(#shadow)">
+    <rect x="575" y="762" width="440" height="30" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="762" width="6" height="30" rx="2" fill="#bfdbfe"/>
+    <text x="593" y="776" font-size="11" font-weight="700" fill="#fff">FlowSlot / SystemSlot / AuthoritySlot.exit</text>
+    <text x="593" y="788" font-size="9" fill="#dbeafe">直接 fireExit 转发 · 无额外逻辑</text>
+  </g>
+  <path d="M795 788 V798" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#aBs)" opacity="0.8"/>
+
+  <g filter="url(#shadow)">
+    <rect x="575" y="798" width="440" height="44" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="798" width="6" height="44" rx="2" fill="#fde68a"/>
+    <text x="593" y="816" font-size="11.5" font-weight="700" fill="#fff">StatisticSlot.exit ★</text>
+    <text x="593" y="830" font-size="9.5" fill="#dbeafe">rt = now - createTimestamp · recordCompleteFor</text>
+    <text x="593" y="840" font-size="9" fill="#fef3c7">addRtAndSuccess · decreaseThreadNum · increaseExceptionQps(若异常)</text>
+  </g>
+  <path d="M795 838 V848" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#aBs)" opacity="0.8"/>
+
+  <g filter="url(#shadow)">
+    <rect x="575" y="848" width="440" height="30" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="848" width="6" height="30" rx="2" fill="#bfdbfe"/>
+    <text x="593" y="862" font-size="11" font-weight="700" fill="#fff">LogSlot.exit</text>
+    <text x="593" y="874" font-size="9" fill="#dbeafe">try { fireExit } catch(Throwable){ warn } · 兜底</text>
+  </g>
+  <path d="M795 874 V884" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#aBs)" opacity="0.8"/>
+
+  <g filter="url(#shadow)">
+    <rect x="575" y="884" width="440" height="30" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="884" width="6" height="30" rx="2" fill="#bfdbfe"/>
+    <text x="593" y="898" font-size="11" font-weight="700" fill="#fff">ClusterBuilderSlot.exit</text>
+    <text x="593" y="910" font-size="9" fill="#dbeafe">fireExit 转发</text>
+  </g>
+  <path d="M795 910 V920" stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#aBs)" opacity="0.8"/>
+
+  <g filter="url(#shadow)">
+    <rect x="575" y="920" width="440" height="30" rx="8" fill="url(#gExit)"/>
+    <rect x="575" y="920" width="6" height="30" rx="2" fill="#bfdbfe"/>
+    <text x="593" y="934" font-size="11" font-weight="700" fill="#fff">NodeSelectorSlot.exit</text>
+    <text x="593" y="946" font-size="9" fill="#dbeafe">fireExit → first 虚拟头结束</text>
+  </g>
+  <path d="M795 950 V964" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+
+  <!-- 流程结束 -->
+  <g filter="url(#shadow)">
+    <rect x="575" y="966" width="440" height="44" rx="22" fill="url(#gExit)"/>
+    <text x="795" y="984" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">⑪ ContextUtil.exit() · 清理上下文</text>
+    <text x="795" y="1000" text-anchor="middle" font-size="9.5" fill="#dbeafe">Entry 出栈 · 默认 Context 自动退出 · 统计写入滑动窗口</text>
+  </g>
+  <path d="M795 1010 V1024" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+
+  <!-- 统计落盘说明 -->
+  <g filter="url(#shadow)">
+    <rect x="575" y="1026" width="440" height="60" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="795" y="1046" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">⑫ 数据落入 Node &amp; 滑动窗口</text>
+    <text x="795" y="1062" text-anchor="middle" font-size="9.5" fill="#1e40af">ClusterNode / DefaultNode / originNode 同步更新</text>
+    <text x="795" y="1076" text-anchor="middle" font-size="9.5" fill="#1e40af">ArrayMetric → LeapArray → WindowWrap → MetricBucket</text>
+  </g>
+
+  <!-- ============ 底部：异常传播路径 ============ -->
+  <rect x="1060" y="160" width="470" height="1000" rx="14" fill="#fff1f2" opacity="0.5" stroke="#fda4af" stroke-width="1"/>
+  <text x="1295" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#9f1239">▎BlockException 异常传播</text>
+  <text x="1295" y="204" text-anchor="middle" font-size="9.5" fill="#e11d48" opacity="0.85">沿 fireEntry 调用栈反向抛出 · 前置 slot 拦截后置结果</text>
+
+  <!-- 异常起点 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="220" width="410" height="58" rx="10" fill="url(#gErr)"/>
+    <rect x="1090" y="220" width="6" height="58" rx="2" fill="#fecdd3"/>
+    <text x="1110" y="243" font-size="12.5" font-weight="700" fill="#fff">① 某规则 Slot 抛 BlockException</text>
+    <text x="1110" y="261" font-size="9.5" fill="#ffe4e6">FlowException / DegradeException</text>
+    <text x="1110" y="273" font-size="9.5" fill="#ffe4e6">AuthorityException / SystemBlockException</text>
+  </g>
+  <path d="M1295 278 V290" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- fireEntry 栈回退 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="292" width="410" height="48" rx="10" fill="url(#gErr)" opacity="0.92"/>
+    <rect x="1090" y="292" width="6" height="48" rx="2" fill="#fecdd3"/>
+    <text x="1110" y="313" font-size="12" font-weight="700" fill="#fff">② 异常沿 fireEntry 调用栈反向传播</text>
+    <text x="1110" y="330" font-size="9.5" fill="#ffe4e6">Degrade → DefaultCB → Flow → System → Authority</text>
+  </g>
+  <path d="M1295 340 V352" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- StatisticSlot catch -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="354" width="410" height="58" rx="10" fill="url(#gErr)"/>
+    <rect x="1090" y="354" width="6" height="58" rx="2" fill="#fde68a"/>
+    <text x="1110" y="377" font-size="12.5" font-weight="700" fill="#fff">③ StatisticSlot catch(BlockException)</text>
+    <text x="1110" y="393" font-size="9.5" fill="#ffe4e6">setBlockError(e) · increaseBlockQps(count)</text>
+    <text x="1110" y="405" font-size="9.5" fill="#fef3c7">originNode / ENTRY_NODE 同步 block++ · throw e</text>
+  </g>
+  <path d="M1295 412 V424" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- LogSlot catch -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="426" width="410" height="48" rx="10" fill="url(#gErr)" opacity="0.92"/>
+    <rect x="1090" y="426" width="6" height="48" rx="2" fill="#fecdd3"/>
+    <text x="1110" y="447" font-size="12" font-weight="700" fill="#fff">④ LogSlot catch(BlockException)</text>
+    <text x="1110" y="464" font-size="9.5" fill="#ffe4e6">EagleEyeLogUtil.log(...) · 记录埋点日志 · throw e</text>
+  </g>
+  <path d="M1295 474 V486" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- ClusterBuilder/NodeSelector 透传 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="488" width="410" height="42" rx="10" fill="url(#gErr)" opacity="0.85"/>
+    <rect x="1090" y="488" width="6" height="42" rx="2" fill="#fecdd3"/>
+    <text x="1110" y="508" font-size="11.5" font-weight="700" fill="#fff">⑤ ClusterBuilder / NodeSelectorSlot</text>
+    <text x="1110" y="523" font-size="9.5" fill="#ffe4e6">未 catch · 异常透传抛出 SlotChain</text>
+  </g>
+  <path d="M1295 530 V542" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- CtSph catch -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="544" width="410" height="58" rx="10" fill="url(#gErr)"/>
+    <rect x="1090" y="544" width="6" height="58" rx="2" fill="#fde68a"/>
+    <text x="1110" y="567" font-size="12.5" font-weight="700" fill="#fff">⑥ CtSph.entryWithPriority catch ★</text>
+    <text x="1110" y="583" font-size="9.5" fill="#ffe4e6">catch (BlockException e1) { e.exit(count, args);</text>
+    <text x="1110" y="595" font-size="9.5" fill="#fef3c7">  throw e1; }  // 触发 exit 反向清理 + 抛回</text>
+  </g>
+  <path d="M1295 602 V614" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- exit 反向清理 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="616" width="410" height="48" rx="10" fill="url(#gErr)" opacity="0.92"/>
+    <rect x="1090" y="616" width="6" height="48" rx="2" fill="#fecdd3"/>
+    <text x="1110" y="637" font-size="12" font-weight="700" fill="#fff">⑦ e.exit() 触发责任链反向 exit</text>
+    <text x="1110" y="654" font-size="9.5" fill="#ffe4e6">StatisticSlot.exit 计 RT · 释放线程数 · 状态收尾</text>
+  </g>
+  <path d="M1295 664 V676" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- 抛回业务 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="678" width="410" height="48" rx="10" fill="url(#gErr)"/>
+    <rect x="1090" y="678" width="6" height="48" rx="2" fill="#fde68a"/>
+    <text x="1110" y="699" font-size="12.5" font-weight="700" fill="#fff">⑧ 抛回业务调用方</text>
+    <text x="1110" y="716" font-size="9.5" fill="#fef3c7">SphU.entry 抛出 BlockException</text>
+  </g>
+  <path d="M1295 726 V738" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+
+  <!-- 业务降级处理 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="740" width="410" height="60" rx="10" fill="url(#gBiz)"/>
+    <rect x="1090" y="740" width="6" height="60" rx="2" fill="#fde68a"/>
+    <text x="1110" y="762" font-size="12.5" font-weight="700" fill="#fff">⑨ 业务捕获并降级</text>
+    <text x="1110" y="780" font-size="9.5" fill="#f1f5f9">catch (BlockException ex) {</text>
+    <text x="1110" y="792" font-size="9.5" fill="#fef3c7">  return fallback / 默认值 / 限流提示 }</text>
+  </g>
+
+  <!-- 异常路径关键说明 -->
+  <g filter="url(#shadow)">
+    <rect x="1090" y="820" width="410" height="250" rx="10" fill="#fff1f2" stroke="#fda4af" stroke-width="1"/>
+    <text x="1110" y="844" font-size="12" font-weight="700" fill="#9f1239">▸ 设计精髓</text>
+    <text x="1110" y="864" font-size="9.5" fill="#9f1239">1. try-catch 包住 fireEntry 实现后置感知</text>
+    <text x="1110" y="878" font-size="9" fill="#be123c">   前置 slot 无需回调即可拿到后续结果</text>
+    <text x="1110" y="898" font-size="9.5" fill="#9f1239">2. 异常即控制流</text>
+    <text x="1110" y="912" font-size="9" fill="#be123c">   抛 BlockException 即终止后续 slot 执行</text>
+    <text x="1110" y="932" font-size="9.5" fill="#9f1239">3. 拦截也会走 exit 反向清理</text>
+    <text x="1110" y="946" font-size="9" fill="#be123c">   CtSph catch 中 e.exit() 保证统计完整</text>
+    <text x="1110" y="966" font-size="9.5" fill="#9f1239">4. block 计数与 pass 计数对称</text>
+    <text x="1110" y="980" font-size="9" fill="#be123c">   通过走 entry 后半段, 拦截走 catch 段</text>
+    <text x="1110" y="1000" font-size="9.5" fill="#9f1239">5. PriorityWaitException 特殊处理</text>
+    <text x="1110" y="1014" font-size="9" fill="#be123c">   排队等待通过, 计 pass 不计 block</text>
+    <text x="1110" y="1040" font-size="9" fill="#9f1239" opacity="0.8">★ 标记为统计/限流的关键节点</text>
+    <text x="1110" y="1058" font-size="8.5" fill="#be123c" opacity="0.7">源码: StatisticSlot.java:57 · CtSph.java:149</text>
+  </g>
+
+  <!-- ============ 底部图例 ============ -->
+  <rect x="30" y="1180" width="1500" height="252" rx="12" fill="#f8fafc" opacity="0.92" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="50" y="1208" font-size="14" font-weight="700" fill="#334155">图例 / Legend &amp; 关键数据流</text>
+
+  <rect x="50" y="1224" width="20" height="14" rx="3" fill="url(#gEntry)"/><text x="78" y="1235" font-size="11" fill="#334155">Entry 正向 (entry/lookProcessChain)</text>
+  <rect x="270" y="1224" width="20" height="14" rx="3" fill="url(#gSlot)"/><text x="298" y="1235" font-size="11" fill="#334155">责任链 Slot (entry/exit)</text>
+  <rect x="470" y="1224" width="20" height="14" rx="3" fill="url(#gExit)"/><text x="498" y="1235" font-size="11" fill="#334155">Exit 反向 (trueExit/统计)</text>
+  <rect x="690" y="1224" width="20" height="14" rx="3" fill="url(#gBiz)"/><text x="718" y="1235" font-size="11" fill="#334155">业务执行</text>
+  <rect x="800" y="1224" width="20" height="14" rx="3" fill="url(#gDec)"/><text x="828" y="1235" font-size="11" fill="#334155">分支判断</text>
+  <rect x="920" y="1224" width="20" height="14" rx="3" fill="url(#gErr)"/><text x="948" y="1235" font-size="11" fill="#334155">异常传播路径</text>
+
+  <g stroke="#059669" stroke-width="2.4" fill="none" marker-end="url(#aG)"><path d="M1080 1231 H1118"/></g><text x="1126" y="1235" font-size="11" fill="#334155">通过/正向调用</text>
+  <g stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"><path d="M1260 1231 H1298"/></g><text x="1306" y="1235" font-size="11" fill="#334155">exit 反向</text>
+  <g stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#aV)" opacity="0.8"><path d="M1380 1231 H1418"/></g><text x="1426" y="1235" font-size="11" fill="#334155">slot 递归</text>
+
+  <!-- 关键流程说明 -->
+  <text x="50" y="1268" font-size="12" font-weight="700" fill="#1e3a8a">▸ 完整请求生命周期（通过路径 12 步 / 异常路径 9 步）</text>
+  <text x="50" y="1290" font-size="10.5" fill="#475569">① SphU.entry → ② entryWithPriority → ③ lookProcessChain(缓存/SPI) → ④ new CtEntry → ⑤ chain.entry</text>
+  <text x="50" y="1308" font-size="10.5" fill="#475569">⑥ 责任链正向 entry (9个slot fireEntry 递归, order -10000→-1000) → ⑦ 返回 Entry → ⑧ 业务执行</text>
+  <text x="50" y="1326" font-size="10.5" fill="#475569">⑨ entry.exit → ⑩ 责任链反向 exit (顺序相反, StatisticSlot.exit 计算 RT/释放线程) → ⑪ ContextUtil.exit → ⑫ 写入滑动窗口</text>
+  <text x="50" y="1344" font-size="10.5" fill="#9f1239">异常: 规则Slot抛BlockException → 沿fireEntry栈反向 → StatisticSlot catch(block++) → LogSlot catch(记录) → CtSph catch(e.exit+throw) → 业务降级</text>
+
+  <text x="50" y="1372" font-size="11" font-weight="700" fill="#7c3aed">▸ 核心机制</text>
+  <text x="50" y="1390" font-size="10" fill="#475569">· entry 正向递归: fireEntry → next.transformEntry → next.entry（自顶向下建结构/校验）</text>
+  <text x="50" y="1406" font-size="10" fill="#475569">· exit 反向递归: fireExit → next.exit（自底向上收尾统计）· 顺序与 entry 完全相反</text>
+  <text x="50" y="1422" font-size="10" fill="#475569">· 异常拦截: try-catch 包住 fireEntry 拦截后续结果 · 拦截也走 exit 保证线程数/RT 统计完整</text>
+</svg>

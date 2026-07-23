@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1380" viewBox="0 0 1560 1380" font-family="'Microsoft YaHei','PingFang SC','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="0.5" stop-color="#eef2f7"/><stop offset="1" stop-color="#e2e8f0"/></linearGradient>
+    <radialGradient id="glow1" cx="0.18" cy="0.08" r="0.55"><stop offset="0" stop-color="#dbeafe" stop-opacity="0.5"/><stop offset="1" stop-color="#dbeafe" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow2" cx="0.88" cy="0.1" r="0.5"><stop offset="0" stop-color="#ede9fe" stop-opacity="0.45"/><stop offset="1" stop-color="#ede9fe" stop-opacity="0"/></radialGradient>
+
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+    <linearGradient id="gCyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#0891b2"/></linearGradient>
+    <linearGradient id="gAmber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/></linearGradient>
+    <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f87171"/><stop offset="1" stop-color="#dc2626"/></linearGradient>
+    <linearGradient id="timeBar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bfdbfe"/><stop offset="0.5" stop-color="#a78bfa"/><stop offset="1" stop-color="#f9a8d4"/></linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset="0.5" stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.4"/>
+      <feOffset dx="0" dy="2" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
+    <marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0891b2"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker>
+  </defs>
+
+  <rect width="1560" height="1380" fill="url(#bgGrad)"/>
+  <rect width="1560" height="1380" fill="url(#glow1)"/>
+  <rect width="1560" height="1380" fill="url(#glow2)"/>
+  <g stroke="#cbd5e1" stroke-width="0.5" opacity="0.45"><path d="M0 260 H1560 M0 600 H1560 M0 880 H1560 M0 1140 H1560"/></g>
+
+  <!-- 标题 -->
+  <text x="780" y="50" text-anchor="middle" font-size="36" font-weight="800" fill="url(#titleGrad)">Sentinel 滑动窗口工作流程图</text>
+  <text x="780" y="78" text-anchor="middle" font-size="14" fill="#0369a1" opacity="0.9">LeapArray · WindowWrap · MetricBucket · currentWindow 四态决策 · 窗口复用与并发安全</text>
+  <line x1="500" y1="92" x2="1060" y2="92" stroke="#a78bfa" stroke-width="1" opacity="0.55"/>
+
+  <!-- ============ ① 数据结构关系 ============ -->
+  <rect x="30" y="100" width="1500" height="150" rx="12" fill="#eff6ff" opacity="0.55" stroke="#93c5fd" stroke-width="1"/>
+  <text x="50" y="124" font-size="15" font-weight="700" fill="#1d4ed8">① 核心数据结构关系 · 类图</text>
+  <text x="50" y="140" font-size="10" fill="#2563eb" opacity="0.8">ArrayMetric 持有 LeapArray，LeapArray 持有 AtomicReferenceArray&lt;WindowWrap&gt;，WindowWrap 持有 MetricBucket</text>
+
+  <g filter="url(#shadow)">
+    <rect x="50" y="152" width="240" height="88" rx="10" fill="url(#gBlue)"/>
+    <text x="170" y="173" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">ArrayMetric</text>
+    <line x1="60" y1="180" x2="280" y2="180" stroke="#dbeafe" stroke-width="1" opacity="0.6"/>
+    <text x="60" y="196" font-size="9.5" fill="#dbeafe" font-family="Consolas,monospace">- data: LeapArray&lt;MetricBucket&gt;</text>
+    <text x="60" y="210" font-size="9.5" fill="#dbeafe" font-family="Consolas,monospace">+ addPass(n) / success()</text>
+    <text x="60" y="224" font-size="9.5" fill="#dbeafe" font-family="Consolas,monospace">+ pass() / block() / rt()</text>
+  </g>
+  <path d="M290 196 H323" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="325" y="152" width="270" height="88" rx="10" fill="url(#gPurple)"/>
+    <text x="460" y="173" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">LeapArray&lt;T&gt;  (abstract)</text>
+    <line x1="335" y1="180" x2="590" y2="180" stroke="#ede9fe" stroke-width="1" opacity="0.6"/>
+    <text x="335" y="196" font-size="9.5" fill="#ede9fe" font-family="Consolas,monospace">- array: AtomicReferenceArray&lt;WindowWrap&gt;</text>
+    <text x="335" y="210" font-size="9.5" fill="#ede9fe" font-family="Consolas,monospace">- windowLengthInMs / sampleCount</text>
+    <text x="335" y="224" font-size="9.5" fill="#ede9fe" font-family="Consolas,monospace">+ currentWindow() / values()</text>
+  </g>
+  <path d="M595 196 H628" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="630" y="152" width="260" height="88" rx="10" fill="url(#gCyan)"/>
+    <text x="760" y="173" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">WindowWrap&lt;T&gt;</text>
+    <line x1="640" y1="180" x2="880" y2="180" stroke="#cffafe" stroke-width="1" opacity="0.6"/>
+    <text x="640" y="196" font-size="9.5" fill="#cffafe" font-family="Consolas,monospace">- windowLengthInMs: long</text>
+    <text x="640" y="210" font-size="9.5" fill="#cffafe" font-family="Consolas,monospace">- windowStart: long</text>
+    <text x="640" y="224" font-size="9.5" fill="#cffafe" font-family="Consolas,monospace">- value: T  (MetricBucket)</text>
+  </g>
+  <path d="M890 196 H923" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="925" y="152" width="280" height="88" rx="10" fill="url(#gAmber)"/>
+    <text x="1065" y="173" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">MetricBucket</text>
+    <line x1="935" y1="180" x2="1200" y2="180" stroke="#fef3c7" stroke-width="1" opacity="0.6"/>
+    <text x="935" y="196" font-size="9.5" fill="#fef3c7" font-family="Consolas,monospace">- counters: LongAdder[]</text>
+    <text x="935" y="210" font-size="9.5" fill="#fef3c7" font-family="Consolas,monospace">- minRt: volatile long</text>
+    <text x="935" y="224" font-size="9.5" fill="#fef3c7" font-family="Consolas,monospace">+ addPass/addBlock/addRT(n)</text>
+  </g>
+  <path d="M1205 196 H1238" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#aA)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1240" y="152" width="280" height="88" rx="10" fill="url(#gGreen)"/>
+    <text x="1380" y="173" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">LongAdder[]  (per MetricEvent)</text>
+    <line x1="1250" y1="180" x2="1510" y2="180" stroke="#d1fae5" stroke-width="1" opacity="0.6"/>
+    <text x="1250" y="196" font-size="9.5" fill="#d1fae5" font-family="Consolas,monospace">PASS · BLOCK · EXCEPTION</text>
+    <text x="1250" y="210" font-size="9.5" fill="#d1fae5" font-family="Consolas,monospace">RT · SUCCESS · OCCUPIED_PASS</text>
+    <text x="1250" y="224" font-size="9.5" fill="#d1fae5" font-family="Consolas,monospace">分段计数 · 高并发无竞争</text>
+  </g>
+
+  <!-- ============ ② currentWindow 核心算法与四态 ============ -->
+  <rect x="30" y="266" width="1500" height="324" rx="12" fill="#faf5ff" opacity="0.55" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="50" y="290" font-size="15" font-weight="700" fill="#6d28d9">② currentWindow(timeMillis) 核心算法 · 四种情况决策</text>
+  <text x="50" y="306" font-size="10" fill="#7c3aed" opacity="0.8">LeapArray.java:116 · while(true) 自旋 · 计算索引与起始时间后取 old = array.get(idx) 分四态处理</text>
+
+  <!-- 左侧：算法公式 -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="320" width="430" height="256" rx="10" fill="#f8fafc" stroke="#a78bfa" stroke-width="1"/>
+    <text x="265" y="342" text-anchor="middle" font-size="13" font-weight="700" fill="#6d28d9">▸ 索引与起始时间计算</text>
+    <rect x="65" y="354" width="400" height="60" rx="6" fill="#1e1b4b"/>
+    <text x="265" y="372" text-anchor="middle" font-size="9.5" fill="#a5b4fc">calculateTimeIdx (LeapArray.java:100)</text>
+    <text x="265" y="390" text-anchor="middle" font-size="11" font-weight="700" fill="#c4b5fd" font-family="Consolas,monospace">timeId = timeMillis / windowLengthInMs</text>
+    <text x="265" y="406" text-anchor="middle" font-size="11" font-weight="700" fill="#c4b5fd" font-family="Consolas,monospace">idx = timeId % array.length()</text>
+    <rect x="65" y="424" width="400" height="60" rx="6" fill="#1e1b4b"/>
+    <text x="265" y="442" text-anchor="middle" font-size="9.5" fill="#a5b4fc">calculateWindowStart (LeapArray.java:106)</text>
+    <text x="265" y="460" text-anchor="middle" font-size="11" font-weight="700" fill="#c4b5fd" font-family="Consolas,monospace">windowStart = timeMillis</text>
+    <text x="265" y="476" text-anchor="middle" font-size="11" font-weight="700" fill="#c4b5fd" font-family="Consolas,monospace">            - timeMillis % windowLengthInMs</text>
+    <text x="265" y="504" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e">▸ 实例 (秒级配置 2窗口×500ms)</text>
+    <rect x="65" y="512" width="400" height="56" rx="6" fill="#fffbeb" stroke="#fcd34d"/>
+    <text x="265" y="530" text-anchor="middle" font-size="10" fill="#92400e" font-family="Consolas,monospace">time=888ms -> idx=(888/500)%2=1</text>
+    <text x="265" y="546" text-anchor="middle" font-size="10" fill="#92400e" font-family="Consolas,monospace">windowStart=888-888%500=500ms</text>
+    <text x="265" y="560" text-anchor="middle" font-size="9" fill="#b45309">-> 命中 [500,1000) 窗口</text>
+  </g>
+
+  <!-- 右侧：四态决策（拉大卡片间距，箭头≥22px） -->
+  <g filter="url(#shadow)">
+    <rect x="520" y="316" width="430" height="36" rx="10" fill="url(#gPurple)"/>
+    <text x="735" y="340" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">currentWindow(timeMillis) · while(true)</text>
+  </g>
+  <path d="M735 352 V374" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+  <g filter="url(#shadow)">
+    <rect x="520" y="378" width="430" height="32" rx="8" fill="#ede9fe" stroke="#a78bfa"/>
+    <text x="735" y="399" text-anchor="middle" font-size="11" font-weight="700" fill="#4c1d95">idx = calcIdx(t) · windowStart = calcStart(t) · old = array.get(idx)</text>
+  </g>
+  <path d="M735 410 V432" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+
+  <!-- 四分支菱形 -->
+  <g filter="url(#shadow)">
+    <path d="M735 434 L860 463 L735 492 L610 463 Z" fill="url(#gAmber)"/>
+    <text x="735" y="461" text-anchor="middle" font-size="11" font-weight="700" fill="#451a03">判断 old 与</text>
+    <text x="735" y="475" text-anchor="middle" font-size="11" font-weight="700" fill="#451a03">windowStart 关系</text>
+  </g>
+
+  <!-- 四个情况卡片横排 -->
+  <!-- 情况1: old==null -->
+  <path d="M610 463 H500 V510" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <g filter="url(#shadow)">
+    <rect x="500" y="512" width="245" height="76" rx="8" fill="url(#gCyan)"/>
+    <rect x="500" y="512" width="6" height="76" rx="2" fill="#cffafe"/>
+    <text x="516" y="532" font-size="11" font-weight="700" fill="#fff">① old == null</text>
+    <text x="516" y="548" font-size="9.5" fill="#cffafe">槽位为空 · 首次使用</text>
+    <text x="516" y="562" font-size="9" fill="#cffafe" font-family="Consolas,monospace">new WindowWrap(len,start,</text>
+    <text x="516" y="576" font-size="9" fill="#cffafe" font-family="Consolas,monospace">  newEmptyBucket(t))</text>
+    <text x="516" y="586" font-size="8.5" fill="#fef3c7">CAS array.compareAndSet(idx,null,w)</text>
+    <text x="735" y="526" text-anchor="end" font-size="9" fill="#cffafe">失败 Thread.yield()</text>
+  </g>
+
+  <!-- 情况2: 命中 -->
+  <path d="M735 492 V510" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+  <g filter="url(#shadow)">
+    <rect x="655" y="512" width="245" height="76" rx="8" fill="url(#gGreen)"/>
+    <rect x="655" y="512" width="6" height="76" rx="2" fill="#d1fae5"/>
+    <text x="671" y="532" font-size="11" font-weight="700" fill="#fff">② windowStart ==</text>
+    <text x="671" y="544" font-size="11" font-weight="700" fill="#fff">   old.windowStart()</text>
+    <text x="671" y="560" font-size="9.5" fill="#d1fae5">时间命中当前窗口</text>
+    <text x="671" y="576" font-size="9" fill="#d1fae5" font-family="Consolas,monospace">return old  (直接返回)</text>
+    <text x="671" y="586" font-size="8.5" fill="#fef3c7">最高频路径 · 无锁无CAS</text>
+  </g>
+
+  <!-- 情况3: 过期 -->
+  <path d="M860 463 H980 V510" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#aA)"/>
+  <g filter="url(#shadow)">
+    <rect x="980" y="512" width="245" height="76" rx="8" fill="url(#gAmber)"/>
+    <rect x="980" y="512" width="6" height="76" rx="2" fill="#fef3c7"/>
+    <text x="996" y="532" font-size="11" font-weight="700" fill="#fff">③ windowStart &gt;</text>
+    <text x="996" y="544" font-size="11" font-weight="700" fill="#fff">   old.windowStart()</text>
+    <text x="996" y="560" font-size="9.5" fill="#fef3c7">窗口过期 · 复用槽位</text>
+    <text x="996" y="576" font-size="9" fill="#fef3c7" font-family="Consolas,monospace">if(updateLock.tryLock())</text>
+    <text x="996" y="586" font-size="8.5" fill="#fef3c7" font-family="Consolas,monospace">  return resetWindowTo(old,start)</text>
+  </g>
+
+  <!-- 情况4: 时钟回拨 -->
+  <path d="M735 492 H1220 V510" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#aR)" stroke-dasharray="4,3"/>
+  <g filter="url(#shadow)">
+    <rect x="1235" y="512" width="290" height="76" rx="8" fill="url(#gRed)"/>
+    <rect x="1235" y="512" width="6" height="76" rx="2" fill="#fecaca"/>
+    <text x="1251" y="532" font-size="11" font-weight="700" fill="#fff">④ windowStart &lt;</text>
+    <text x="1251" y="544" font-size="11" font-weight="700" fill="#fff">   old.windowStart()</text>
+    <text x="1251" y="560" font-size="9.5" fill="#fecaca">时钟回拨 · 不应发生</text>
+    <text x="1251" y="576" font-size="9" fill="#fecaca" font-family="Consolas,monospace">return new WindowWrap(...)</text>
+    <text x="1251" y="586" font-size="8.5" fill="#fef3c7">返回新窗口 · 不入数组</text>
+  </g>
+
+  <!-- ============ ③ 窗口滑动时间轴 ============ -->
+  <rect x="30" y="606" width="1500" height="262" rx="12" fill="#f0f9ff" opacity="0.6" stroke="#93c5fd" stroke-width="1"/>
+  <text x="50" y="630" font-size="15" font-weight="700" fill="#1d4ed8">③ 滑动窗口时间推进示意 · 窗口复用机制</text>
+  <text x="50" y="646" font-size="10" fill="#2563eb" opacity="0.8">配置 sampleCount=2, windowLength=500ms, interval=1000ms · 数组长度2 · 时间推进时过期槽位被重置复用</text>
+
+  <!-- 时间轴 -->
+  <rect x="50" y="668" width="1480" height="22" rx="4" fill="url(#timeBar)"/>
+  <g font-size="9.5" fill="#1e3a8a" text-anchor="middle">
+    <text x="100" y="704">0</text><text x="220" y="704">200</text><text x="335" y="704">400</text>
+    <text x="450" y="704">500</text><text x="565" y="704">700</text><text x="680" y="704">900</text>
+    <text x="795" y="704">1000</text><text x="910" y="704">1200</text><text x="1025" y="704">1400</text>
+    <text x="1140" y="704">1500</text><text x="1255" y="704">1700</text><text x="1370" y="704">1900</text><text x="1490" y="704">2000+</text>
+  </g>
+  <g stroke="#64748b" stroke-width="0.8" opacity="0.5">
+    <path d="M100 690 V700 M220 690 V700 M335 690 V700 M450 690 V700 M565 690 V700 M680 690 V700 M795 690 V700 M910 690 V700 M1025 690 V700 M1140 690 V700 M1255 690 V700 M1370 690 V700 M1490 690 V700"/>
+  </g>
+  <text x="780" y="722" text-anchor="middle" font-size="9" fill="#64748b">时间 (ms) -></text>
+
+  <!-- 快照 T1=888ms -->
+  <text x="60" y="744" font-size="11" font-weight="700" fill="#0e7490">快照 T1: time=888ms · idx=1 · windowStart=500</text>
+  <g>
+    <rect x="60" y="752" width="160" height="44" rx="6" fill="#e0e7ff" stroke="#a5b4fc"/>
+    <text x="140" y="770" text-anchor="middle" font-size="9.5" fill="#3730a3">idx=0 [0,500)</text>
+    <text x="140" y="786" text-anchor="middle" font-size="8.5" fill="#6366f1">已过期 · pass=120</text>
+    <rect x="225" y="752" width="160" height="44" rx="6" fill="#3b82f6" stroke="#1d4ed8"/>
+    <text x="305" y="770" text-anchor="middle" font-size="9.5" fill="#fff">idx=1 [500,1000) ★</text>
+    <text x="305" y="786" text-anchor="middle" font-size="8.5" fill="#dbeafe">当前窗口 · pass=88</text>
+  </g>
+  <!-- T1 -> T2 水平箭头 -->
+  <path d="M385 774 H408" stroke="#0e7490" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+
+  <!-- 快照 T2=1100ms -->
+  <text x="412" y="744" font-size="11" font-weight="700" fill="#0e7490">快照 T2: time=1100ms · idx=0 · windowStart=1000</text>
+  <g>
+    <rect x="412" y="752" width="160" height="44" rx="6" fill="#3b82f6" stroke="#1d4ed8"/>
+    <text x="492" y="770" text-anchor="middle" font-size="9.5" fill="#fff">idx=0 [1000,1500) ★</text>
+    <text x="492" y="786" text-anchor="middle" font-size="8.5" fill="#dbeafe">重置 · pass=5</text>
+    <rect x="577" y="752" width="160" height="44" rx="6" fill="#fbbf24" stroke="#d97706" opacity="0.6"/>
+    <text x="657" y="770" text-anchor="middle" font-size="9.5" fill="#451a03">idx=1 [500,1000)</text>
+    <text x="657" y="786" text-anchor="middle" font-size="8.5" fill="#92400e">过期 · pass=88</text>
+  </g>
+  <!-- T2 -> T3 水平箭头 -->
+  <path d="M737 774 H760" stroke="#0e7490" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+
+  <!-- 快照 T3=1550ms -->
+  <text x="764" y="744" font-size="11" font-weight="700" fill="#0e7490">快照 T3: time=1550ms · idx=1 · windowStart=1500</text>
+  <g>
+    <rect x="764" y="752" width="160" height="44" rx="6" fill="#fbbf24" stroke="#d97706" opacity="0.6"/>
+    <text x="844" y="770" text-anchor="middle" font-size="9.5" fill="#451a03">idx=0 [1000,1500)</text>
+    <text x="844" y="786" text-anchor="middle" font-size="8.5" fill="#92400e">过期 · pass=200</text>
+    <rect x="929" y="752" width="160" height="44" rx="6" fill="#3b82f6" stroke="#1d4ed8"/>
+    <text x="1009" y="770" text-anchor="middle" font-size="9.5" fill="#fff">idx=1 [1500,2000) ★</text>
+    <text x="1009" y="786" text-anchor="middle" font-size="8.5" fill="#dbeafe">重置 · pass=12</text>
+  </g>
+
+  <!-- 说明 -->
+  <g filter="url(#shadow)">
+    <rect x="1105" y="740" width="425" height="118" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="1120" y="760" font-size="11" font-weight="700" fill="#334155">▸ 复用机制说明</text>
+    <text x="1120" y="778" font-size="9.5" fill="#475569">数组长度 = sampleCount (固定)</text>
+    <text x="1120" y="794" font-size="9.5" fill="#475569">每个槽位 idx 对应的 windowStart</text>
+    <text x="1120" y="810" font-size="9.5" fill="#475569">随时间推移不断向前更新</text>
+    <text x="1120" y="826" font-size="9.5" fill="#7c3aed">过期 -> resetWindowTo 复用对象</text>
+    <text x="1120" y="842" font-size="9.5" fill="#7c3aed">避免 GC · 仅重置 windowStart 与计数</text>
+    <text x="1120" y="854" font-size="8.5" fill="#92400e">validWindow: start+interval > now</text>
+  </g>
+
+  <!-- 图例：窗口状态色 -->
+  <g transform="translate(60,818)">
+    <rect x="0" y="0" width="14" height="10" rx="2" fill="#3b82f6"/><text x="20" y="9" font-size="9.5" fill="#1e3a8a">当前/有效窗口</text>
+    <rect x="120" y="0" width="14" height="10" rx="2" fill="#fbbf24" opacity="0.6"/><text x="140" y="9" font-size="9.5" fill="#92400e">过期窗口(待复用)</text>
+    <rect x="270" y="0" width="14" height="10" rx="2" fill="#e0e7ff"/><text x="290" y="9" font-size="9.5" fill="#3730a3">空槽/null</text>
+  </g>
+
+  <!-- ============ ④ 统计写入与读取流程 ============ -->
+  <rect x="30" y="886" width="1500" height="262" rx="12" fill="#ecfdf5" opacity="0.5" stroke="#a7f3d0" stroke-width="1"/>
+  <text x="50" y="910" font-size="15" font-weight="700" fill="#047857">④ 统计写入与读取流程</text>
+
+  <!-- 左：写入流程 -->
+  <text x="50" y="934" font-size="13" font-weight="700" fill="#059669">▸ 写入流程 · addPass(n)</text>
+  <g filter="url(#shadow)">
+    <rect x="50" y="944" width="220" height="42" rx="8" fill="url(#gGreen)"/>
+    <text x="160" y="963" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">ArrayMetric.addPass(n)</text>
+    <text x="160" y="979" text-anchor="middle" font-size="9" fill="#d1fae5" font-family="Consolas,monospace">StatisticSlot 调用</text>
+  </g>
+  <path d="M160 986 V1006" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+  <g filter="url(#shadow)">
+    <rect x="50" y="1010" width="220" height="42" rx="8" fill="url(#gGreen)"/>
+    <text x="160" y="1029" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">data.currentWindow()</text>
+    <text x="160" y="1045" text-anchor="middle" font-size="9" fill="#d1fae5" font-family="Consolas,monospace">-> WindowWrap&lt;MetricBucket&gt;</text>
+  </g>
+  <path d="M160 1052 V1072" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+  <g filter="url(#shadow)">
+    <rect x="50" y="1076" width="220" height="42" rx="8" fill="url(#gAmber)"/>
+    <text x="160" y="1095" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">wrap.value().addPass(n)</text>
+    <text x="160" y="1111" text-anchor="middle" font-size="9" fill="#fef3c7" font-family="Consolas,monospace">MetricBucket.add(PASS,n)</text>
+  </g>
+  <path d="M270 1097 H303" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#aA)"/>
+  <g filter="url(#shadow)">
+    <rect x="305" y="1076" width="180" height="42" rx="8" fill="url(#gGreen)"/>
+    <text x="395" y="1095" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">counters[PASS].add(n)</text>
+    <text x="395" y="1111" text-anchor="middle" font-size="9" fill="#d1fae5" font-family="Consolas,monospace">LongAdder 分段累加</text>
+  </g>
+  <text x="160" y="1142" text-anchor="middle" font-size="9" fill="#059669" opacity="0.85">写入路径: 仅操作当前窗口 · 无全表遍历 · O(1)</text>
+
+  <!-- 右：读取流程 -->
+  <text x="820" y="934" font-size="13" font-weight="700" fill="#0891b2">▸ 读取流程 · 聚合有效窗口</text>
+  <g filter="url(#shadow)">
+    <rect x="820" y="944" width="200" height="42" rx="8" fill="url(#gCyan)"/>
+    <text x="920" y="963" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">FlowSlot 读取 QPS</text>
+    <text x="920" y="979" text-anchor="middle" font-size="9" fill="#cffafe" font-family="Consolas,monospace">node.pass() / success()</text>
+  </g>
+  <path d="M920 986 V1006" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <g filter="url(#shadow)">
+    <rect x="820" y="1010" width="200" height="42" rx="8" fill="url(#gCyan)"/>
+    <text x="920" y="1029" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">data.values()</text>
+    <text x="920" y="1045" text-anchor="middle" font-size="9" fill="#cffafe" font-family="Consolas,monospace">LeapArray.values(now)</text>
+  </g>
+  <path d="M920 1052 V1072" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <g filter="url(#shadow)">
+    <rect x="820" y="1076" width="200" height="42" rx="8" fill="url(#gCyan)"/>
+    <text x="920" y="1095" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">遍历 array 全部槽</text>
+    <text x="920" y="1111" text-anchor="middle" font-size="9" fill="#cffafe" font-family="Consolas,monospace">for i in [0, sampleCount)</text>
+  </g>
+  <path d="M1020 1097 H1053" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <g filter="url(#shadow)">
+    <rect x="1055" y="1076" width="200" height="42" rx="8" fill="url(#gAmber)"/>
+    <text x="1155" y="1095" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">过滤过期窗口</text>
+    <text x="1155" y="1111" text-anchor="middle" font-size="9" fill="#fef3c7" font-family="Consolas,monospace">isWindowDeprecated()</text>
+  </g>
+  <path d="M1255 1097 H1288" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <g filter="url(#shadow)">
+    <rect x="1290" y="1076" width="220" height="42" rx="8" fill="url(#gGreen)"/>
+    <text x="1400" y="1095" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Σ 累加有效 bucket</text>
+    <text x="1400" y="1111" text-anchor="middle" font-size="9" fill="#d1fae5" font-family="Consolas,monospace">sum += bucket.pass()</text>
+  </g>
+  <text x="920" y="1142" text-anchor="middle" font-size="9" fill="#0891b2" opacity="0.85">读取路径: 遍历窗口 · 过滤 isWindowDeprecated(now-windowStart > interval) · 聚合 O(n)</text>
+
+  <!-- 写入读取关联 -->
+  <path d="M485 1097 H816" stroke="#94a3b8" stroke-width="1.4" fill="none" stroke-dasharray="4,3" opacity="0.6" marker-end="url(#aS)"/>
+  <text x="650" y="1090" text-anchor="middle" font-size="8.5" fill="#64748b">同一 LeapArray 实例</text>
+
+  <!-- ============ ⑤ 并发安全 + 默认配置 ============ -->
+  <rect x="30" y="1162" width="1500" height="194" rx="12" fill="#fffbeb" opacity="0.55" stroke="#fcd34d" stroke-width="1"/>
+  <text x="50" y="1186" font-size="15" font-weight="700" fill="#b45309">⑤ 并发安全三层保护 + 默认配置</text>
+
+  <g filter="url(#shadow)">
+    <rect x="50" y="1200" width="470" height="118" rx="10" fill="url(#gAmber)"/>
+    <text x="285" y="1222" text-anchor="middle" font-size="13" font-weight="700" fill="#451a03">▸ 第一层 · AtomicReferenceArray (CAS)</text>
+    <text x="65" y="1244" font-size="10" fill="#7c2d12" font-family="Consolas,monospace">array.compareAndSet(idx, null, window)</text>
+    <text x="65" y="1262" font-size="9.5" fill="#7c2d12">场景①: 槽位为空时，多线程竞争创建</text>
+    <text x="65" y="1278" font-size="9.5" fill="#7c2d12">仅一个线程 CAS 成功，其余 Thread.yield() 自旋</text>
+    <text x="65" y="1296" font-size="9.5" fill="#9a3412" opacity="0.85">保证: 数组元素写入原子可见 · 无锁</text>
+    <text x="65" y="1312" font-size="8.5" fill="#9a3412" opacity="0.7">LeapArray.java:148</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="540" y="1200" width="470" height="118" rx="10" fill="url(#gPurple)"/>
+    <text x="775" y="1222" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">▸ 第二层 · ReentrantLock (updateLock)</text>
+    <text x="555" y="1244" font-size="10" fill="#ede9fe" font-family="Consolas,monospace">if (updateLock.tryLock()) { resetWindowTo }</text>
+    <text x="555" y="1262" font-size="9.5" fill="#ede9fe">场景③: 窗口过期重置，需原子更新 start+value</text>
+    <text x="555" y="1278" font-size="9.5" fill="#ede9fe">tryLock 失败 -> Thread.yield() 等待重置完成</text>
+    <text x="555" y="1296" font-size="9.5" fill="#c4b5fd" opacity="0.95">条件锁 · 仅过期路径生效 · 不影响热路径</text>
+    <text x="555" y="1312" font-size="8.5" fill="#c4b5fd" opacity="0.7">LeapArray.java:186</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1030" y="1200" width="480" height="118" rx="10" fill="url(#gGreen)"/>
+    <text x="1270" y="1222" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">▸ 第三层 · LongAdder (分段计数)</text>
+    <text x="1045" y="1244" font-size="10" fill="#d1fae5" font-family="Consolas,monospace">counters[event].add(n)  // Cell[] 分段</text>
+    <text x="1045" y="1262" font-size="9.5" fill="#d1fae5">MetricBucket 内每个事件用 LongAdder</text>
+    <text x="1045" y="1278" font-size="9.5" fill="#d1fae5">高并发写分散到不同 Cell · 求和时 sum()</text>
+    <text x="1045" y="1296" font-size="9.5" fill="#a7f3d0" opacity="0.95">优于 AtomicLong · 写性能近线性扩展</text>
+    <text x="1045" y="1312" font-size="8.5" fill="#a7f3d0" opacity="0.7">MetricBucket.java:30 · add():74</text>
+  </g>
+
+  <!-- 默认配置 -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="1326" width="1460" height="22" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="65" y="1342" font-size="10.5" font-weight="700" fill="#334155">▸ 默认配置:</text>
+    <text x="150" y="1342" font-size="10" fill="#1e3a8a">秒级 = sampleCount:2 × windowLength:500ms = interval:1000ms (1秒)</text>
+    <text x="540" y="1342" font-size="10" fill="#1e3a8a">|  分钟级 = sampleCount:60 × windowLength:1000ms = interval:60000ms (60秒)</text>
+    <text x="1080" y="1342" font-size="10" fill="#7c3aed">|  约束: intervalInMs % sampleCount == 0 (均匀分桶)</text>
+    <text x="1380" y="1342" font-size="10" fill="#be185d">| LeapArray.java:64</text>
+  </g>
+</svg>
