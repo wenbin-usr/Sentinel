@@ -95,7 +95,7 @@
   </g>
 
   <!-- ============ ② currentWindow 核心算法与四态 ============ -->
-  <rect x="30" y="266" width="1500" height="324" rx="12" fill="#faf5ff" opacity="0.55" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="30" y="266" width="1500" height="332" rx="12" fill="#faf5ff" opacity="0.55" stroke="#c4b5fd" stroke-width="1"/>
   <text x="50" y="290" font-size="15" font-weight="700" fill="#6d28d9">② currentWindow(timeMillis) 核心算法 · 四种情况决策</text>
   <text x="50" y="306" font-size="10" fill="#7c3aed" opacity="0.8">LeapArray.java:116 · while(true) 自旋 · 计算索引与起始时间后取 old = array.get(idx) 分四态处理</text>
 
@@ -141,8 +141,8 @@
   <!-- 情况1: old==null -->
   <path d="M610 463 H500 V510" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
   <g filter="url(#shadow)">
-    <rect x="500" y="512" width="245" height="76" rx="8" fill="url(#gCyan)"/>
-    <rect x="500" y="512" width="6" height="76" rx="2" fill="#cffafe"/>
+    <rect x="500" y="512" width="245" height="80" rx="8" fill="url(#gCyan)"/>
+    <rect x="500" y="512" width="6" height="80" rx="2" fill="#cffafe"/>
     <text x="516" y="532" font-size="11" font-weight="700" fill="#fff">① old == null</text>
     <text x="516" y="548" font-size="9.5" fill="#cffafe">槽位为空 · 首次使用</text>
     <text x="516" y="562" font-size="9" fill="#cffafe" font-family="Consolas,monospace">new WindowWrap(len,start,</text>
@@ -154,8 +154,8 @@
   <!-- 情况2: 命中 -->
   <path d="M735 492 V510" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
   <g filter="url(#shadow)">
-    <rect x="655" y="512" width="245" height="76" rx="8" fill="url(#gGreen)"/>
-    <rect x="655" y="512" width="6" height="76" rx="2" fill="#d1fae5"/>
+    <rect x="655" y="512" width="245" height="80" rx="8" fill="url(#gGreen)"/>
+    <rect x="655" y="512" width="6" height="80" rx="2" fill="#d1fae5"/>
     <text x="671" y="532" font-size="11" font-weight="700" fill="#fff">② windowStart ==</text>
     <text x="671" y="544" font-size="11" font-weight="700" fill="#fff">   old.windowStart()</text>
     <text x="671" y="560" font-size="9.5" fill="#d1fae5">时间命中当前窗口</text>
@@ -166,8 +166,8 @@
   <!-- 情况3: 过期 -->
   <path d="M860 463 H980 V510" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#aA)"/>
   <g filter="url(#shadow)">
-    <rect x="980" y="512" width="245" height="76" rx="8" fill="url(#gAmber)"/>
-    <rect x="980" y="512" width="6" height="76" rx="2" fill="#fef3c7"/>
+    <rect x="980" y="512" width="245" height="80" rx="8" fill="url(#gAmber)"/>
+    <rect x="980" y="512" width="6" height="80" rx="2" fill="#fef3c7"/>
     <text x="996" y="532" font-size="11" font-weight="700" fill="#fff">③ windowStart &gt;</text>
     <text x="996" y="544" font-size="11" font-weight="700" fill="#fff">   old.windowStart()</text>
     <text x="996" y="560" font-size="9.5" fill="#fef3c7">窗口过期 · 复用槽位</text>
@@ -178,8 +178,8 @@
   <!-- 情况4: 时钟回拨 -->
   <path d="M735 492 H1220 V510" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#aR)" stroke-dasharray="4,3"/>
   <g filter="url(#shadow)">
-    <rect x="1235" y="512" width="290" height="76" rx="8" fill="url(#gRed)"/>
-    <rect x="1235" y="512" width="6" height="76" rx="2" fill="#fecaca"/>
+    <rect x="1235" y="512" width="290" height="80" rx="8" fill="url(#gRed)"/>
+    <rect x="1235" y="512" width="6" height="80" rx="2" fill="#fecaca"/>
     <text x="1251" y="532" font-size="11" font-weight="700" fill="#fff">④ windowStart &lt;</text>
     <text x="1251" y="544" font-size="11" font-weight="700" fill="#fff">   old.windowStart()</text>
     <text x="1251" y="560" font-size="9.5" fill="#fecaca">时钟回拨 · 不应发生</text>

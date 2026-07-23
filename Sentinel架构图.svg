@@ -124,7 +124,7 @@
 
   <!-- ============ 第二层：三大分区 ============ -->
   <!-- 左：Slot Chain 责任链 -->
-  <rect x="40" y="218" width="400" height="430" rx="16" fill="#faf5ff" opacity="0.85" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="40" y="218" width="400" height="440" rx="16" fill="#faf5ff" opacity="0.85" stroke="#c4b5fd" stroke-width="1"/>
   <text x="240" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#6d28d9">② Processor Slot Chain · 责任链</text>
   <text x="240" y="262" text-anchor="middle" font-size="10.5" fill="#7c3aed" opacity="0.85">单向链表 · SPI 按 @Spi(order) 升序加载 · order 越小越靠前</text>
 
@@ -136,86 +136,86 @@
     <text x="396" y="287" text-anchor="end" font-size="10.5" fill="#6d28d9">虚拟头节点 · 仅转发</text>
   </g>
 
-  <!-- 9 个 Slot (26px卡片 12px间距) -->
+  <!-- 9 个 Slot (28px卡片 10px间距) -->
   <g filter="url(#shadow)">
-    <rect x="70" y="306" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="306" width="6" height="26" rx="2" fill="#ede9fe"/>
-    <text x="92" y="320" font-size="12.5" font-weight="700" fill="#fff">NodeSelectorSlot</text>
-    <text x="92" y="331" font-size="10" fill="#f5f3ff">构建 DefaultNode 调用树</text>
-    <text x="396" y="325" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -10000</text>
+    <rect x="70" y="304" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="304" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="92" y="319" font-size="12.5" font-weight="700" fill="#fff">NodeSelectorSlot</text>
+    <text x="92" y="330" font-size="10" fill="#f5f3ff">构建 DefaultNode 调用树</text>
+    <text x="396" y="324" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -10000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="344" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="344" width="6" height="26" rx="2" fill="#ede9fe"/>
-    <text x="92" y="358" font-size="12.5" font-weight="700" fill="#fff">ClusterBuilderSlot</text>
-    <text x="92" y="369" font-size="10" fill="#f5f3ff">创建 ClusterNode(全局唯一)</text>
-    <text x="396" y="363" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -9000</text>
+    <rect x="70" y="342" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="342" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="92" y="357" font-size="12.5" font-weight="700" fill="#fff">ClusterBuilderSlot</text>
+    <text x="92" y="368" font-size="10" fill="#f5f3ff">创建 ClusterNode(全局唯一)</text>
+    <text x="396" y="362" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -9000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="382" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="382" width="6" height="26" rx="2" fill="#ede9fe"/>
-    <text x="92" y="396" font-size="12.5" font-weight="700" fill="#fff">LogSlot</text>
-    <text x="92" y="407" font-size="10" fill="#f5f3ff">try-catch 记录 BlockException</text>
-    <text x="396" y="401" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -8000</text>
+    <rect x="70" y="380" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="380" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="92" y="395" font-size="12.5" font-weight="700" fill="#fff">LogSlot</text>
+    <text x="92" y="406" font-size="10" fill="#f5f3ff">try-catch 记录 BlockException</text>
+    <text x="396" y="400" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -8000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="420" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="420" width="6" height="26" rx="2" fill="#fde68a"/>
-    <text x="92" y="434" font-size="12.5" font-weight="700" fill="#fff">StatisticSlot  ★</text>
-    <text x="92" y="445" font-size="10" fill="#fef3c7">实时统计 线程/QPS/RT/异常</text>
-    <text x="396" y="439" text-anchor="end" font-size="10.5" font-weight="700" fill="#fef9c3">order -7000</text>
+    <rect x="70" y="418" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="418" width="6" height="28" rx="2" fill="#fde68a"/>
+    <text x="92" y="433" font-size="12.5" font-weight="700" fill="#fff">StatisticSlot  ★</text>
+    <text x="92" y="444" font-size="10" fill="#fef3c7">实时统计 线程/QPS/RT/异常</text>
+    <text x="396" y="438" text-anchor="end" font-size="10.5" font-weight="700" fill="#fef9c3">order -7000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="458" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="458" width="6" height="26" rx="2" fill="#ede9fe"/>
-    <text x="92" y="472" font-size="12.5" font-weight="700" fill="#fff">AuthoritySlot</text>
-    <text x="92" y="483" font-size="10" fill="#f5f3ff">黑白名单鉴权</text>
-    <text x="396" y="477" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -6000</text>
+    <rect x="70" y="456" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="456" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="92" y="471" font-size="12.5" font-weight="700" fill="#fff">AuthoritySlot</text>
+    <text x="92" y="482" font-size="10" fill="#f5f3ff">黑白名单鉴权</text>
+    <text x="396" y="476" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -6000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="496" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="496" width="6" height="26" rx="2" fill="#ede9fe"/>
-    <text x="92" y="510" font-size="12.5" font-weight="700" fill="#fff">SystemSlot</text>
-    <text x="92" y="521" font-size="10" fill="#f5f3ff">系统级规则 CPU/Load/RT</text>
-    <text x="396" y="515" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -5000</text>
+    <rect x="70" y="494" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="494" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="92" y="509" font-size="12.5" font-weight="700" fill="#fff">SystemSlot</text>
+    <text x="92" y="520" font-size="10" fill="#f5f3ff">系统级规则 CPU/Load/RT</text>
+    <text x="396" y="514" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -5000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="534" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="534" width="6" height="26" rx="2" fill="#fde68a"/>
-    <text x="92" y="548" font-size="12.5" font-weight="700" fill="#fff">FlowSlot  ★</text>
-    <text x="92" y="559" font-size="10" fill="#fef3c7">限流 QPS/线程 · FlowRuleChecker</text>
-    <text x="396" y="553" text-anchor="end" font-size="10.5" font-weight="700" fill="#fef9c3">order -2000</text>
+    <rect x="70" y="532" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="532" width="6" height="28" rx="2" fill="#fde68a"/>
+    <text x="92" y="547" font-size="12.5" font-weight="700" fill="#fff">FlowSlot  ★</text>
+    <text x="92" y="558" font-size="10" fill="#fef3c7">限流 QPS/线程 · FlowRuleChecker</text>
+    <text x="396" y="552" text-anchor="end" font-size="10.5" font-weight="700" fill="#fef9c3">order -2000</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="572" width="340" height="26" rx="8" fill="url(#gSlot)" stroke="#f472b6" stroke-width="1" stroke-opacity="0.6"/>
-    <rect x="70" y="572" width="6" height="26" rx="2" fill="#fbcfe8"/>
-    <text x="92" y="586" font-size="12.5" font-weight="700" fill="#fff">DefaultCircuitBreakerSlot</text>
-    <text x="92" y="597" font-size="10" fill="#fdf2f8">默认熔断 (2.0新增 @since 2.0.0)</text>
-    <text x="396" y="591" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -1500</text>
+    <rect x="70" y="570" width="340" height="28" rx="8" fill="url(#gSlot)" stroke="#f472b6" stroke-width="1" stroke-opacity="0.6"/>
+    <rect x="70" y="570" width="6" height="28" rx="2" fill="#fbcfe8"/>
+    <text x="92" y="585" font-size="12.5" font-weight="700" fill="#fff">DefaultCircuitBreakerSlot</text>
+    <text x="92" y="596" font-size="10" fill="#fdf2f8">默认熔断 (2.0新增 @since 2.0.0)</text>
+    <text x="396" y="590" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -1500</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="70" y="610" width="340" height="26" rx="8" fill="url(#gSlot)"/>
-    <rect x="70" y="610" width="6" height="26" rx="2" fill="#ede9fe"/>
-    <text x="92" y="624" font-size="12.5" font-weight="700" fill="#fff">DegradeSlot</text>
-    <text x="92" y="635" font-size="10" fill="#f5f3ff">用户配置熔断 · CircuitBreaker</text>
-    <text x="396" y="629" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -1000</text>
+    <rect x="70" y="608" width="340" height="28" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="608" width="6" height="28" rx="2" fill="#ede9fe"/>
+    <text x="92" y="623" font-size="12.5" font-weight="700" fill="#fff">DegradeSlot</text>
+    <text x="92" y="634" font-size="10" fill="#f5f3ff">用户配置熔断 · CircuitBreaker</text>
+    <text x="396" y="628" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -1000</text>
   </g>
   <!-- Slot 之间竖向箭头 -->
   <g stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#arrVs)" opacity="0.75">
-    <path d="M240 294 V306"/>
-    <path d="M240 332 V344"/>
-    <path d="M240 370 V382"/>
-    <path d="M240 408 V420"/>
-    <path d="M240 446 V458"/>
-    <path d="M240 484 V496"/>
-    <path d="M240 522 V534"/>
-    <path d="M240 560 V572"/>
-    <path d="M240 598 V610"/>
+    <path d="M240 294 V304"/>
+    <path d="M240 332 V342"/>
+    <path d="M240 370 V380"/>
+    <path d="M240 408 V418"/>
+    <path d="M240 446 V456"/>
+    <path d="M240 484 V494"/>
+    <path d="M240 522 V532"/>
+    <path d="M240 560 V570"/>
+    <path d="M240 598 V608"/>
   </g>
-  <text x="240" y="646" text-anchor="middle" font-size="10" fill="#7c3aed" opacity="0.8">entry 正向递归 (fireEntry->next) · exit 反向递归 · try-catch 拦截后续异常</text>
+  <text x="240" y="652" text-anchor="middle" font-size="10" fill="#7c3aed" opacity="0.8">entry 正向递归 (fireEntry->next) · exit 反向递归 · try-catch 拦截后续异常</text>
 
   <!-- 中：Node 体系 & 滑动窗口 -->
-  <rect x="460" y="218" width="500" height="430" rx="16" fill="#eff6ff" opacity="0.85" stroke="#93c5fd" stroke-width="1"/>
+  <rect x="460" y="218" width="500" height="440" rx="16" fill="#eff6ff" opacity="0.85" stroke="#93c5fd" stroke-width="1"/>
   <text x="710" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#1d4ed8">③ Node 体系 &amp; 滑动窗口 · 统计底层</text>
   <text x="710" y="262" text-anchor="middle" font-size="10.5" fill="#2563eb" opacity="0.85">Sentinel 数据底座 · 滑动窗口默认 秒级2×500ms / 分钟级60×1s</text>
 
@@ -300,10 +300,10 @@
     <text x="830" y="628" text-anchor="middle" font-size="9" fill="#fef3c7">LongAdder 高并发计数</text>
   </g>
   <path d="M700 597 H716" stroke="#3b82f6" stroke-width="1.6" marker-end="url(#arr)"/>
-  <text x="710" y="644" text-anchor="middle" font-size="9.5" fill="#0284c7" opacity="0.85">currentWindow 四态: null / 命中 / 过期 / 时钟回拨</text>
+  <text x="710" y="652" text-anchor="middle" font-size="9.5" fill="#0284c7" opacity="0.85">currentWindow 四态: null / 命中 / 过期 / 时钟回拨</text>
 
   <!-- 右：规则管理 & 限流算法 -->
-  <rect x="980" y="218" width="540" height="430" rx="16" fill="#fffbeb" opacity="0.85" stroke="#fcd34d" stroke-width="1"/>
+  <rect x="980" y="218" width="540" height="440" rx="16" fill="#fffbeb" opacity="0.85" stroke="#fcd34d" stroke-width="1"/>
   <text x="1250" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#b45309">④ 规则管理 &amp; 限流算法</text>
   <text x="1250" y="262" text-anchor="middle" font-size="10.5" fill="#d97706" opacity="0.85">RuleManager 持有规则 · 动态推送 · Slot 校验时按需读取</text>
 
@@ -436,9 +436,9 @@
   </g>
   <!-- 数据源 -> 规则 箭头 -->
   <g stroke="#059669" stroke-width="1.6" fill="none" marker-end="url(#arrG)" opacity="0.75">
-    <path d="M1250 668 V650 H1385 V434" stroke-dasharray="5,4"/>
+    <path d="M1250 668 V660 H1385 V434" stroke-dasharray="5,4"/>
   </g>
-  <text x="1380" y="660" font-size="9" fill="#047857" opacity="0.9">规则热更新</text>
+  <text x="1380" y="652" font-size="9" fill="#047857" opacity="0.9">规则热更新</text>
 
   <!-- ============ 第六层：Transport + Dashboard + Cluster ============ -->
   <!-- Transport -->
@@ -501,13 +501,13 @@
   <text x="1275" y="832" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">⑧ 集群限流 (sentinel-cluster)</text>
   <text x="1275" y="850" text-anchor="middle" font-size="10.5" fill="#dc2626" opacity="0.85">Token Server 统一管控 · Client 请求令牌</text>
   <g filter="url(#shadow)">
-    <rect x="1060" y="864" width="200" height="116" rx="12" fill="url(#gCluster)"/>
-    <text x="1160" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#450a0a">Cluster Token Server</text>
-    <text x="1160" y="904" text-anchor="middle" font-size="9.5" fill="#7f1d1d">全局配额计算</text>
-    <text x="1160" y="918" text-anchor="middle" font-size="9.5" fill="#7f1d1d">TokenService</text>
-    <text x="1160" y="934" text-anchor="middle" font-size="9" fill="#991b1b">Netty Server</text>
-    <text x="1160" y="958" text-anchor="middle" font-size="9" fill="#fecaca">占用未来窗口</text>
-    <text x="1160" y="972" text-anchor="middle" font-size="9" fill="#fecaca">OccupiableBucketLeapArray</text>
+    <rect x="1050" y="864" width="200" height="116" rx="12" fill="url(#gCluster)"/>
+    <text x="1150" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#450a0a">Cluster Token Server</text>
+    <text x="1150" y="904" text-anchor="middle" font-size="9.5" fill="#7f1d1d">全局配额计算</text>
+    <text x="1150" y="918" text-anchor="middle" font-size="9.5" fill="#7f1d1d">TokenService</text>
+    <text x="1150" y="934" text-anchor="middle" font-size="9" fill="#991b1b">Netty Server</text>
+    <text x="1150" y="958" text-anchor="middle" font-size="9" fill="#fecaca">占用未来窗口</text>
+    <text x="1150" y="972" text-anchor="middle" font-size="9" fill="#fecaca">OccupiableBucketLeapArray</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="1290" y="864" width="210" height="116" rx="12" fill="url(#gCluster)"/>
@@ -519,17 +519,17 @@
     <text x="1395" y="972" text-anchor="middle" font-size="9" fill="#fecaca">ClusterFlowConfig</text>
   </g>
   <g stroke="#dc2626" stroke-width="1.8" fill="none" marker-end="url(#arrP)" opacity="0.8" stroke-dasharray="5,3">
-    <path d="M1290 910 H1264"/>
-    <path d="M1264 940 H1290"/>
+    <path d="M1290 910 H1254"/>
+    <path d="M1254 940 H1290"/>
   </g>
-  <text x="1277" y="900" text-anchor="middle" font-size="9" fill="#b91c1c">请求令牌</text>
-  <text x="1277" y="958" text-anchor="middle" font-size="9" fill="#b91c1c">授权配额</text>
+  <text x="1270" y="900" text-anchor="middle" font-size="9" fill="#b91c1c">请求令牌</text>
+  <text x="1270" y="958" text-anchor="middle" font-size="9" fill="#b91c1c">授权配额</text>
 
   <!-- Slot <-> Node/Rule 关联虚线 -->
   <g stroke="#d97706" stroke-width="1.2" fill="none" marker-end="url(#arrD)" opacity="0.45" stroke-dasharray="3,4">
-    <path d="M410 434 H486"/>
-    <path d="M410 548 H996"/>
-    <path d="M410 624 H996"/>
+    <path d="M410 433 H486"/>
+    <path d="M410 547 H996"/>
+    <path d="M410 623 H996"/>
   </g>
 
   <!-- ============ 图例 ============ -->
