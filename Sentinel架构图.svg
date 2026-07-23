@@ -478,18 +478,18 @@
   <text x="770" y="850" text-anchor="middle" font-size="10.5" fill="#7c3aed" opacity="0.85">sentinel-dashboard · Spring Boot 可视化控制台</text>
   <g filter="url(#shadow)">
     <rect x="570" y="864" width="130" height="48" rx="10" fill="url(#gDash)"/>
-    <text x="635" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2e1065">实时监控</text>
-    <text x="635" y="900" text-anchor="middle" font-size="9" fill="#4c1d95">QPS/RT 曲线</text>
+    <text x="635" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">实时监控</text>
+    <text x="635" y="900" text-anchor="middle" font-size="9" fill="#f3e8ff">QPS/RT 曲线</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="710" y="864" width="130" height="48" rx="10" fill="url(#gDash)"/>
-    <text x="775" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2e1065">规则管理</text>
-    <text x="775" y="900" text-anchor="middle" font-size="9" fill="#4c1d95">流控/熔断/热点</text>
+    <text x="775" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">规则管理</text>
+    <text x="775" y="900" text-anchor="middle" font-size="9" fill="#f3e8ff">流控/熔断/热点</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="850" y="864" width="130" height="48" rx="10" fill="url(#gDash)"/>
-    <text x="915" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2e1065">机器列表</text>
-    <text x="915" y="900" text-anchor="middle" font-size="9" fill="#4c1d95">应用实例</text>
+    <text x="915" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">机器列表</text>
+    <text x="915" y="900" text-anchor="middle" font-size="9" fill="#f3e8ff">应用实例</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="570" y="924" width="410" height="56" rx="10" fill="#f3e8ff" stroke="#a855f7" stroke-width="1"/>
