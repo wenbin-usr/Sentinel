@@ -537,8 +537,8 @@
   <!-- Slot <-> Node/Rule 关联虚线 -->
   <g stroke="#d97706" stroke-width="1.2" fill="none" marker-end="url(#arrD)" opacity="0.45" stroke-dasharray="3,4">
     <path d="M410 431 H486"/>
-    <path d="M410 545 H996"/>
-    <path d="M410 621 H996"/>
+    <path d="M410 545 H970 V494 H996"/>
+    <path d="M410 621 H970 V574 H996"/>
   </g>
 
   <!-- ============ 图例 ============ -->

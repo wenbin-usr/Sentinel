@@ -3298,15 +3298,17 @@ flowchart LR
     N --> O[NodeSelectSlot.exit]
 ```
 
-| Slot | order | 职责 |
-| --- | --- | --- |
-| NodeSelectSlot | -1000 | 为每个 Context + Resource 构建一个 DefaultNode，组织调用树 |
-| ClusterBuilderSlot | -500 | 为每个 Resource 构建全局唯一的 ClusterNode |
-| StatisticSlot | 0 | 实时统计通过/拒绝/异常/RT/线程数等指标 |
-| FlowSlot | 1000 | 基于 FlowRule 检查流量是否通过 |
-| AuthoritySlot | 2000 | 基于 AuthorityRule 检查黑白名单 |
-| SystemSlot | 3000 | 基于 SystemRule 检查系统级指标（CPU、Load、RT）|
-| DegradeSlot | 4000 | 基于 CircuitBreaker 检查熔断状态 |
+| Slot               | order  | 职责                                            |
+|--------------------|--------|-----------------------------------------------|
+| NodeSelectSlot     | -10000 | 为每个 Context + Resource 构建一个 DefaultNode，组织调用树 |
+| ClusterBuilderSlot | -9000  | 为每个 Resource 构建全局唯一的 ClusterNode              |
+ | LogSlot            | -8000  | 记录被限流/熔断等拦截的异常日志                                          |
+| StatisticSlot      | -7000  | 实时统计通过/拒绝/异常/RT/线程数等指标                        |
+| AuthoritySlot      | -6000  | 基于 AuthorityRule 检查黑白名单                       |
+| SystemSlot         | -5000  | 基于 SystemRule 检查系统级指标（CPU、Load、RT）            |
+| ParamFlowSlot      | -3000  | 基于 FlowRule 检查流量是否通过                          |
+| FlowSlot           | -2000  | 基于 FlowRule 检查流量是否通过                          |
+| DegradeSlot        | -1000  | 基于 CircuitBreaker 检查熔断状态                      |
 
 #### 2.4 SlotChain 与 Context、Entry 的交互
 
