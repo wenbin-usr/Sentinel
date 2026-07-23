@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 1120" font-family="'Microsoft YaHei','PingFang SC','Segoe UI',sans-serif">
+  <defs>
+    <!-- 浅色背景渐变 -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.5" stop-color="#eef2f7"/>
+      <stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.2" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#bfdbfe" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#bfdbfe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.85" cy="0.15" r="0.5">
+      <stop offset="0" stop-color="#ede9fe" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ede9fe" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- 各分区卡片渐变（保留彩色，在浅底上更醒目） -->
+    <linearGradient id="gEntry" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="gSlot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="gNode" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="gRule" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="gDs" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="gTrans" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#db2777"/>
+    </linearGradient>
+    <linearGradient id="gCluster" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f87171"/><stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="gDash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#9333ea"/>
+    </linearGradient>
+
+    <!-- 标题渐变文字 -->
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0ea5e9"/>
+      <stop offset="0.5" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#db2777"/>
+    </linearGradient>
+
+    <!-- 阴影 -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/>
+      <feOffset dx="0" dy="2" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.28"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- 箭头标记（加深以保证浅底可见） -->
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0891b2"/>
+    </marker>
+    <marker id="arrV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#059669"/>
+    </marker>
+    <marker id="arrP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#db2777"/>
+    </marker>
+    <marker id="arrD" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,0 L5,10 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1560" height="1120" fill="url(#bgGrad)"/>
+  <rect width="1560" height="1120" fill="url(#glow1)"/>
+  <rect width="1560" height="1120" fill="url(#glow2)"/>
+
+  <!-- 装饰网格 -->
+  <g stroke="#cbd5e1" stroke-width="0.5" opacity="0.55">
+    <path d="M0 200 H1560 M0 400 H1560 M0 600 H1560 M0 800 H1560 M0 1000 H1560"/>
+  </g>
+
+  <!-- ===== 标题 ===== -->
+  <text x="780" y="56" text-anchor="middle" font-size="38" font-weight="800" fill="url(#titleGrad)">Sentinel 架构全景图</text>
+  <text x="780" y="84" text-anchor="middle" font-size="15" fill="#0369a1" opacity="0.9">流量防卫兵 · 责任链 / 滑动窗口 / 限流降级 / 动态数据源 / 集群限流</text>
+  <line x1="520" y1="98" x2="1040" y2="98" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+
+  <!-- ============ 第一层：API 入口 ============ -->
+  <text x="60" y="128" font-size="14" font-weight="700" fill="#0e7490">① API 入口层 · Entry</text>
+  <g filter="url(#shadow)">
+    <rect x="60" y="138" width="320" height="64" rx="12" fill="url(#gEntry)"/>
+    <text x="220" y="164" text-anchor="middle" font-size="16" font-weight="700" fill="#042f2e">SphU / SphO  (API)</text>
+    <text x="220" y="186" text-anchor="middle" font-size="11.5" fill="#083344">entry() · asyncEntry() · 业务调用入口</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="420" y="138" width="320" height="64" rx="12" fill="url(#gEntry)"/>
+    <text x="580" y="164" text-anchor="middle" font-size="16" font-weight="700" fill="#042f2e">CtSph  (核心调度)</text>
+    <text x="580" y="186" text-anchor="middle" font-size="11.5" fill="#083344">entryWithPriority() · lookProcessChain()</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="780" y="138" width="320" height="64" rx="12" fill="url(#gEntry)"/>
+    <text x="940" y="164" text-anchor="middle" font-size="16" font-weight="700" fill="#042f2e">ContextUtil  (上下文)</text>
+    <text x="940" y="186" text-anchor="middle" font-size="11.5" fill="#083344">Context · EntranceNode · 调用链路树</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1140" y="138" width="360" height="64" rx="12" fill="url(#gEntry)"/>
+    <text x="1320" y="164" text-anchor="middle" font-size="16" font-weight="700" fill="#042f2e">SlotChainProvider (SPI)</text>
+    <text x="1320" y="186" text-anchor="middle" font-size="11.5" fill="#083344">DefaultSlotChainBuilder · chainMap 缓存(CoW+双检锁)</text>
+  </g>
+  <!-- 入口层箭头 -->
+  <g stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#arr)">
+    <path d="M380 170 H416"/>
+    <path d="M740 170 H776"/>
+    <path d="M1100 170 H1136"/>
+  </g>
+
+  <!-- ============ 第二层：三大分区 ============ -->
+  <!-- 左：Slot Chain 责任链 -->
+  <rect x="40" y="218" width="400" height="430" rx="16" fill="#faf5ff" opacity="0.85" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="240" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#6d28d9">② Processor Slot Chain · 责任链</text>
+  <text x="240" y="262" text-anchor="middle" font-size="10.5" fill="#7c3aed" opacity="0.85">单向链表 · SPI 按 @Spi(order) 升序加载 · order 越小越靠前</text>
+
+  <!-- 虚拟头节点 -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="276" width="340" height="30" rx="8" fill="#ede9fe" stroke="#818cf8" stroke-width="1"/>
+    <rect x="70" y="276" width="6" height="30" rx="2" fill="#818cf8"/>
+    <text x="92" y="296" font-size="12" font-weight="700" fill="#4c1d95">first</text>
+    <text x="396" y="296" text-anchor="end" font-size="10.5" fill="#6d28d9">虚拟头节点 · 仅转发</text>
+  </g>
+
+  <!-- 9 个 Slot -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="312" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="312" width="6" height="36" rx="2" fill="#ede9fe"/>
+    <text x="92" y="328" font-size="12.5" font-weight="700" fill="#fff">NodeSelectorSlot</text>
+    <text x="92" y="343" font-size="10" fill="#f5f3ff">构建 DefaultNode 调用树</text>
+    <text x="396" y="335" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -10000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="352" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="352" width="6" height="36" rx="2" fill="#ede9fe"/>
+    <text x="92" y="368" font-size="12.5" font-weight="700" fill="#fff">ClusterBuilderSlot</text>
+    <text x="92" y="383" font-size="10" fill="#f5f3ff">创建 ClusterNode(全局唯一)</text>
+    <text x="396" y="375" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -9000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="392" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="392" width="6" height="36" rx="2" fill="#ede9fe"/>
+    <text x="92" y="408" font-size="12.5" font-weight="700" fill="#fff">LogSlot</text>
+    <text x="92" y="423" font-size="10" fill="#f5f3ff">try-catch 记录 BlockException</text>
+    <text x="396" y="415" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -8000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="432" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="432" width="6" height="36" rx="2" fill="#fde68a"/>
+    <text x="92" y="448" font-size="12.5" font-weight="700" fill="#fff">StatisticSlot  ★</text>
+    <text x="92" y="463" font-size="10" fill="#fef3c7">实时统计 线程/QPS/RT/异常</text>
+    <text x="396" y="455" text-anchor="end" font-size="10.5" font-weight="700" fill="#fef9c3">order -7000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="472" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="472" width="6" height="36" rx="2" fill="#ede9fe"/>
+    <text x="92" y="488" font-size="12.5" font-weight="700" fill="#fff">AuthoritySlot</text>
+    <text x="92" y="503" font-size="10" fill="#f5f3ff">黑白名单鉴权</text>
+    <text x="396" y="495" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -6000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="512" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="512" width="6" height="36" rx="2" fill="#ede9fe"/>
+    <text x="92" y="528" font-size="12.5" font-weight="700" fill="#fff">SystemSlot</text>
+    <text x="92" y="543" font-size="10" fill="#f5f3ff">系统级规则 CPU/Load/RT</text>
+    <text x="396" y="535" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -5000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="552" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="552" width="6" height="36" rx="2" fill="#fde68a"/>
+    <text x="92" y="568" font-size="12.5" font-weight="700" fill="#fff">FlowSlot  ★</text>
+    <text x="92" y="583" font-size="10" fill="#fef3c7">限流 QPS/线程 · FlowRuleChecker</text>
+    <text x="396" y="575" text-anchor="end" font-size="10.5" font-weight="700" fill="#fef9c3">order -2000</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="592" width="340" height="36" rx="8" fill="url(#gSlot)" stroke="#f472b6" stroke-width="1" stroke-opacity="0.6"/>
+    <rect x="70" y="592" width="6" height="36" rx="2" fill="#fbcfe8"/>
+    <text x="92" y="608" font-size="12.5" font-weight="700" fill="#fff">DefaultCircuitBreakerSlot</text>
+    <text x="92" y="623" font-size="10" fill="#fdf2f8">默认熔断 (2.0新增 @since 2.0.0)</text>
+    <text x="396" y="615" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -1500</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="632" width="340" height="36" rx="8" fill="url(#gSlot)"/>
+    <rect x="70" y="632" width="6" height="36" rx="2" fill="#ede9fe"/>
+    <text x="92" y="648" font-size="12.5" font-weight="700" fill="#fff">DegradeSlot</text>
+    <text x="92" y="663" font-size="10" fill="#f5f3ff">用户配置熔断 · CircuitBreaker</text>
+    <text x="396" y="655" text-anchor="end" font-size="10.5" font-weight="700" fill="#fde68a">order -1000</text>
+  </g>
+  <!-- Slot 之间竖向箭头 -->
+  <g stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#arrV)" opacity="0.75">
+    <path d="M240 306 V310"/>
+    <path d="M240 348 V350"/>
+    <path d="M240 388 V390"/>
+    <path d="M240 428 V430"/>
+    <path d="M240 468 V470"/>
+    <path d="M240 508 V510"/>
+    <path d="M240 548 V550"/>
+    <path d="M240 588 V590"/>
+  </g>
+  <text x="240" y="688" text-anchor="middle" font-size="10" fill="#7c3aed" opacity="0.8">entry 正向递归 (fireEntry->next) · exit 反向递归 · try-catch 拦截后续异常</text>
+
+  <!-- 中：Node 体系 & 滑动窗口 -->
+  <rect x="460" y="218" width="500" height="430" rx="16" fill="#eff6ff" opacity="0.85" stroke="#93c5fd" stroke-width="1"/>
+  <text x="710" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#1d4ed8">③ Node 体系 &amp; 滑动窗口 · 统计底层</text>
+  <text x="710" y="262" text-anchor="middle" font-size="10.5" fill="#2563eb" opacity="0.85">Sentinel 数据底座 · 滑动窗口默认 秒级2×500ms / 分钟级60×1s</text>
+
+  <!-- Node 继承树 -->
+  <text x="480" y="290" font-size="12" font-weight="700" fill="#1e3a8a">▸ Node 继承体系</text>
+  <g filter="url(#shadow)">
+    <rect x="490" y="300" width="180" height="30" rx="7" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="580" y="320" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">Node (interface)</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="700" y="300" width="180" height="30" rx="7" fill="url(#gNode)"/>
+    <text x="790" y="320" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">StatisticNode</text>
+  </g>
+  <path d="M670 315 H696" stroke="#3b82f6" stroke-width="1.6" marker-end="url(#arr)"/>
+  <g filter="url(#shadow)">
+    <rect x="490" y="346" width="120" height="28" rx="7" fill="url(#gNode)"/>
+    <text x="550" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">DefaultNode</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="630" y="346" width="120" height="28" rx="7" fill="url(#gNode)"/>
+    <text x="690" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">EntranceNode</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="770" y="346" width="120" height="28" rx="7" fill="url(#gNode)" stroke="#f59e0b" stroke-width="1.2"/>
+    <text x="830" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">ClusterNode ★</text>
+  </g>
+  <g stroke="#3b82f6" stroke-width="1.3" fill="none" opacity="0.7">
+    <path d="M550 346 V330"/>
+    <path d="M690 346 V330"/>
+    <path d="M830 346 V330"/>
+  </g>
+  <text x="480" y="396" font-size="10" fill="#1e3a8a" opacity="0.85">DefaultNode:每Context一个 · ClusterNode:每资源全局唯一</text>
+
+  <!-- 滑动窗口 -->
+  <text x="480" y="428" font-size="12" font-weight="700" fill="#1e3a8a">▸ 滑动窗口 LeapArray</text>
+  <g filter="url(#shadow)">
+    <rect x="490" y="438" width="200" height="34" rx="8" fill="url(#gNode)"/>
+    <text x="590" y="460" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">ArrayMetric</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="720" y="438" width="220" height="34" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="830" y="460" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">LeapArray (窗口数组)</text>
+  </g>
+  <path d="M690 455 H716" stroke="#3b82f6" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- 窗口格子 -->
+  <g>
+    <rect x="490" y="490" width="64" height="50" rx="6" fill="#3b82f6" opacity="0.85" stroke="#2563eb"/>
+    <text x="522" y="510" text-anchor="middle" font-size="10" fill="#fff">W[0]</text>
+    <text x="522" y="528" text-anchor="middle" font-size="9" fill="#dbeafe">active</text>
+    <rect x="560" y="490" width="64" height="50" rx="6" fill="#dbeafe" stroke="#60a5fa"/>
+    <text x="592" y="510" text-anchor="middle" font-size="10" fill="#1e40af">W[1]</text>
+    <text x="592" y="528" text-anchor="middle" font-size="9" fill="#3b82f6">empty</text>
+    <rect x="630" y="490" width="64" height="50" rx="6" fill="#e0e7ff" stroke="#a5b4fc"/>
+    <text x="662" y="510" text-anchor="middle" font-size="10" fill="#3730a3">W[2]</text>
+    <text x="662" y="528" text-anchor="middle" font-size="9" fill="#6366f1">expired</text>
+    <rect x="700" y="490" width="64" height="50" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="732" y="510" text-anchor="middle" font-size="10" fill="#475569">W[3]</text>
+    <text x="732" y="528" text-anchor="middle" font-size="9" fill="#64748b">...</text>
+    <rect x="770" y="490" width="64" height="50" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="802" y="510" text-anchor="middle" font-size="10" fill="#475569">W[n]</text>
+    <text x="802" y="528" text-anchor="middle" font-size="9" fill="#64748b">...</text>
+  </g>
+  <g stroke="#3b82f6" stroke-width="1" fill="none" opacity="0.6">
+    <path d="M830 472 V486" marker-end="url(#arr)"/>
+    <path d="M830 488 H522 V486" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- WindowWrap / MetricBucket -->
+  <g filter="url(#shadow)">
+    <rect x="490" y="560" width="210" height="74" rx="8" fill="#f8fafc" stroke="#3b82f6" stroke-width="1"/>
+    <text x="595" y="580" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">WindowWrap&lt;T&gt;</text>
+    <text x="595" y="598" text-anchor="middle" font-size="9.5" fill="#1e40af">windowStart · windowLength</text>
+    <text x="595" y="614" text-anchor="middle" font-size="9.5" fill="#1e40af">value: MetricBucket</text>
+    <text x="595" y="628" text-anchor="middle" font-size="9" fill="#2563eb">CAS+tryLock 并发安全</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="720" y="560" width="220" height="74" rx="8" fill="url(#gNode)"/>
+    <text x="830" y="580" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">MetricBucket</text>
+    <text x="830" y="598" text-anchor="middle" font-size="9.5" fill="#dbeafe">pass · block · exception</text>
+    <text x="830" y="614" text-anchor="middle" font-size="9.5" fill="#dbeafe">rt · success · thread</text>
+    <text x="830" y="628" text-anchor="middle" font-size="9" fill="#fef3c7">LongAdder 高并发计数</text>
+  </g>
+  <path d="M700 597 H716" stroke="#3b82f6" stroke-width="1.6" marker-end="url(#arr)"/>
+  <text x="710" y="652" text-anchor="middle" font-size="9.5" fill="#0284c7" opacity="0.85">currentWindow 四态: null / 命中 / 过期 / 时钟回拨</text>
+
+  <!-- 右：规则管理 & 限流算法 -->
+  <rect x="980" y="218" width="540" height="430" rx="16" fill="#fffbeb" opacity="0.85" stroke="#fcd34d" stroke-width="1"/>
+  <text x="1250" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#b45309">④ 规则管理 &amp; 限流算法</text>
+  <text x="1250" y="262" text-anchor="middle" font-size="10.5" fill="#d97706" opacity="0.85">RuleManager 持有规则 · 动态推送 · Slot 校验时按需读取</text>
+
+  <text x="1000" y="290" font-size="12" font-weight="700" fill="#92400e">▸ 规则管理器 (RuleManager)</text>
+  <g filter="url(#shadow)">
+    <rect x="1000" y="300" width="250" height="40" rx="8" fill="url(#gRule)"/>
+    <text x="1125" y="318" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">FlowRuleManager</text>
+    <text x="1125" y="332" text-anchor="middle" font-size="9.5" fill="#7c2d12">限流规则 · FlowSlot 读取</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1260" y="300" width="250" height="40" rx="8" fill="url(#gRule)" stroke="#fde68a" stroke-width="1.2"/>
+    <text x="1385" y="318" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">DegradeRuleManager</text>
+    <text x="1385" y="332" text-anchor="middle" font-size="9.5" fill="#7c2d12">熔断规则 · DegradeSlot</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1000" y="346" width="250" height="40" rx="8" fill="url(#gRule)"/>
+    <text x="1125" y="364" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">AuthorityRuleManager</text>
+    <text x="1125" y="378" text-anchor="middle" font-size="9.5" fill="#7c2d12">黑白名单 · AuthoritySlot</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1260" y="346" width="250" height="40" rx="8" fill="url(#gRule)"/>
+    <text x="1385" y="364" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">SystemRuleManager</text>
+    <text x="1385" y="378" text-anchor="middle" font-size="9.5" fill="#7c2d12">系统规则 · SystemSlot</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1000" y="392" width="250" height="40" rx="8" fill="url(#gRule)" stroke="#f472b6" stroke-width="1.2"/>
+    <text x="1125" y="410" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">DefaultCircuitBreakerRuleMgr</text>
+    <text x="1125" y="424" text-anchor="middle" font-size="9.5" fill="#7c2d12">默认熔断规则 (2.0)</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1260" y="392" width="250" height="40" rx="8" fill="url(#gRule)"/>
+    <text x="1385" y="410" text-anchor="middle" font-size="11.5" font-weight="700" fill="#451a03">ClusterRuleManager</text>
+    <text x="1385" y="424" text-anchor="middle" font-size="9.5" fill="#7c2d12">集群限流规则</text>
+  </g>
+
+  <text x="1000" y="456" font-size="12" font-weight="700" fill="#92400e">▸ 限流算法 TrafficShapingController</text>
+  <g filter="url(#shadow)">
+    <rect x="1000" y="466" width="125" height="56" rx="8" fill="url(#gRule)"/>
+    <text x="1062" y="486" text-anchor="middle" font-size="11" font-weight="700" fill="#451a03">DefaultController</text>
+    <text x="1062" y="502" text-anchor="middle" font-size="9.5" fill="#7c2d12">快速失败</text>
+    <text x="1062" y="516" text-anchor="middle" font-size="9" fill="#9a3412">QPS/线程</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1133" y="466" width="125" height="56" rx="8" fill="url(#gRule)"/>
+    <text x="1195" y="486" text-anchor="middle" font-size="11" font-weight="700" fill="#451a03">ThrottlingController</text>
+    <text x="1195" y="502" text-anchor="middle" font-size="9.5" fill="#7c2d12">漏桶匀速</text>
+    <text x="1195" y="516" text-anchor="middle" font-size="9" fill="#9a3412">排队等待</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1266" y="466" width="125" height="56" rx="8" fill="url(#gRule)"/>
+    <text x="1328" y="486" text-anchor="middle" font-size="11" font-weight="700" fill="#451a03">WarmUpController</text>
+    <text x="1328" y="502" text-anchor="middle" font-size="9.5" fill="#7c2d12">令牌桶预热</text>
+    <text x="1328" y="516" text-anchor="middle" font-size="9" fill="#9a3412">coldFactor</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1399" y="466" width="111" height="56" rx="8" fill="url(#gRule)"/>
+    <text x="1454" y="486" text-anchor="middle" font-size="10.5" font-weight="700" fill="#451a03">WarmUpRateLimiter</text>
+    <text x="1454" y="502" text-anchor="middle" font-size="9.5" fill="#7c2d12">预热+匀速</text>
+    <text x="1454" y="516" text-anchor="middle" font-size="9" fill="#9a3412">组合</text>
+  </g>
+
+  <!-- 熔断状态机 -->
+  <text x="1000" y="546" font-size="12" font-weight="700" fill="#92400e">▸ 熔断状态机 CircuitBreaker</text>
+  <g filter="url(#shadow)">
+    <rect x="1000" y="558" width="120" height="32" rx="16" fill="#16a34a"/>
+    <text x="1060" y="578" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">CLOSED</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1190" y="558" width="120" height="32" rx="16" fill="#dc2626"/>
+    <text x="1250" y="578" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">OPEN</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1380" y="558" width="130" height="32" rx="16" fill="#ca8a04"/>
+    <text x="1445" y="578" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">HALF_OPEN</text>
+  </g>
+  <g stroke="#d97706" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+    <path d="M1120 574 H1186"/>
+    <path d="M1310 574 H1376"/>
+    <path d="M1445 590 V612 H1060 V590" stroke-dasharray="4,3"/>
+  </g>
+  <text x="1153" y="568" text-anchor="middle" font-size="8.5" fill="#b91c1c">超阈值</text>
+  <text x="1343" y="568" text-anchor="middle" font-size="8.5" fill="#a16207">探测</text>
+  <text x="1250" y="624" text-anchor="middle" font-size="9" fill="#b45309" opacity="0.85">恢复 / 再熔断</text>
+  <text x="1000" y="616" font-size="9.5" fill="#92400e" opacity="0.8">ResponseTimeCircuitBreaker(慢调用RT) · ExceptionCircuitBreaker(异常比例/数)</text>
+
+  <!-- ============ 第五层：动态数据源 ============ -->
+  <rect x="40" y="668" width="1480" height="120" rx="16" fill="#ecfdf5" opacity="0.85" stroke="#6ee7b7" stroke-width="1"/>
+  <text x="240" y="694" font-size="16" font-weight="700" fill="#047857">⑤ 动态数据源 · SPI 扩展 (sentinel-extension)</text>
+  <text x="240" y="712" text-anchor="middle" font-size="10.5" fill="#059669" opacity="0.85">监听配置变更 -> 转换为规则 -> 调用 RuleManager.loadRules() 热更新</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="155" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">FileRefreshDataSource</text>
+    <text x="155" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">本地文件定时轮询</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="244" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="319" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">NacosDataSource</text>
+    <text x="319" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Nacos 监听</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="408" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="483" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ApolloDataSource</text>
+    <text x="483" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Apollo Config</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="572" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="647" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ZookeeperDataSource</text>
+    <text x="647" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">ZK Watcher</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="736" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="811" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">RedisDataSource</text>
+    <text x="811" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Redis Pub/Sub</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="900" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="975" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">ConsulDataSource</text>
+    <text x="975" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Consul KV</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1064" y="724" width="150" height="48" rx="10" fill="url(#gDs)"/>
+    <text x="1139" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#022c22">EtcdDataSource</text>
+    <text x="1139" y="760" text-anchor="middle" font-size="9.5" fill="#064e3b">Etcd Watch</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1228" y="724" width="270" height="48" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="1363" y="744" text-anchor="middle" font-size="11.5" font-weight="700" fill="#064e3b">ReadableDataSource&lt;T,S&gt;</text>
+    <text x="1363" y="760" text-anchor="middle" font-size="9.5" fill="#047857">SPI 统一抽象 · loadConfig() 转换器</text>
+  </g>
+  <!-- 数据源 -> 规则 箭头 -->
+  <g stroke="#059669" stroke-width="1.6" fill="none" marker-end="url(#arrG)" opacity="0.75">
+    <path d="M1250 668 V650 H1385 V434" stroke-dasharray="5,4"/>
+  </g>
+  <text x="1380" y="660" font-size="9" fill="#047857" opacity="0.9">规则热更新</text>
+
+  <!-- ============ 第六层：Transport + Dashboard + Cluster ============ -->
+  <!-- Transport -->
+  <rect x="40" y="806" width="470" height="190" rx="16" fill="#fdf2f8" opacity="0.85" stroke="#f9a8d4" stroke-width="1"/>
+  <text x="275" y="832" text-anchor="middle" font-size="16" font-weight="700" fill="#be185d">⑥ Transport 通信层</text>
+  <text x="275" y="850" text-anchor="middle" font-size="10.5" fill="#db2777" opacity="0.85">sentinel-transport · 与 Dashboard 交互</text>
+  <g filter="url(#shadow)">
+    <rect x="70" y="864" width="190" height="52" rx="10" fill="url(#gTrans)"/>
+    <text x="165" y="884" text-anchor="middle" font-size="11.5" font-weight="700" fill="#500724">HeartbeatSender</text>
+    <text x="165" y="900" text-anchor="middle" font-size="9.5" fill="#831843">定时心跳上报客户端状态</text>
+    <text x="165" y="912" text-anchor="middle" font-size="9" fill="#9d174d">10s 周期</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="280" y="864" width="210" height="52" rx="10" fill="url(#gTrans)"/>
+    <text x="385" y="884" text-anchor="middle" font-size="11.5" font-weight="700" fill="#500724">CommandCenter</text>
+    <text x="385" y="900" text-anchor="middle" font-size="9.5" fill="#831843">HTTP 服务 (默认 8719)</text>
+    <text x="385" y="912" text-anchor="middle" font-size="9" fill="#9d174d">动态规则查询/设置</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="70" y="930" width="420" height="50" rx="10" fill="#fce7f3" stroke="#ec4899" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="280" y="952" text-anchor="middle" font-size="11" font-weight="700" fill="#831843">TransportClient / SentinelApiClient</text>
+    <text x="280" y="968" text-anchor="middle" font-size="9.5" fill="#be185d">Netty/HTTP · 推送规则 · 上报监控数据</text>
+  </g>
+
+  <!-- Dashboard -->
+  <rect x="540" y="806" width="460" height="190" rx="16" fill="#faf5ff" opacity="0.85" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="770" y="832" text-anchor="middle" font-size="16" font-weight="700" fill="#6b21a8">⑦ Sentinel Dashboard</text>
+  <text x="770" y="850" text-anchor="middle" font-size="10.5" fill="#7c3aed" opacity="0.85">sentinel-dashboard · Spring Boot 可视化控制台</text>
+  <g filter="url(#shadow)">
+    <rect x="570" y="864" width="130" height="48" rx="10" fill="url(#gDash)"/>
+    <text x="635" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2e1065">实时监控</text>
+    <text x="635" y="900" text-anchor="middle" font-size="9" fill="#4c1d95">QPS/RT 曲线</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="710" y="864" width="130" height="48" rx="10" fill="url(#gDash)"/>
+    <text x="775" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2e1065">规则管理</text>
+    <text x="775" y="900" text-anchor="middle" font-size="9" fill="#4c1d95">流控/熔断/热点</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="850" y="864" width="130" height="48" rx="10" fill="url(#gDash)"/>
+    <text x="915" y="884" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2e1065">机器列表</text>
+    <text x="915" y="900" text-anchor="middle" font-size="9" fill="#4c1d95">应用实例</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="570" y="924" width="410" height="56" rx="10" fill="#f3e8ff" stroke="#a855f7" stroke-width="1"/>
+    <text x="775" y="944" text-anchor="middle" font-size="11" font-weight="700" fill="#581c87">推送模式：Push / Pull · 规则持久化</text>
+    <text x="775" y="960" text-anchor="middle" font-size="9.5" fill="#7c3aed">DataSource 桥接 -> RuleManager 热更新</text>
+    <text x="775" y="974" text-anchor="middle" font-size="9" fill="#6b21a8">集群限流 Server 分配</text>
+  </g>
+  <!-- Transport <-> Dashboard 双向 -->
+  <g stroke="#db2777" stroke-width="1.8" fill="none" marker-end="url(#arrP)" opacity="0.8">
+    <path d="M490 890 H566"/>
+    <path d="M566 905 H490" marker-end="url(#arrP)"/>
+  </g>
+  <text x="528" y="876" text-anchor="middle" font-size="9" fill="#be185d">心跳/上报</text>
+  <text x="528" y="924" text-anchor="middle" font-size="9" fill="#be185d">推送规则</text>
+
+  <!-- 集群限流 -->
+  <rect x="1030" y="806" width="490" height="190" rx="16" fill="#fef2f2" opacity="0.85" stroke="#fca5a5" stroke-width="1"/>
+  <text x="1275" y="832" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">⑧ 集群限流 (sentinel-cluster)</text>
+  <text x="1275" y="850" text-anchor="middle" font-size="10.5" fill="#dc2626" opacity="0.85">Token Server 统一管控 · Client 请求令牌</text>
+  <g filter="url(#shadow)">
+    <rect x="1060" y="864" width="200" height="116" rx="12" fill="url(#gCluster)"/>
+    <text x="1160" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#450a0a">Cluster Token Server</text>
+    <text x="1160" y="904" text-anchor="middle" font-size="9.5" fill="#7f1d1d">全局配额计算</text>
+    <text x="1160" y="918" text-anchor="middle" font-size="9.5" fill="#7f1d1d">TokenService</text>
+    <text x="1160" y="934" text-anchor="middle" font-size="9" fill="#991b1b">Netty Server</text>
+    <text x="1160" y="958" text-anchor="middle" font-size="9" fill="#fecaca">占用未来窗口</text>
+    <text x="1160" y="972" text-anchor="middle" font-size="9" fill="#fecaca">OccupiableBucketLeapArray</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1290" y="864" width="210" height="116" rx="12" fill="url(#gCluster)"/>
+    <text x="1395" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#450a0a">Cluster Token Client</text>
+    <text x="1395" y="904" text-anchor="middle" font-size="9.5" fill="#7f1d1d">FlowSlot 内嵌触发</text>
+    <text x="1395" y="918" text-anchor="middle" font-size="9.5" fill="#7f1d1d">requestToken()</text>
+    <text x="1395" y="934" text-anchor="middle" font-size="9" fill="#991b1b">异步获取令牌</text>
+    <text x="1395" y="958" text-anchor="middle" font-size="9" fill="#fecaca">失败回退本地限流</text>
+    <text x="1395" y="972" text-anchor="middle" font-size="9" fill="#fecaca">ClusterFlowConfig</text>
+  </g>
+  <g stroke="#dc2626" stroke-width="1.8" fill="none" marker-end="url(#arrP)" opacity="0.8" stroke-dasharray="5,3">
+    <path d="M1290 910 H1264"/>
+    <path d="M1264 940 H1290"/>
+  </g>
+  <text x="1277" y="900" text-anchor="middle" font-size="9" fill="#b91c1c">请求令牌</text>
+  <text x="1277" y="958" text-anchor="middle" font-size="9" fill="#b91c1c">授权配额</text>
+
+  <!-- Slot <-> Node/Rule 关联虚线 -->
+  <g stroke="#d97706" stroke-width="1.2" fill="none" marker-end="url(#arrD)" opacity="0.45" stroke-dasharray="3,4">
+    <path d="M410 450 H486"/>
+    <path d="M410 570 H996"/>
+    <path d="M410 650 H996"/>
+  </g>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="40" y="1018" width="1480" height="86" rx="12" fill="#f8fafc" opacity="0.9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="60" y="1042" font-size="13" font-weight="700" fill="#334155">图例 / Legend</text>
+
+  <rect x="60" y="1056" width="18" height="14" rx="3" fill="url(#gEntry)"/><text x="84" y="1067" font-size="11" fill="#334155">API入口</text>
+  <rect x="150" y="1056" width="18" height="14" rx="3" fill="url(#gSlot)"/><text x="174" y="1067" font-size="11" fill="#334155">Slot责任链</text>
+  <rect x="262" y="1056" width="18" height="14" rx="3" fill="url(#gNode)"/><text x="286" y="1067" font-size="11" fill="#334155">Node/滑动窗口</text>
+  <rect x="392" y="1056" width="18" height="14" rx="3" fill="url(#gRule)"/><text x="416" y="1067" font-size="11" fill="#334155">规则/算法</text>
+  <rect x="500" y="1056" width="18" height="14" rx="3" fill="url(#gDs)"/><text x="524" y="1067" font-size="11" fill="#334155">动态数据源</text>
+  <rect x="610" y="1056" width="18" height="14" rx="3" fill="url(#gTrans)"/><text x="634" y="1067" font-size="11" fill="#334155">Transport</text>
+  <rect x="710" y="1056" width="18" height="14" rx="3" fill="url(#gDash)"/><text x="734" y="1067" font-size="11" fill="#334155">Dashboard</text>
+  <rect x="812" y="1056" width="18" height="14" rx="3" fill="url(#gCluster)"/><text x="836" y="1067" font-size="11" fill="#334155">集群限流</text>
+
+  <g stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#arr)"><path d="M900 1063 H936"/></g><text x="944" y="1067" font-size="11" fill="#334155">调用流</text>
+  <g stroke="#059669" stroke-width="1.6" fill="none" marker-end="url(#arrG)" stroke-dasharray="5,4"><path d="M1010 1063 H1046"/></g><text x="1054" y="1067" font-size="11" fill="#334155">规则热更新</text>
+  <g stroke="#d97706" stroke-width="1.2" fill="none" marker-end="url(#arrD)" stroke-dasharray="3,4" opacity="0.7"><path d="M1150 1063 H1186"/></g><text x="1194" y="1067" font-size="11" fill="#334155">Slot读取数据</text>
+  <g stroke="#db2777" stroke-width="1.8" fill="none" marker-end="url(#arrP)" stroke-dasharray="5,3"><path d="M1300 1063 H1336"/></g><text x="1344" y="1067" font-size="11" fill="#334155">集群令牌交互</text>
+
+  <text x="60" y="1094" font-size="9.5" fill="#64748b" opacity="0.9">★ 核心节点 · order 实测自 Constants.java:76-84 · 责任链单向链表 fireEntry 递归 · 资源级 chainMap(volatile+CoW) 复用</text>
+</svg>
