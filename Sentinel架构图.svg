@@ -77,7 +77,7 @@
       <path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/>
     </marker>
     <!-- UML 继承: 空心三角, 指向父类 -->
-    <marker id="arrUml" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+    <marker id="arrUml" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L11,6 L0,12 z" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
     </marker>
   </defs>
@@ -227,16 +227,16 @@
   <text x="480" y="290" font-size="12" font-weight="700" fill="#1e3a8a">▸ Node 继承体系</text>
   <!-- L1: Node (interface) 根接口 -->
   <g filter="url(#shadow)">
-    <rect x="620" y="300" width="180" height="26" rx="7" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
-    <text x="710" y="317" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">Node (interface)</text>
+    <rect x="620" y="296" width="180" height="26" rx="7" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="710" y="313" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">Node (interface)</text>
   </g>
   <!-- L2: StatisticNode 统计基类 (持有 ArrayMetric 滑动窗口) -->
   <g filter="url(#shadow)">
-    <rect x="620" y="338" width="180" height="26" rx="7" fill="url(#gNode)"/>
-    <text x="710" y="355" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">StatisticNode</text>
+    <rect x="620" y="334" width="180" height="26" rx="7" fill="url(#gNode)"/>
+    <text x="710" y="351" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">StatisticNode</text>
   </g>
   <!-- 继承: StatisticNode ▷ Node -->
-  <path d="M710 338 V326" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
+  <path d="M710 334 V322" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
   <!-- L3: 三个具体 Node -->
   <g filter="url(#shadow)">
     <rect x="470" y="376" width="140" height="26" rx="7" fill="url(#gNode)"/>
@@ -251,8 +251,8 @@
     <text x="880" y="393" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">ClusterNode ★</text>
   </g>
   <!-- 继承: DefaultNode/ClusterNode ▷ StatisticNode (树形连接器: 主干+横枝) -->
-  <path d="M710 376 V364" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
-  <path d="M710 372 H880 V376" stroke="#3b82f6" stroke-width="1.4" fill="none"/>
+  <path d="M710 376 V360" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
+  <path d="M710 368 H880 V376" stroke="#3b82f6" stroke-width="1.4" fill="none"/>
   <!-- 继承: EntranceNode ▷ DefaultNode -->
   <path d="M610 389 H640" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
   <text x="625" y="384" text-anchor="middle" font-size="8.5" fill="#3b82f6" opacity="0.85">extends</text>
