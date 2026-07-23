@@ -76,6 +76,10 @@
     <marker id="arrVs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/>
     </marker>
+    <!-- UML 继承: 空心三角, 指向父类 -->
+    <marker id="arrUml" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L11,6 L0,12 z" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+    </marker>
   </defs>
 
   <!-- 背景 -->
@@ -219,35 +223,40 @@
   <text x="710" y="244" text-anchor="middle" font-size="16" font-weight="700" fill="#1d4ed8">③ Node 体系 &amp; 滑动窗口 · 统计底层</text>
   <text x="710" y="262" text-anchor="middle" font-size="10.5" fill="#2563eb" opacity="0.85">Sentinel 数据底座 · 滑动窗口默认 秒级2×500ms / 分钟级60×1s</text>
 
-  <!-- Node 继承树 -->
+  <!-- Node 继承树 (UML 继承: 子类 ▷ 父类, 空心三角指向父类) -->
   <text x="480" y="290" font-size="12" font-weight="700" fill="#1e3a8a">▸ Node 继承体系</text>
+  <!-- L1: Node (interface) 根接口 -->
   <g filter="url(#shadow)">
-    <rect x="490" y="300" width="180" height="30" rx="7" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
-    <text x="580" y="320" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">Node (interface)</text>
+    <rect x="620" y="300" width="180" height="26" rx="7" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+    <text x="710" y="317" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">Node (interface)</text>
+  </g>
+  <!-- L2: StatisticNode 统计基类 (持有 ArrayMetric 滑动窗口) -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="338" width="180" height="26" rx="7" fill="url(#gNode)"/>
+    <text x="710" y="355" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">StatisticNode</text>
+  </g>
+  <!-- 继承: StatisticNode ▷ Node -->
+  <path d="M710 338 V326" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
+  <!-- L3: 三个具体 Node -->
+  <g filter="url(#shadow)">
+    <rect x="470" y="376" width="140" height="26" rx="7" fill="url(#gNode)"/>
+    <text x="540" y="393" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">EntranceNode</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="700" y="300" width="180" height="30" rx="7" fill="url(#gNode)"/>
-    <text x="790" y="320" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">StatisticNode</text>
-  </g>
-  <path d="M670 315 H696" stroke="#3b82f6" stroke-width="1.6" marker-end="url(#arr)"/>
-  <g filter="url(#shadow)">
-    <rect x="490" y="346" width="120" height="28" rx="7" fill="url(#gNode)"/>
-    <text x="550" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">DefaultNode</text>
+    <rect x="640" y="376" width="140" height="26" rx="7" fill="url(#gNode)"/>
+    <text x="710" y="393" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">DefaultNode</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="630" y="346" width="120" height="28" rx="7" fill="url(#gNode)"/>
-    <text x="690" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">EntranceNode</text>
+    <rect x="810" y="376" width="140" height="26" rx="7" fill="url(#gNode)" stroke="#f59e0b" stroke-width="1.2"/>
+    <text x="880" y="393" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">ClusterNode ★</text>
   </g>
-  <g filter="url(#shadow)">
-    <rect x="770" y="346" width="120" height="28" rx="7" fill="url(#gNode)" stroke="#f59e0b" stroke-width="1.2"/>
-    <text x="830" y="365" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">ClusterNode ★</text>
-  </g>
-  <g stroke="#3b82f6" stroke-width="1.3" fill="none" opacity="0.7">
-    <path d="M550 346 V330"/>
-    <path d="M690 346 V330"/>
-    <path d="M830 346 V330"/>
-  </g>
-  <text x="480" y="396" font-size="10" fill="#1e3a8a" opacity="0.85">DefaultNode:每Context一个 · ClusterNode:每资源全局唯一</text>
+  <!-- 继承: DefaultNode/ClusterNode ▷ StatisticNode (树形连接器: 主干+横枝) -->
+  <path d="M710 376 V364" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
+  <path d="M710 372 H880 V376" stroke="#3b82f6" stroke-width="1.4" fill="none"/>
+  <!-- 继承: EntranceNode ▷ DefaultNode -->
+  <path d="M610 389 H640" stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"/>
+  <text x="625" y="384" text-anchor="middle" font-size="8.5" fill="#3b82f6" opacity="0.85">extends</text>
+  <text x="480" y="416" font-size="10" fill="#1e3a8a" opacity="0.85">DefaultNode:每Context一个 · ClusterNode:每资源全局唯一 · EntranceNode:调用树入口(继承DefaultNode)</text>
 
   <!-- 滑动窗口 -->
   <text x="480" y="428" font-size="12" font-weight="700" fill="#1e3a8a">▸ 滑动窗口 LeapArray</text>
@@ -549,6 +558,7 @@
   <g stroke="#059669" stroke-width="1.6" fill="none" marker-end="url(#arrG)" stroke-dasharray="5,4"><path d="M1010 1063 H1046"/></g><text x="1054" y="1067" font-size="11" fill="#334155">规则热更新</text>
   <g stroke="#d97706" stroke-width="1.2" fill="none" marker-end="url(#arrD)" stroke-dasharray="3,4" opacity="0.7"><path d="M1150 1063 H1186"/></g><text x="1194" y="1067" font-size="11" fill="#334155">Slot读取数据</text>
   <g stroke="#db2777" stroke-width="1.8" fill="none" marker-end="url(#arrP)" stroke-dasharray="5,3"><path d="M1300 1063 H1336"/></g><text x="1344" y="1067" font-size="11" fill="#334155">集群令牌交互</text>
+  <g stroke="#3b82f6" stroke-width="1.4" fill="none" marker-end="url(#arrUml)"><path d="M1420 1063 H1456"/></g><text x="1464" y="1067" font-size="11" fill="#334155">▷ 继承</text>
 
   <text x="60" y="1094" font-size="9.5" fill="#64748b" opacity="0.9">★ 核心节点 · order 实测自 Constants.java:76-84 · 责任链单向链表 fireEntry 递归 · 资源级 chainMap(volatile+CoW) 复用</text>
 </svg>
