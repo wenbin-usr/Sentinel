@@ -33,10 +33,10 @@
       <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/>
     </linearGradient>
     <linearGradient id="gTrans" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#db2777"/>
+      <stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#ec4899"/>
     </linearGradient>
     <linearGradient id="gCluster" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f87171"/><stop offset="1" stop-color="#dc2626"/>
+      <stop offset="0" stop-color="#f87171"/><stop offset="1" stop-color="#ef4444"/>
     </linearGradient>
     <linearGradient id="gDash" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#9333ea"/>
@@ -456,15 +456,15 @@
   <text x="275" y="850" text-anchor="middle" font-size="10.5" fill="#db2777" opacity="0.85">sentinel-transport · 与 Dashboard 交互</text>
   <g filter="url(#shadow)">
     <rect x="70" y="864" width="190" height="52" rx="10" fill="url(#gTrans)"/>
-    <text x="165" y="884" text-anchor="middle" font-size="11.5" font-weight="700" fill="#500724">HeartbeatSender</text>
-    <text x="165" y="900" text-anchor="middle" font-size="9.5" fill="#831843">定时心跳上报客户端状态</text>
-    <text x="165" y="912" text-anchor="middle" font-size="9" fill="#9d174d">10s 周期</text>
+    <text x="165" y="884" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">HeartbeatSender</text>
+    <text x="165" y="900" text-anchor="middle" font-size="9.5" fill="#fce7f3">定时心跳上报客户端状态</text>
+    <text x="165" y="912" text-anchor="middle" font-size="9" fill="#fbcfe8">10s 周期</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="280" y="864" width="210" height="52" rx="10" fill="url(#gTrans)"/>
-    <text x="385" y="884" text-anchor="middle" font-size="11.5" font-weight="700" fill="#500724">CommandCenter</text>
-    <text x="385" y="900" text-anchor="middle" font-size="9.5" fill="#831843">HTTP 服务 (默认 8719)</text>
-    <text x="385" y="912" text-anchor="middle" font-size="9" fill="#9d174d">动态规则查询/设置</text>
+    <text x="385" y="884" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">CommandCenter</text>
+    <text x="385" y="900" text-anchor="middle" font-size="9.5" fill="#fce7f3">HTTP 服务 (默认 8719)</text>
+    <text x="385" y="912" text-anchor="middle" font-size="9" fill="#fbcfe8">动态规则查询/设置</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="70" y="930" width="420" height="50" rx="10" fill="#fce7f3" stroke="#ec4899" stroke-width="1" stroke-dasharray="4,3"/>
@@ -511,19 +511,19 @@
   <text x="1275" y="850" text-anchor="middle" font-size="10.5" fill="#dc2626" opacity="0.85">Token Server 统一管控 · Client 请求令牌</text>
   <g filter="url(#shadow)">
     <rect x="1050" y="864" width="200" height="116" rx="12" fill="url(#gCluster)"/>
-    <text x="1150" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#450a0a">Cluster Token Server</text>
-    <text x="1150" y="904" text-anchor="middle" font-size="9.5" fill="#7f1d1d">全局配额计算</text>
-    <text x="1150" y="918" text-anchor="middle" font-size="9.5" fill="#7f1d1d">TokenService</text>
-    <text x="1150" y="934" text-anchor="middle" font-size="9" fill="#991b1b">Netty Server</text>
+    <text x="1150" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">Cluster Token Server</text>
+    <text x="1150" y="904" text-anchor="middle" font-size="9.5" fill="#fee2e2">全局配额计算</text>
+    <text x="1150" y="918" text-anchor="middle" font-size="9.5" fill="#fee2e2">TokenService</text>
+    <text x="1150" y="934" text-anchor="middle" font-size="9" fill="#fecaca">Netty Server</text>
     <text x="1150" y="958" text-anchor="middle" font-size="9" fill="#fecaca">占用未来窗口</text>
     <text x="1150" y="972" text-anchor="middle" font-size="9" fill="#fecaca">OccupiableBucketLeapArray</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="1290" y="864" width="210" height="116" rx="12" fill="url(#gCluster)"/>
-    <text x="1395" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#450a0a">Cluster Token Client</text>
-    <text x="1395" y="904" text-anchor="middle" font-size="9.5" fill="#7f1d1d">FlowSlot 内嵌触发</text>
-    <text x="1395" y="918" text-anchor="middle" font-size="9.5" fill="#7f1d1d">requestToken()</text>
-    <text x="1395" y="934" text-anchor="middle" font-size="9" fill="#991b1b">异步获取令牌</text>
+    <text x="1395" y="886" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">Cluster Token Client</text>
+    <text x="1395" y="904" text-anchor="middle" font-size="9.5" fill="#fee2e2">FlowSlot 内嵌触发</text>
+    <text x="1395" y="918" text-anchor="middle" font-size="9.5" fill="#fee2e2">requestToken()</text>
+    <text x="1395" y="934" text-anchor="middle" font-size="9" fill="#fecaca">异步获取令牌</text>
     <text x="1395" y="958" text-anchor="middle" font-size="9" fill="#fecaca">失败回退本地限流</text>
     <text x="1395" y="972" text-anchor="middle" font-size="9" fill="#fecaca">ClusterFlowConfig</text>
   </g>
