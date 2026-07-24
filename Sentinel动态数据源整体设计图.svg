@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1340" viewBox="0 0 1560 1340" font-family="'Microsoft YaHei','PingFang SC','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="0.5" stop-color="#eef2f7"/><stop offset="1" stop-color="#e6ebf2"/></linearGradient>
+    <radialGradient id="glow1" cx="0.18" cy="0.05" r="0.55"><stop offset="0" stop-color="#dbeafe" stop-opacity="0.45"/><stop offset="1" stop-color="#dbeafe" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow2" cx="0.88" cy="0.08" r="0.5"><stop offset="0" stop-color="#ede9fe" stop-opacity="0.4"/><stop offset="1" stop-color="#ede9fe" stop-opacity="0"/></radialGradient>
+
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#059669"/></linearGradient>
+    <linearGradient id="gCyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#0891b2"/></linearGradient>
+    <linearGradient id="gAmber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/></linearGradient>
+    <linearGradient id="gSlate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#94a3b8"/><stop offset="1" stop-color="#475569"/></linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset="0.5" stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2"/>
+      <feOffset dx="0" dy="2" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
+    <marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0891b2"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker>
+    <marker id="aSL" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#7c3aed"/></marker>
+    <marker id="aCL" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#0891b2"/></marker>
+  </defs>
+
+  <rect width="1560" height="1340" fill="url(#bgGrad)"/>
+  <rect width="1560" height="1340" fill="url(#glow1)"/>
+  <rect width="1560" height="1340" fill="url(#glow2)"/>
+
+  <!-- 标题 -->
+  <text x="780" y="48" text-anchor="middle" font-size="34" font-weight="800" fill="url(#titleGrad)">Sentinel 动态数据源整体设计</text>
+  <text x="780" y="74" text-anchor="middle" font-size="14" fill="#0369a1" opacity="0.9">ReadableDataSource · Converter · SentinelProperty · 规则热更新全链路</text>
+  <line x1="500" y1="88" x2="1060" y2="88" stroke="#a78bfa" stroke-width="1" opacity="0.55"/>
+
+  <!-- ============ ① 配置后端 ============ -->
+  <rect x="30" y="96" width="1500" height="176" rx="12" fill="#eff6ff" opacity="0.55" stroke="#93c5fd" stroke-width="1"/>
+  <text x="50" y="120" font-size="15" font-weight="700" fill="#1d4ed8">① 配置后端 · 配置存储与监听来源</text>
+  <text x="50" y="137" font-size="10" fill="#2563eb" opacity="0.8">9 类实现 · 本地文件 (Pull) 与远程配置中心 (Push) · 各对应一个 ReadableDataSource 实现类</text>
+
+  <!-- 9 张后端卡片 -->
+  <g font-size="13" font-weight="700" fill="#fff" text-anchor="middle">
+    <g filter="url(#shadow)"><rect x="69" y="150" width="150" height="78" rx="9" fill="url(#gAmber)"/><text x="144" y="184">File</text><text x="144" y="204" font-size="9" font-weight="400" fill="#fff7ed">本地文件 · Pull</text></g>
+    <g filter="url(#shadow)"><rect x="228" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="303" y="184">Nacos</text><text x="303" y="204" font-size="9" font-weight="400" fill="#dbeafe">配置中心 · Push</text></g>
+    <g filter="url(#shadow)"><rect x="387" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="462" y="184">Apollo</text><text x="462" y="204" font-size="9" font-weight="400" fill="#dbeafe">配置中心 · Push</text></g>
+    <g filter="url(#shadow)"><rect x="546" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="621" y="184">Zookeeper</text><text x="621" y="204" font-size="9" font-weight="400" fill="#dbeafe">配置节点 · Push</text></g>
+    <g filter="url(#shadow)"><rect x="705" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="780" y="184">Etcd</text><text x="780" y="204" font-size="9" font-weight="400" fill="#dbeafe">KV · Push</text></g>
+    <g filter="url(#shadow)"><rect x="864" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="939" y="184">Consul</text><text x="939" y="204" font-size="9" font-weight="400" fill="#dbeafe">KV · Push</text></g>
+    <g filter="url(#shadow)"><rect x="1023" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="1098" y="184">Eureka</text><text x="1098" y="204" font-size="9" font-weight="400" fill="#dbeafe">服务发现 · Push</text></g>
+    <g filter="url(#shadow)"><rect x="1182" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="1257" y="184">Redis</text><text x="1257" y="204" font-size="9" font-weight="400" fill="#dbeafe">Pub/Sub · Push</text></g>
+    <g filter="url(#shadow)"><rect x="1341" y="150" width="150" height="78" rx="9" fill="url(#gBlue)"/><text x="1416" y="184">Spring Cloud</text><text x="1416" y="204" font-size="9" font-weight="400" fill="#dbeafe">配置中心 · Push</text></g>
+  </g>
+  <text x="50" y="248" font-size="9.5" fill="#1e3a8a" font-family="Consolas,monospace">实现类: FileRefreshableDataSource · NacosDataSource · ApolloDataSource · ZookeeperDataSource · EtcdDataSource · ConsulDataSource</text>
+  <text x="50" y="262" font-size="9.5" fill="#1e3a8a" font-family="Consolas,monospace">            · EurekaDataSource · RedisDataSource · SpringCloudConfigDataSource   |   可写: FileWritableDataSource (WritableDataSource)</text>
+
+  <!-- ① -> ② 连接 -->
+  <path d="M144 230 V346" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#aA)"/>
+  <text x="150" y="292" font-size="9" fill="#92400e">本地 Pull</text>
+  <path d="M1098 230 V346" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+  <text x="1104" y="292" font-size="9" fill="#047857">远程 Push</text>
+
+  <!-- ============ ② 刷新机制 ============ -->
+  <rect x="30" y="292" width="1500" height="176" rx="12" fill="#faf5ff" opacity="0.55" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="50" y="316" font-size="15" font-weight="700" fill="#6d28d9">② 刷新机制 · Pull 定时轮询 vs Push 监听回调</text>
+  <text x="50" y="333" font-size="10" fill="#7c3aed" opacity="0.8">AbstractDataSource 子类以两种方式驱动 getProperty().updateValue(T)，最终都汇聚到属性层</text>
+
+  <!-- Pull lane -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="346" width="720" height="112" rx="10" fill="url(#gAmber)" opacity="0.96"/>
+    <text x="66" y="370" font-size="13" font-weight="700" fill="#fff">Pull · 定时轮询</text>
+    <text x="200" y="370" font-size="10.5" fill="#fff7ed" font-family="Consolas,monospace">AutoRefreshDataSource (extends AbstractDataSource)</text>
+    <rect x="66" y="378" width="688" height="72" rx="6" fill="#fffbeb" opacity="0.92"/>
+    <text x="78" y="397" font-size="9.5" fill="#7c2d12" font-family="Consolas,monospace">ScheduledExecutorService.scheduleAtFixedRate(task, refreshMs, refreshMs)</text>
+    <text x="78" y="414" font-size="9.5" fill="#7c2d12" font-family="Consolas,monospace">task: if (isModified()) { T v = loadConfig(); getProperty().updateValue(v); }</text>
+    <text x="78" y="431" font-size="9.5" fill="#92400e">recommendRefreshMs 默认 3000ms · FileRefreshableDataSource 轮询 file.lastModified()</text>
+    <text x="78" y="446" font-size="8.5" fill="#b45309" opacity="0.85">适用于本地文件等无主动推送能力的后端 · 定时拉取 + 修改判定</text>
+  </g>
+
+  <!-- Push lane -->
+  <g filter="url(#shadow)">
+    <rect x="790" y="346" width="740" height="112" rx="10" fill="url(#gGreen)" opacity="0.96"/>
+    <text x="806" y="370" font-size="13" font-weight="700" fill="#fff">Push · 监听回调</text>
+    <text x="940" y="370" font-size="10.5" fill="#d1fae5" font-family="Consolas,monospace">backend Listener (extends AbstractDataSource)</text>
+    <rect x="806" y="378" width="708" height="72" rx="6" fill="#ecfdf5" opacity="0.92"/>
+    <text x="818" y="397" font-size="9.5" fill="#064e3b" font-family="Consolas,monospace">configService.addListener(dataId, groupId, listener)   // 向配置中心注册监听</text>
+    <text x="818" y="414" font-size="9.5" fill="#064e3b" font-family="Consolas,monospace">receiveConfigInfo(configInfo): T v = parser.convert(configInfo); getProperty().updateValue(v);</text>
+    <text x="818" y="431" font-size="9.5" fill="#047857">Nacos / Apollo / Zookeeper / Etcd / Consul / Eureka / Redis / Spring Cloud</text>
+    <text x="818" y="446" font-size="8.5" fill="#065f46" opacity="0.85">配置中心变更即时推送 · 近实时 · 无需轮询</text>
+  </g>
+
+  <!-- ② -> ③ -->
+  <path d="M780 470 V494" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+  <text x="786" y="486" font-size="9" fill="#6d28d9">loadConfig()</text>
+
+  <!-- ============ ③ 数据源抽象层 ============ -->
+  <rect x="30" y="492" width="1500" height="250" rx="12" fill="#faf5ff" opacity="0.45" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="50" y="516" font-size="15" font-weight="700" fill="#6d28d9">③ 数据源抽象层 · 接口与基类</text>
+  <text x="50" y="533" font-size="10" fill="#7c3aed" opacity="0.8">ReadableDataSource / AbstractDataSource / AutoRefreshDataSource / WritableDataSource / Converter</text>
+
+  <!-- Row1: 四张卡片 -->
+  <!-- ReadableDataSource -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="548" width="330" height="120" rx="10" fill="url(#gPurple)"/>
+    <text x="215" y="571" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">ReadableDataSource&lt;S,T&gt;</text>
+    <text x="215" y="585" text-anchor="middle" font-size="8.5" fill="#ede9fe" font-style="italic">«interface»</text>
+    <line x1="60" y1="592" x2="370" y2="592" stroke="#ede9fe" stroke-width="1" opacity="0.5"/>
+    <text x="64" y="608" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ readSource(): S</text>
+    <text x="64" y="623" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ loadConfig(): T</text>
+    <text x="64" y="638" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ getProperty(): SentinelProperty&lt;T&gt;</text>
+    <text x="64" y="653" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ close()</text>
+  </g>
+
+  <!-- AbstractDataSource -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="548" width="380" height="120" rx="10" fill="url(#gPurple)"/>
+    <text x="600" y="571" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">AbstractDataSource&lt;S,T&gt;</text>
+    <text x="600" y="585" text-anchor="middle" font-size="8.5" fill="#ede9fe" font-style="italic">abstract · implements ReadableDataSource</text>
+    <line x1="420" y1="592" x2="780" y2="592" stroke="#ede9fe" stroke-width="1" opacity="0.5"/>
+    <text x="424" y="608" font-size="9" fill="#ede9fe" font-family="Consolas,monospace"># parser: Converter&lt;S,T&gt;</text>
+    <text x="424" y="623" font-size="9" fill="#ede9fe" font-family="Consolas,monospace"># property: SentinelProperty&lt;T&gt;  (new DynamicSentinelProperty)</text>
+    <text x="424" y="638" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ loadConfig() = parser.convert(readSource())</text>
+    <text x="424" y="653" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ getProperty() / readSource() (abstract) / close()</text>
+  </g>
+
+  <!-- AutoRefreshDataSource -->
+  <g filter="url(#shadow)">
+    <rect x="820" y="548" width="350" height="120" rx="10" fill="url(#gPurple)"/>
+    <text x="995" y="571" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">AutoRefreshDataSource&lt;S,T&gt;</text>
+    <text x="995" y="585" text-anchor="middle" font-size="8.5" fill="#ede9fe" font-style="italic">extends AbstractDataSource</text>
+    <line x1="830" y1="592" x2="1160" y2="592" stroke="#ede9fe" stroke-width="1" opacity="0.5"/>
+    <text x="834" y="608" font-size="9" fill="#ede9fe" font-family="Consolas,monospace"># service: ScheduledExecutorService</text>
+    <text x="834" y="623" font-size="9" fill="#ede9fe" font-family="Consolas,monospace"># recommendRefreshMs = 3000</text>
+    <text x="834" y="638" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ isModified() : boolean   (定时轮询)</text>
+    <text x="834" y="653" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">子类: FileRefreshableDataSource</text>
+  </g>
+
+  <!-- WritableDataSource -->
+  <g filter="url(#shadow)">
+    <rect x="1200" y="548" width="330" height="120" rx="10" fill="url(#gSlate)"/>
+    <text x="1365" y="571" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">WritableDataSource&lt;T&gt;</text>
+    <text x="1365" y="585" text-anchor="middle" font-size="8.5" fill="#e2e8f0" font-style="italic">«interface» · 写回配置 (可选)</text>
+    <line x1="1210" y1="592" x2="1520" y2="592" stroke="#e2e8f0" stroke-width="1" opacity="0.5"/>
+    <text x="1214" y="608" font-size="9" fill="#e2e8f0" font-family="Consolas,monospace">+ write(T value)</text>
+    <text x="1214" y="623" font-size="9" fill="#e2e8f0" font-family="Consolas,monospace">+ close()</text>
+    <text x="1214" y="640" font-size="9" fill="#f1f5f9">实现: FileWritableDataSource</text>
+    <text x="1214" y="655" font-size="8.5" fill="#cbd5e1" opacity="0.9">规则持久化回写本地</text>
+  </g>
+
+  <!-- 继承/实现箭头 -->
+  <path d="M410 608 H384" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+  <text x="397" y="602" text-anchor="middle" font-size="8.5" fill="#6d28d9" font-style="italic">implements</text>
+  <path d="M820 608 H794" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)"/>
+  <text x="807" y="602" text-anchor="middle" font-size="8.5" fill="#6d28d9" font-style="italic">extends</text>
+
+  <!-- Row2: Converter + 关系说明 -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="680" width="700" height="52" rx="9" fill="url(#gCyan)"/>
+    <text x="66" y="702" font-size="12" font-weight="700" fill="#fff" font-family="Consolas,monospace">Converter&lt;S,T&gt;</text>
+    <text x="200" y="702" font-size="10.5" fill="#cffafe" font-family="Consolas,monospace">+ convert(S source): T</text>
+    <text x="66" y="722" font-size="9.5" fill="#cffafe">函数式接口 · 用户实现 · 示例: JSON String → List&lt;FlowRule&gt; · 由 AbstractDataSource.parser 持有</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="770" y="680" width="760" height="52" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="786" y="702" font-size="10" font-weight="700" fill="#334155">▸ 关系总览</text>
+    <text x="868" y="702" font-size="9.5" fill="#475569" font-family="Consolas,monospace">9 类 DataSource 与 FileWritableDataSource 均继承自 AbstractDataSource (持有 parser + DynamicSentinelProperty)</text>
+    <text x="786" y="722" font-size="9.5" fill="#475569">远程 Push 类直接 extends AbstractDataSource · FileRefreshableDataSource extends AutoRefreshDataSource (再 extends AbstractDataSource)</text>
+  </g>
+
+  <!-- ③ -> ④ -->
+  <path d="M780 744 V762" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <text x="786" y="758" font-size="9" fill="#0e7490">getProperty()</text>
+
+  <!-- ============ ④ 属性层 ============ -->
+  <rect x="30" y="762" width="1500" height="176" rx="12" fill="#ecfeff" opacity="0.5" stroke="#a5f3fc" stroke-width="1"/>
+  <text x="50" y="786" font-size="15" font-weight="700" fill="#0e7490">④ 属性层 · SentinelProperty 与监听器通知</text>
+  <text x="50" y="803" font-size="10" fill="#0891b2" opacity="0.85">DynamicSentinelProperty 持有当前值与监听器集合，updateValue 时仅在值变化时通知所有 PropertyListener</text>
+
+  <!-- SentinelProperty -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="816" width="400" height="112" rx="10" fill="url(#gCyan)"/>
+    <text x="250" y="839" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">SentinelProperty&lt;T&gt;</text>
+    <text x="250" y="853" text-anchor="middle" font-size="8.5" fill="#cffafe" font-style="italic">«interface» · 持有当前配置值</text>
+    <line x1="60" y1="860" x2="440" y2="860" stroke="#cffafe" stroke-width="1" opacity="0.5"/>
+    <text x="64" y="877" font-size="9" fill="#cffafe" font-family="Consolas,monospace">+ addListener(PropertyListener&lt;T&gt;)</text>
+    <text x="64" y="892" font-size="9" fill="#cffafe" font-family="Consolas,monospace">+ removeListener(PropertyListener&lt;T&gt;)</text>
+    <text x="64" y="907" font-size="9" fill="#cffafe" font-family="Consolas,monospace">+ updateValue(T newValue): boolean</text>
+    <text x="64" y="922" font-size="8.5" fill="#ecfeff" opacity="0.9">值变化时通知所有监听器</text>
+  </g>
+
+  <!-- DynamicSentinelProperty -->
+  <g filter="url(#shadow)">
+    <rect x="470" y="816" width="520" height="112" rx="10" fill="url(#gCyan)"/>
+    <text x="730" y="839" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">DynamicSentinelProperty&lt;T&gt;</text>
+    <text x="730" y="853" text-anchor="middle" font-size="8.5" fill="#cffafe" font-style="italic">implements SentinelProperty&lt;T&gt;</text>
+    <line x1="480" y1="860" x2="980" y2="860" stroke="#cffafe" stroke-width="1" opacity="0.5"/>
+    <text x="484" y="877" font-size="9" fill="#cffafe" font-family="Consolas,monospace"># listeners: CopyOnWriteArraySet&lt;PropertyListener&lt;T&gt;&gt;</text>
+    <text x="484" y="892" font-size="9" fill="#cffafe" font-family="Consolas,monospace"># value: T</text>
+    <text x="484" y="907" font-size="9" fill="#cffafe" font-family="Consolas,monospace">updateValue: if (!isEqual) { value=new; for l: l.configUpdate(new); }</text>
+    <text x="484" y="922" font-size="8.5" fill="#ecfeff" opacity="0.9">addListener: 注册并立即触发 configLoad(value)</text>
+  </g>
+
+  <!-- PropertyListener -->
+  <g filter="url(#shadow)">
+    <rect x="1010" y="816" width="520" height="112" rx="10" fill="url(#gPurple)"/>
+    <text x="1270" y="839" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="Consolas,monospace">PropertyListener&lt;T&gt;</text>
+    <text x="1270" y="853" text-anchor="middle" font-size="8.5" fill="#ede9fe" font-style="italic">«interface» · 由规则管理器实现</text>
+    <line x1="1020" y1="860" x2="1520" y2="860" stroke="#ede9fe" stroke-width="1" opacity="0.5"/>
+    <text x="1024" y="877" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ configUpdate(T value)   // 值变更回调</text>
+    <text x="1024" y="892" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">+ configLoad(T value)     // 首次加载回调</text>
+    <text x="1024" y="910" font-size="9" fill="#ede9fe" font-family="Consolas,monospace">实现: 各 RuleManager 内部 LISTENER</text>
+    <text x="1024" y="924" font-size="8.5" fill="#c4b5fd" opacity="0.9">configUpdate → 将规则载入内存</text>
+  </g>
+
+  <!-- ④ 内部箭头 -->
+  <path d="M470 872 H454" stroke="#0891b2" stroke-width="2" fill="none" marker-end="url(#aC)"/>
+  <text x="462" y="866" text-anchor="middle" font-size="8.5" fill="#0e7490" font-style="italic">implements</text>
+  <path d="M990 880 H1010" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#aV)" stroke-dasharray="4,3"/>
+  <text x="1000" y="874" text-anchor="middle" font-size="8.5" fill="#6d28d9">notify</text>
+
+  <!-- ④ -> ⑤ -->
+  <path d="M780 940 V958" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+  <text x="786" y="954" font-size="9" fill="#047857">register2Property()</text>
+
+  <!-- ============ ⑤ 规则管理器 ============ -->
+  <rect x="30" y="958" width="1500" height="146" rx="12" fill="#ecfdf5" opacity="0.5" stroke="#a7f3d0" stroke-width="1"/>
+  <text x="50" y="982" font-size="15" font-weight="700" fill="#047857">⑤ 规则管理器 · register2Property 热加载</text>
+  <text x="50" y="999" font-size="10" fill="#059669" opacity="0.85">register2Property(SentinelProperty&lt;List&lt;XxxRule&gt;&gt;) 注册内部 PropertyListener，回调中 loadRules 到内存规则表</text>
+
+  <g font-family="Consolas,monospace">
+    <g filter="url(#shadow)">
+      <rect x="30" y="1012" width="360" height="82" rx="9" fill="url(#gGreen)"/>
+      <text x="210" y="1034" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">FlowRuleManager</text>
+      <text x="44" y="1053" font-size="8.5" fill="#d1fae5">register2Property(SentinelProperty&lt;List&lt;FlowRule&gt;&gt;)</text>
+      <text x="44" y="1068" font-size="8.5" fill="#d1fae5">LISTENER.configUpdate → loadRules</text>
+      <text x="44" y="1083" font-size="8" fill="#a7f3d0" opacity="0.9">流控规则</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="410" y="1012" width="360" height="82" rx="9" fill="url(#gGreen)"/>
+      <text x="590" y="1034" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">DegradeRuleManager</text>
+      <text x="424" y="1053" font-size="8.5" fill="#d1fae5">register2Property(SentinelProperty&lt;List&lt;DegradeRule&gt;&gt;)</text>
+      <text x="424" y="1068" font-size="8.5" fill="#d1fae5">LISTENER.configUpdate → loadRules</text>
+      <text x="424" y="1083" font-size="8" fill="#a7f3d0" opacity="0.9">熔断降级规则</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="790" y="1012" width="360" height="82" rx="9" fill="url(#gGreen)"/>
+      <text x="970" y="1034" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">AuthorityRuleManager</text>
+      <text x="804" y="1053" font-size="8.5" fill="#d1fae5">register2Property(SentinelProperty&lt;List&lt;AuthorityRule&gt;&gt;)</text>
+      <text x="804" y="1068" font-size="8.5" fill="#d1fae5">LISTENER.configUpdate → loadRules</text>
+      <text x="804" y="1083" font-size="8" fill="#a7f3d0" opacity="0.9">授权规则</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="1170" y="1012" width="360" height="82" rx="9" fill="url(#gGreen)"/>
+      <text x="1350" y="1034" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">SystemRuleManager</text>
+      <text x="1184" y="1053" font-size="8.5" fill="#d1fae5">register2Property(SentinelProperty&lt;List&lt;SystemRule&gt;&gt;)</text>
+      <text x="1184" y="1068" font-size="8.5" fill="#d1fae5">LISTENER.configUpdate → loadRules</text>
+      <text x="1184" y="1083" font-size="8" fill="#a7f3d0" opacity="0.9">系统规则</text>
+    </g>
+  </g>
+
+  <!-- ⑤ -> ⑥ -->
+  <path d="M780 1106 V1124" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+  <text x="786" y="1120" font-size="9" fill="#1d4ed8">规则进入内存 · 热生效</text>
+
+  <!-- ============ ⑥ 运行时 Slot Chain ============ -->
+  <rect x="30" y="1124" width="1500" height="150" rx="12" fill="#eff6ff" opacity="0.5" stroke="#93c5fd" stroke-width="1"/>
+  <text x="50" y="1148" font-size="15" font-weight="700" fill="#1d4ed8">⑥ 运行时生效 · Slot Chain 责任链</text>
+  <text x="50" y="1165" font-size="10" fill="#2563eb" opacity="0.8">规则在对应 Slot 中实时校验 · 一次请求贯穿整条责任链 · 规则更新后立即可见</text>
+
+  <!-- 7 个 slot -->
+  <g font-size="11" font-weight="700" fill="#fff" text-anchor="middle" font-family="Consolas,monospace">
+    <g filter="url(#shadow)"><rect x="32" y="1180" width="200" height="78" rx="9" fill="url(#gBlue)"/><text x="132" y="1216">NodeSelectorSlot</text><text x="132" y="1234" font-size="8.5" font-weight="400" fill="#dbeafe">构建调用树</text></g>
+    <g filter="url(#shadow)"><rect x="248" y="1180" width="200" height="78" rx="9" fill="url(#gBlue)"/><text x="348" y="1216">ClusterBuilderSlot</text><text x="348" y="1234" font-size="8.5" font-weight="400" fill="#dbeafe">构建集群节点</text></g>
+    <g filter="url(#shadow)"><rect x="464" y="1180" width="200" height="78" rx="9" fill="url(#gBlue)"/><text x="564" y="1216">StatisticSlot</text><text x="564" y="1234" font-size="8.5" font-weight="400" fill="#dbeafe">实时统计</text></g>
+    <g filter="url(#shadow)"><rect x="680" y="1180" width="200" height="78" rx="9" fill="url(#gGreen)"/><text x="780" y="1216">FlowSlot</text><text x="780" y="1234" font-size="8.5" font-weight="400" fill="#d1fae5">流控校验</text></g>
+    <g filter="url(#shadow)"><rect x="896" y="1180" width="200" height="78" rx="9" fill="url(#gGreen)"/><text x="996" y="1216">DegradeSlot</text><text x="996" y="1234" font-size="8.5" font-weight="400" fill="#d1fae5">熔断校验</text></g>
+    <g filter="url(#shadow)"><rect x="1112" y="1180" width="200" height="78" rx="9" fill="url(#gGreen)"/><text x="1212" y="1216">AuthoritySlot</text><text x="1212" y="1234" font-size="8.5" font-weight="400" fill="#d1fae5">授权校验</text></g>
+    <g filter="url(#shadow)"><rect x="1328" y="1180" width="200" height="78" rx="9" fill="url(#gGreen)"/><text x="1428" y="1216">SystemSlot</text><text x="1428" y="1234" font-size="8.5" font-weight="400" fill="#d1fae5">系统校验</text></g>
+  </g>
+  <g stroke="#64748b" stroke-width="1.4" fill="none" opacity="0.55">
+    <path d="M232 1219 H244" marker-end="url(#aS)"/>
+    <path d="M448 1219 H460" marker-end="url(#aS)"/>
+    <path d="M664 1219 H676" marker-end="url(#aS)"/>
+    <path d="M880 1219 H892" marker-end="url(#aS)"/>
+    <path d="M1096 1219 H1108" marker-end="url(#aS)"/>
+    <path d="M1312 1219 H1324" marker-end="url(#aS)"/>
+  </g>
+  <text x="780" y="1278" text-anchor="middle" font-size="9" fill="#1e3a8a" opacity="0.8">请求入口 → 贯穿责任链 → 各 Slot 读取内存中的规则进行校验 → 放行 / 拒绝</text>
+
+  <!-- 底部数据流总览 -->
+  <rect x="30" y="1294" width="1500" height="38" rx="8" fill="#ffffff" opacity="0.7" stroke="#cbd5e1"/>
+  <text x="780" y="1318" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">数据流: 配置后端 ─▶ readSource() ─▶ Converter.convert ─▶ SentinelProperty.updateValue() ─▶ PropertyListener.configUpdate() ─▶ RuleManager.loadRules() ─▶ Slot Chain 热生效</text>
+</svg>
