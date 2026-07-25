@@ -241,7 +241,7 @@
   </g>
   <!-- 浏览器 -> 控制台 REST -->
   <path d="M1290 886 L1290 744" stroke="#e11d48" stroke-width="2" fill="none" marker-end="url(#arrPk)" stroke-dasharray="5,3"/>
-  <text x="1300" y="815" font-size="9.5" fill="#be123c">HTTP REST (JSON)</text>
+  <text x="1300" y="860" font-size="9.5" fill="#be123c">HTTP REST (JSON)</text>
 
   <!-- ============ 图例 ============ -->
   <rect x="40" y="966" width="1480" height="80" rx="12" fill="#f8fafc" opacity="0.92" stroke="#cbd5e1" stroke-width="1"/>
