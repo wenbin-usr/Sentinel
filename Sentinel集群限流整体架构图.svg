@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1060" font-family="'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif">
+  <defs>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="125%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0284c7"/></marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
+    <marker id="arr-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6366f1"/></marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="1500" height="1060" fill="#f4f6fb"/>
+
+  <!-- title -->
+  <text x="750" y="44" text-anchor="middle" font-size="26" font-weight="700" fill="#1e293b">Sentinel 集群限流整体架构</text>
+  <text x="750" y="66" text-anchor="middle" font-size="13" fill="#64748b">Cluster Flow Control Architecture · 基于源码梳理</text>
+
+  <!-- ============ CONTROL PLANE ============ -->
+  <rect x="40" y="84" width="1420" height="112" rx="14" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+  <text x="60" y="106" font-size="12" font-weight="700" fill="#4338ca" letter-spacing="1">管控面 · CONTROL PLANE</text>
+
+  <!-- Dashboard -->
+  <g filter="url(#shadow)">
+    <rect x="90" y="118" width="330" height="66" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1.2"/>
+    <text x="255" y="142" text-anchor="middle" font-size="15" font-weight="700" fill="#3730a3">Sentinel Dashboard</text>
+    <text x="255" y="163" text-anchor="middle" font-size="10" fill="#6366f1">角色分配 /cluster/assign · 模式下发 setClusterMode</text>
+  </g>
+
+  <!-- Config Center -->
+  <g filter="url(#shadow)">
+    <rect x="1080" y="118" width="330" height="66" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1.2"/>
+    <text x="1245" y="142" text-anchor="middle" font-size="15" font-weight="700" fill="#3730a3">配置中心 Config Center</text>
+    <text x="1245" y="163" text-anchor="middle" font-size="10" fill="#6366f1">Nacos / ZK / Apollo · 推送 FlowRule + ClusterMap</text>
+  </g>
+
+  <!-- Dashboard -> ConfigCenter (persist topology) -->
+  <line x1="420" y1="151" x2="1080" y2="151" stroke="#a5b4fc" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arr-indigo)"/>
+  <rect x="680" y="143" width="140" height="16" rx="3" fill="#eef2ff"/>
+  <text x="750" y="155" text-anchor="middle" font-size="10" fill="#4338ca">持久化 集群拓扑/规则</text>
+
+  <!-- Dashboard -> Client (setClusterMode) -->
+  <line x1="290" y1="184" x2="290" y2="252" stroke="#6366f1" stroke-width="1.6" stroke-dasharray="6 3" marker-end="url(#arr-indigo)"/>
+  <rect x="178" y="212" width="224" height="16" rx="3" fill="#f4f6fb"/>
+  <text x="290" y="224" text-anchor="middle" font-size="10" fill="#4338ca">setClusterMode · 角色分配 (transport 命令)</text>
+
+  <!-- ConfigCenter -> Client (L route) -->
+  <path d="M 1100 184 L 1100 210 L 450 210 L 450 252" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arr-blue)"/>
+  <rect x="636" y="203" width="278" height="16" rx="3" fill="#f4f6fb"/>
+  <text x="775" y="215" text-anchor="middle" font-size="10" fill="#0369a1">FlowRule · ClientConfig · ClusterMap(模式·连接)</text>
+
+  <!-- ConfigCenter -> Server -->
+  <line x1="1290" y1="184" x2="1290" y2="252" stroke="#059669" stroke-width="1.6" marker-end="url(#arr-green)"/>
+  <rect x="1148" y="212" width="284" height="16" rx="3" fill="#f4f6fb"/>
+  <text x="1290" y="224" text-anchor="middle" font-size="10" fill="#047857">ClusterFlowRule · ServerConfig · namespaceSet</text>
+
+  <text x="60" y="244" font-size="12" font-weight="700" fill="#4338ca" letter-spacing="1">数据面 · DATA PLANE</text>
+
+  <!-- ============ CLIENT PANEL ============ -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="252" width="460" height="510" rx="14" fill="#ffffff" stroke="#7dd3fc" stroke-width="1.4"/>
+  </g>
+  <rect x="60" y="252" width="460" height="50" rx="14" fill="#e0f2fe"/>
+  <rect x="60" y="280" width="460" height="22" fill="#e0f2fe"/>
+  <text x="80" y="278" font-size="14.5" font-weight="700" fill="#075985">应用实例 Application · Token Client</text>
+  <text x="80" y="296" font-size="10" fill="#0369a1">可多实例 · 本机角色 = CLUSTER_CLIENT</text>
+
+  <!-- Client box A : Slot Chain -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="312" width="420" height="74" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="92" y="332" font-size="12" font-weight="700" fill="#1e293b">① Slot Chain -&gt; FlowSlot -&gt; FlowRuleChecker.canPassCheck()</text>
+  <text x="92" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">
+    <tspan x="92" y="352">判定 rule.isClusterMode() == true ?</tspan>
+    <tspan x="92" y="370">true -&gt; passClusterCheck()  |  false -&gt; passLocalCheck() 本地限流</tspan>
+  </text>
+
+  <line x1="290" y1="386" x2="290" y2="412" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arr-slate)"/>
+  <rect x="300" y="392" width="116" height="14" rx="3" fill="#ffffff"/>
+  <text x="358" y="403" font-size="9.5" fill="#64748b">isClusterMode()==true</text>
+
+  <!-- Client box B : passClusterCheck -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="412" width="420" height="96" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="92" y="432" font-size="12" font-weight="700" fill="#1e293b">② passClusterCheck() - 集群判定与回退</text>
+  <text x="92" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">
+    <tspan x="92" y="450">pickClusterService()  &lt;-  ClusterStateManager</tspan>
+    <tspan x="92" y="467">clusterService.requestToken(flowId, count, prioritized)</tspan>
+    <tspan x="92" y="484">applyTokenResult(): OK放行 / SHOULD_WAIT睡眠 / BLOCKED拦截</tspan>
+    <tspan x="92" y="501" fill="#dc2626">FAIL·异常 -&gt; fallbackToLocalOrPass()  [fallbackToLocalWhenFail]</tspan>
+  </text>
+
+  <line x1="290" y1="508" x2="290" y2="528" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arr-slate)"/>
+
+  <!-- Client box C : business layer -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="528" width="420" height="62" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="92" y="548" font-size="12" font-weight="700" fill="#1e293b">③ DefaultClusterTokenClient (业务层)</text>
+  <text x="92" y="572" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">FlowRequestData{flowId,count,priority} -&gt; ClusterRequest(FLOW=1)</text>
+
+  <line x1="290" y1="590" x2="290" y2="610" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arr-slate)"/>
+
+  <!-- Client box D : transport layer -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="610" width="420" height="96" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="92" y="630" font-size="12" font-weight="700" fill="#1e293b">④ NettyTransportClient (传输层 · 同步阻塞)</text>
+  <text x="92" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">
+    <tspan x="92" y="648">xid 关联 · TokenClientPromiseHolder · await(20ms)</tspan>
+    <tspan x="92" y="665">帧: 2B长度 + id(4) + type(1) + body(flowId/count/priority)</tspan>
+    <tspan x="92" y="682">自动重连(线性退避) · ServerChangeObserver · 自动 Ping(ns)</tspan>
+    <tspan x="92" y="699" fill="#0369a1">ClusterClientConfigManager: host / port / timeout</tspan>
+  </text>
+
+  <!-- ============ MIDDLE NETTY CHANNEL ============ -->
+  <!-- request arrow -->
+  <line x1="524" y1="400" x2="976" y2="400" stroke="#0284c7" stroke-width="2.6" marker-end="url(#arr-blue)"/>
+  <text x="750" y="392" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0369a1">请求令牌 requestToken</text>
+  <text x="750" y="416" text-anchor="middle" font-size="9.5" fill="#64748b" font-family="ui-monospace,Menlo,monospace">Netty TCP · 2B 长度前缀帧</text>
+
+  <!-- netty pill -->
+  <rect x="710" y="436" width="80" height="26" rx="13" fill="#ffffff" stroke="#7dd3fc" stroke-width="1.2"/>
+  <text x="750" y="453" text-anchor="middle" font-size="11" font-weight="700" fill="#0284c7">Netty</text>
+
+  <!-- response arrow -->
+  <line x1="976" y1="486" x2="524" y2="486" stroke="#059669" stroke-width="2.6" marker-end="url(#arr-green)"/>
+  <text x="750" y="478" text-anchor="middle" font-size="11.5" font-weight="700" fill="#047857">返回 TokenResult</text>
+  <text x="750" y="502" text-anchor="middle" font-size="9.5" fill="#64748b" font-family="ui-monospace,Menlo,monospace">OK / BLOCKED / SHOULD_WAIT / FAIL · remaining + waitInMs</text>
+
+  <!-- ============ SERVER PANEL ============ -->
+  <g filter="url(#shadow)">
+    <rect x="980" y="252" width="460" height="510" rx="14" fill="#ffffff" stroke="#6ee7b7" stroke-width="1.4"/>
+  </g>
+  <rect x="980" y="252" width="460" height="50" rx="14" fill="#d1fae5"/>
+  <rect x="980" y="280" width="460" height="22" fill="#d1fae5"/>
+  <text x="1000" y="278" font-size="14.5" font-weight="700" fill="#065f46">Token Server 令牌服务端</text>
+  <text x="1000" y="296" font-size="10" fill="#047857">Standalone 独立 · Embedded 嵌入 · 默认端口 18730</text>
+
+  <!-- Server box 1 : Netty server -->
+  <g filter="url(#shadow)">
+    <rect x="1000" y="312" width="420" height="66" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="1012" y="332" font-size="12" font-weight="700" fill="#1e293b">① NettyTransportServer (监听 18730)</text>
+  <text x="1012" y="356" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">TokenServerHandler -&gt; RequestProcessorProvider 按 type 分发</text>
+
+  <line x1="1210" y1="378" x2="1210" y2="398" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arr-slate)"/>
+
+  <!-- Server box 2 : processor -->
+  <g filter="url(#shadow)">
+    <rect x="1000" y="398" width="420" height="62" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="1012" y="418" font-size="12" font-weight="700" fill="#1e293b">② FlowRequestProcessor (@RequestType FLOW)</text>
+  <text x="1012" y="442" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">-&gt; TokenServiceProvider.getService() (DefaultTokenService)</text>
+
+  <line x1="1210" y1="460" x2="1210" y2="480" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arr-slate)"/>
+
+  <!-- Server box 3 : token service -->
+  <g filter="url(#shadow)">
+    <rect x="1000" y="480" width="420" height="62" rx="9" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="1012" y="500" font-size="12" font-weight="700" fill="#1e293b">③ DefaultTokenService.requestToken(...)</text>
+  <text x="1012" y="524" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">取 FlowRule -&gt; ClusterFlowChecker.acquireClusterToken()</text>
+
+  <line x1="1210" y1="542" x2="1210" y2="562" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arr-slate)"/>
+
+  <!-- Server box 4 : checker core -->
+  <g filter="url(#shadow)">
+    <rect x="1000" y="562" width="420" height="140" rx="9" fill="#f0fdf4" stroke="#6ee7b7" stroke-width="1.2"/>
+  </g>
+  <text x="1012" y="582" font-size="12" font-weight="700" fill="#065f46">④ ClusterFlowChecker - 令牌计算核心</text>
+  <text x="1012" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">
+    <tspan x="1012" y="600">a) GlobalRequestLimiter.tryPass(namespace)  过载保护</tspan>
+    <tspan x="1012" y="617">b) ClusterMetric 滑动窗口  latestQps = getAvg(PASS)</tspan>
+    <tspan x="1012" y="634">c) threshold = calcGlobalThreshold(rule) × exceedCount</tspan>
+    <tspan x="1012" y="651">     GLOBAL = rule.count  |  AVG_LOCAL = count × connCount</tspan>
+    <tspan x="1012" y="668">d) nextRemaining = threshold − latestQps − acquireCount</tspan>
+    <tspan x="1012" y="685">     ≥0 -&gt; 发放 OK(记 PASS, 返回 remaining)</tspan>
+    <tspan x="1012" y="697" fill="#b45309">     &lt;0 -&gt; BLOCKED(记 BLOCK) / 借未来桶 SHOULD_WAIT</tspan>
+  </text>
+
+  <!-- server managers strip -->
+  <rect x="1000" y="714" width="420" height="38" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1"/>
+  <text x="1012" y="731" font-size="9.5" fill="#047857" font-family="ui-monospace,Menlo,monospace">ClusterFlowRuleManager : flowId -&gt; FlowRule (按 namespace)</text>
+  <text x="1012" y="746" font-size="9.5" fill="#047857" font-family="ui-monospace,Menlo,monospace">ServerConfigManager : namespaceSet · transport · exceed · maxOccupy</text>
+
+  <!-- ============ BOTTOM : DEPLOYMENT MODES + STATE MACHINE ============ -->
+  <!-- Deployment modes -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="790" width="640" height="212" rx="14" fill="#ffffff" stroke="#fcd34d" stroke-width="1.4"/>
+  </g>
+  <rect x="60" y="790" width="640" height="34" rx="14" fill="#fef3c7"/>
+  <rect x="60" y="812" width="640" height="12" fill="#fef3c7"/>
+  <text x="80" y="812" font-size="13.5" font-weight="700" fill="#92400e">部署模式 Deployment Modes</text>
+
+  <rect x="80" y="836" width="600" height="72" rx="9" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <text x="94" y="858" font-size="12" font-weight="700" fill="#92400e">▸ Standalone 独立模式</text>
+  <text x="94" font-size="10" fill="#78350f" font-family="ui-monospace,Menlo,monospace">
+    <tspan x="94" y="876">SentinelDefaultTokenServer + NettyTransportServer，独立 JVM 进程</tspan>
+    <tspan x="94" y="893">客户端经 Netty 连接 (默认端口 18730)，与业务解耦</tspan>
+  </text>
+
+  <rect x="80" y="918" width="600" height="72" rx="9" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <text x="94" y="940" font-size="12" font-weight="700" fill="#92400e">▸ Embedded 嵌入模式</text>
+  <text x="94" font-size="10" fill="#78350f" font-family="ui-monospace,Menlo,monospace">
+    <tspan x="94" y="958">DefaultEmbeddedTokenServer 运行于某个应用实例内</tspan>
+    <tspan x="94" y="975">本机直连 TokenService (无 Netty 往返)，同时为其它实例服务</tspan>
+  </text>
+
+  <!-- State machine -->
+  <g filter="url(#shadow)">
+    <rect x="720" y="790" width="720" height="212" rx="14" fill="#ffffff" stroke="#fcd34d" stroke-width="1.4"/>
+  </g>
+  <rect x="720" y="790" width="720" height="34" rx="14" fill="#fef3c7"/>
+  <rect x="720" y="812" width="720" height="12" fill="#fef3c7"/>
+  <text x="740" y="812" font-size="13.5" font-weight="700" fill="#92400e">ClusterStateManager 状态机 - 决定本机角色</text>
+
+  <!-- state badges -->
+  <rect x="740" y="838" width="170" height="58" rx="9" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.2"/>
+  <text x="825" y="858" text-anchor="middle" font-size="12" font-weight="700" fill="#075985">CLUSTER_CLIENT (0)</text>
+  <text x="825" y="874" text-anchor="middle" font-size="9.5" fill="#0369a1">TokenClient -&gt; Netty</text>
+  <text x="825" y="888" text-anchor="middle" font-size="9.5" fill="#0369a1">向远端 Token Server 请求</text>
+
+  <rect x="995" y="838" width="170" height="58" rx="9" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1.2"/>
+  <text x="1080" y="858" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">CLUSTER_SERVER (1)</text>
+  <text x="1080" y="874" text-anchor="middle" font-size="9.5" fill="#047857">EmbeddedTokenServer</text>
+  <text x="1080" y="888" text-anchor="middle" font-size="9.5" fill="#047857">本地直接计算 token</text>
+
+  <rect x="1250" y="838" width="170" height="58" rx="9" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="1335" y="858" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">NOT_STARTED (-1)</text>
+  <text x="1335" y="874" text-anchor="middle" font-size="9.5" fill="#64748b">停止 client / server</text>
+  <text x="1335" y="888" text-anchor="middle" font-size="9.5" fill="#64748b">不参与集群限流</text>
+
+  <!-- transitions -->
+  <line x1="910" y1="860" x2="995" y2="860" stroke="#d97706" stroke-width="1.6" marker-end="url(#arr-amber)"/>
+  <text x="952" y="852" text-anchor="middle" font-size="9" fill="#92400e">setToServer</text>
+  <line x1="995" y1="874" x2="910" y2="874" stroke="#d97706" stroke-width="1.6" marker-end="url(#arr-amber)"/>
+  <text x="952" y="886" text-anchor="middle" font-size="9" fill="#92400e">setToClient</text>
+
+  <line x1="1165" y1="860" x2="1250" y2="860" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arr-slate)"/>
+  <text x="1207" y="852" text-anchor="middle" font-size="9" fill="#64748b">stop</text>
+  <line x1="1250" y1="874" x2="1165" y2="874" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arr-slate)"/>
+  <text x="1207" y="886" text-anchor="middle" font-size="9" fill="#64748b">start</text>
+
+  <text x="740" y="924" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">pickClusterService():  isClient() -&gt; TokenClientProvider.getClient()</text>
+  <text x="740" y="942" font-size="10" fill="#475569" font-family="ui-monospace,Menlo,monospace">                    isServer() -&gt; EmbeddedClusterTokenServerProvider.getServer()</text>
+  <text x="740" y="962" font-size="10.5" fill="#475569">模式由 配置中心 ClusterMap 动态下发 或 Dashboard setClusterMode 命令 触发；</text>
+  <text x="740" y="980" font-size="10.5" fill="#475569">client / server 互斥切换 (先停对端再启本端)，最小间隔 5s 防抖动。</text>
+
+  <!-- footer -->
+  <text x="750" y="1030" text-anchor="middle" font-size="9.5" fill="#94a3b8">源码模块: sentinel-core (FlowRuleChecker / ClusterStateManager / ClusterFlowConfig) · sentinel-cluster-common-default (ClusterRequest / ClusterResponse)</text>
+  <text x="750" y="1048" text-anchor="middle" font-size="9.5" fill="#94a3b8">sentinel-cluster-client-default (DefaultClusterTokenClient / NettyTransportClient) · sentinel-cluster-server-default (SentinelDefaultTokenServer / DefaultTokenService / ClusterFlowChecker)</text>
+</svg>
