@@ -52,38 +52,38 @@
     <rect x="60" y="188" width="420" height="56" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="188" width="5" height="56" rx="2" fill="#0d9488"/>
     <text x="78" y="210" font-size="13" font-weight="700" fill="#0f766e">业务应用 · SphU.entry()</text>
-    <text x="78" y="228" font-size="10" fill="#475569">InitFunc SPI 启动传输层: HeartbeatSenderInitFunc(@InitOrder -1) · CommandCenterInitFunc</text>
+    <text x="78" y="228" font-size="8.5" fill="#475569">InitFunc SPI 启动传输层: HeartbeatSenderInitFunc(@InitOrder -1) · CommandCenterInitFunc</text>
   </g>
   <!-- C2 HeartbeatSender -->
   <g filter="url(#shadow)">
     <rect x="60" y="254" width="420" height="72" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="254" width="5" height="72" rx="2" fill="#0d9488"/>
     <text x="78" y="274" font-size="13" font-weight="700" fill="#0f766e">HeartbeatSender 心跳发送器 → 出口</text>
-    <text x="78" y="291" font-size="9.5" fill="#475569">SPI: HttpHeartbeatSender(netty·GET) / SpringMvcHttpHeartbeatSender(GET) / SimpleHttpHeartbeatSender(POST)</text>
-    <text x="78" y="305" font-size="9.5" fill="#475569">ScheduledExecutor 初始延迟 5s · 默认 5s(simple 10s) · payload: app/ip/port/v/version/hostname/pid</text>
-    <text x="78" y="319" font-size="9.5" fill="#475569">可配 csp.sentinel.heartbeat.interval.ms</text>
+    <text x="78" y="291" font-size="8.5" fill="#475569">SPI: HttpHeartbeatSender · SpringMvcHttpHeartbeatSender · SimpleHttpHeartbeatSender</text>
+    <text x="78" y="305" font-size="8.5" fill="#475569">初始延迟 5s · 默认 5s(simple 10s) · payload: app/ip/port/v/version/hostname/pid</text>
+    <text x="78" y="319" font-size="8.5" fill="#475569">可配 csp.sentinel.heartbeat.interval.ms</text>
   </g>
   <!-- C3 CommandCenter -->
   <g filter="url(#shadow)">
     <rect x="60" y="336" width="420" height="66" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="336" width="5" height="66" rx="2" fill="#0d9488"/>
     <text x="78" y="356" font-size="13" font-weight="700" fill="#0f766e">CommandCenter 命令服务器 ← 入口 (:8719)</text>
-    <text x="78" y="373" font-size="9.5" fill="#475569">客户端内嵌 HTTP 服务 · 默认端口 8719 · 占用每 3 次失败 +1 自动递增 → setRuntimePort</text>
-    <text x="78" y="387" font-size="9.5" fill="#475569">SPI: NettyHttpCommandCenter / SimpleHttpCommandCenter / SpringMvcHttpCommandCenter</text>
+    <text x="78" y="373" font-size="8.5" fill="#475569">客户端内嵌 HTTP 服务 · 默认端口 8719 · 占用每 3 次失败 +1 自动递增 → setRuntimePort</text>
+    <text x="78" y="387" font-size="8.5" fill="#475569">SPI: NettyHttpCommandCenter / SimpleHttpCommandCenter / SpringMvcHttpCommandCenter</text>
   </g>
   <!-- C4 CommandHandlerProvider -->
   <g filter="url(#shadow)">
     <rect x="60" y="412" width="420" height="44" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="412" width="5" height="44" rx="2" fill="#0d9488"/>
     <text x="78" y="432" font-size="13" font-weight="700" fill="#0f766e">CommandHandlerProvider</text>
-    <text x="78" y="449" font-size="10" fill="#475569">@CommandMapping 注解 + SPI 发现 · HTTP 路径(去 /) 即命令名</text>
+    <text x="78" y="449" font-size="8.5" fill="#475569">@CommandMapping 注解 + SPI 发现 · HTTP 路径(去 /) 即命令名</text>
   </g>
   <!-- C5 Handler 表 -->
   <g filter="url(#shadow)">
     <rect x="60" y="466" width="420" height="128" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="466" width="5" height="128" rx="2" fill="#0d9488"/>
     <text x="78" y="486" font-size="13" font-weight="700" fill="#0f766e">Command Handler 命令表</text>
-    <g font-family="'JetBrains Mono','Consolas','Menlo',monospace" font-size="9.5" fill="#334155">
+    <g font-family="'JetBrains Mono','Consolas','Menlo',monospace" font-size="8" fill="#334155">
       <text x="78" y="503">getRules     → FetchActiveRuleCommandHandler  <tspan fill="#64748b">type=flow|degrade|system|authority</tspan></text>
       <text x="78" y="518">setRules     → ModifyRulesCommandHandler      <tspan fill="#64748b">type=&amp;data=</tspan></text>
       <text x="78" y="533">metric       → SendMetricCommandHandler       <tspan fill="#64748b">startTime/endTime (MetricSearcher)</tspan></text>
@@ -97,17 +97,17 @@
     <rect x="60" y="604" width="420" height="62" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="604" width="5" height="62" rx="2" fill="#0d9488"/>
     <text x="78" y="624" font-size="13" font-weight="700" fill="#0f766e">MetricWriter → 指标日志</text>
-    <text x="78" y="641" font-size="9.5" fill="#475569">本地 metrics.log.{pid} 文件 (sentinel-core)</text>
-    <text x="78" y="655" font-size="9.5" fill="#475569">MetricSearcher 由 metric 命令按时间区间读取并返回 (监控为拉取模型)</text>
+    <text x="78" y="641" font-size="8.5" fill="#475569">本地 metrics.log.{pid} 文件 (sentinel-core)</text>
+    <text x="78" y="655" font-size="8.5" fill="#475569">MetricSearcher 由 metric 命令按时间区间读取并返回 (监控为拉取模型)</text>
   </g>
   <!-- C7 TransportConfig -->
   <g filter="url(#shadow)">
     <rect x="60" y="676" width="420" height="74" rx="10" fill="#ffffff" stroke="#5eead4" stroke-width="1"/>
     <rect x="60" y="676" width="5" height="74" rx="2" fill="#0d9488"/>
     <text x="78" y="696" font-size="13" font-weight="700" fill="#0f766e">TransportConfig 配置 (-D)</text>
-    <text x="78" y="713" font-size="9.5" fill="#475569">csp.sentinel.dashboard.server  (控制台地址, 可逗号分隔多台)</text>
-    <text x="78" y="727" font-size="9.5" fill="#475569">csp.sentinel.api.port=8719 · heartbeat.interval.ms · heartbeat.client.ip</text>
-    <text x="78" y="741" font-size="9.5" fill="#475569">csp.sentinel.heartbeat.api.path (默认 /registry/machine)</text>
+    <text x="78" y="713" font-size="8.5" fill="#475569">csp.sentinel.dashboard.server  (控制台地址, 可逗号分隔多台)</text>
+    <text x="78" y="727" font-size="8.5" fill="#475569">csp.sentinel.api.port=8719 · heartbeat.interval.ms · heartbeat.client.ip</text>
+    <text x="78" y="741" font-size="8.5" fill="#475569">csp.sentinel.heartbeat.api.path (默认 /registry/machine)</text>
   </g>
   <text x="270" y="822" text-anchor="middle" font-size="9.5" fill="#0f766e" opacity="0.85">↑ 出口 = 心跳发送器 · ↓ 入口 = CommandCenter(:8719) → @CommandMapping</text>
 
@@ -122,59 +122,59 @@
     <rect x="1080" y="188" width="420" height="62" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1"/>
     <rect x="1080" y="188" width="5" height="62" rx="2" fill="#4f46e5"/>
     <text x="1098" y="208" font-size="13" font-weight="700" fill="#3730a3">MachineRegistryController ← 心跳入口</text>
-    <text x="1098" y="225" font-size="9.5" fill="#475569">@RequestMapping /registry/machine (接收 GET/POST)</text>
-    <text x="1098" y="239" font-size="9.5" fill="#475569">构建 MachineInfo → appManagement.addMachine(刷新 lastHeartbeat)</text>
+    <text x="1098" y="225" font-size="8.5" fill="#475569">@RequestMapping /registry/machine (接收 GET/POST)</text>
+    <text x="1098" y="239" font-size="8.5" fill="#475569">构建 MachineInfo → appManagement.addMachine(刷新 lastHeartbeat)</text>
   </g>
   <!-- D2 注册表 -->
   <g filter="url(#shadow)">
     <rect x="1080" y="260" width="420" height="74" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1"/>
     <rect x="1080" y="260" width="5" height="74" rx="2" fill="#4f46e5"/>
     <text x="1098" y="280" font-size="13" font-weight="700" fill="#3730a3">AppManagement · SimpleMachineDiscovery</text>
-    <text x="1098" y="297" font-size="9.5" fill="#475569">内存注册表 ConcurrentMap&lt;app, AppInfo&gt; · MachineInfo.isHealthy/isDead</text>
-    <text x="1098" y="311" font-size="9.5" fill="#475569">心跳超时判定 · MetricFetcher 定期清理 dead 机器/应用</text>
-    <text x="1098" y="325" font-size="9.5" fill="#475569">isValidMachineOfApp 作为所有规则控制器的访问守卫</text>
+    <text x="1098" y="297" font-size="8.5" fill="#475569">内存注册表 ConcurrentMap&lt;app, AppInfo&gt; · MachineInfo.isHealthy/isDead</text>
+    <text x="1098" y="311" font-size="8.5" fill="#475569">心跳超时判定 · MetricFetcher 定期清理 dead 机器/应用</text>
+    <text x="1098" y="325" font-size="8.5" fill="#475569">isValidMachineOfApp 作为所有规则控制器的访问守卫</text>
   </g>
   <!-- D3 MetricFetcher -->
   <g filter="url(#shadow)">
     <rect x="1080" y="344" width="420" height="66" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1"/>
     <rect x="1080" y="344" width="5" height="66" rx="2" fill="#4f46e5"/>
     <text x="1098" y="364" font-size="13" font-weight="700" fill="#3730a3">MetricFetcher (@Component · 定时 1s)</text>
-    <text x="1098" y="381" font-size="9.5" fill="#475569">ScheduledExecutor fetchAllApp() · 对每台健康机器</text>
-    <text x="1098" y="395" font-size="9.5" fill="#475569">GET /metric?startTime&amp;endTime · MetricNode.fromThinString 解析聚合</text>
+    <text x="1098" y="381" font-size="8.5" fill="#475569">ScheduledExecutor fetchAllApp() · 对每台健康机器</text>
+    <text x="1098" y="395" font-size="8.5" fill="#475569">GET /metric?startTime&amp;endTime · MetricNode.fromThinString 解析聚合</text>
   </g>
   <!-- D4 Repository -->
   <g filter="url(#shadow)">
     <rect x="1080" y="420" width="420" height="54" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1"/>
     <rect x="1080" y="420" width="5" height="54" rx="2" fill="#4f46e5"/>
     <text x="1098" y="440" font-size="13" font-weight="700" fill="#3730a3">InMemoryMetricsRepository</text>
-    <text x="1098" y="457" font-size="9.5" fill="#475569">三级 Map: app→resource→timestamp · MAX_METRIC_LIVE_TIME_MS 5min 自动淘汰</text>
+    <text x="1098" y="457" font-size="8.5" fill="#475569">三级 Map: app→resource→timestamp · MAX_METRIC_LIVE_TIME_MS 5min 自动淘汰</text>
   </g>
   <!-- D5 SentinelApiClient -->
   <g filter="url(#shadow)">
     <rect x="1080" y="484" width="420" height="70" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1.2"/>
     <rect x="1080" y="484" width="5" height="70" rx="2" fill="#4f46e5"/>
     <text x="1098" y="504" font-size="13" font-weight="700" fill="#3730a3">SentinelApiClient → 命令出口 (桥接)</text>
-    <text x="1098" y="521" font-size="9.5" fill="#475569">CloseableHttpAsyncClient · 返回 CompletableFuture&lt;String&gt;</text>
-    <text x="1098" y="535" font-size="9.5" fill="#475569">fetchXxxOfMachine(GET) · setXxxOfMachine(POST, 客户端 ≥1.6.0) · 版本探测</text>
-    <text x="1098" y="549" font-size="9.5" fill="#475569">fetchResource/ClusterNode · gateway/* · cluster/* 透传命令名</text>
+    <text x="1098" y="521" font-size="8.5" fill="#475569">CloseableHttpAsyncClient · 返回 CompletableFuture&lt;String&gt;</text>
+    <text x="1098" y="535" font-size="8.5" fill="#475569">fetchXxxOfMachine(GET) · setXxxOfMachine(POST, 客户端 ≥1.6.0) · 版本探测</text>
+    <text x="1098" y="549" font-size="8.5" fill="#475569">fetchResource/ClusterNode · gateway/* · cluster/* 透传命令名</text>
   </g>
   <!-- D6 Provider/Publisher -->
   <g filter="url(#shadow)">
     <rect x="1080" y="564" width="420" height="66" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1"/>
     <rect x="1080" y="564" width="5" height="66" rx="2" fill="#4f46e5"/>
     <text x="1098" y="584" font-size="13" font-weight="700" fill="#3730a3">FlowRuleApiProvider / FlowRuleApiPublisher</text>
-    <text x="1098" y="601" font-size="9.5" fill="#475569">仅 flow 规则有 (FlowControllerV2) · 其余规则控制器直连 SentinelApiClient</text>
-    <text x="1098" y="615" font-size="9.5" fill="#475569">Provider 取最健康一台回查 · Publisher 遍历应用全部机器下发</text>
+    <text x="1098" y="601" font-size="8.5" fill="#475569">仅 flow 规则有 (FlowControllerV2) · 其余规则控制器直连 SentinelApiClient</text>
+    <text x="1098" y="615" font-size="8.5" fill="#475569">Provider 取最健康一台回查 · Publisher 遍历应用全部机器下发</text>
   </g>
   <!-- D7 REST Controllers -->
   <g filter="url(#shadow)">
     <rect x="1080" y="640" width="420" height="104" rx="10" fill="#ffffff" stroke="#a5b4fc" stroke-width="1"/>
     <rect x="1080" y="640" width="5" height="104" rx="2" fill="#4f46e5"/>
     <text x="1098" y="660" font-size="13" font-weight="700" fill="#3730a3">REST Controllers (浏览器侧)</text>
-    <text x="1098" y="678" font-size="9.5" fill="#475569">/app · /metric · /resource · /version · /registry</text>
-    <text x="1098" y="692" font-size="9.5" fill="#475569">/v1·/v2/flow · /degrade · /authority · /system</text>
-    <text x="1098" y="706" font-size="9.5" fill="#475569">/paramFlow · /gateway/* · /cluster/*</text>
-    <text x="1098" y="724" font-size="9" fill="#64748b" font-style="italic">浏览器 CRUD → 调 SentinelApiClient → 客户端 CommandCenter</text>
+    <text x="1098" y="678" font-size="8.5" fill="#475569">/app · /metric · /resource · /version · /registry</text>
+    <text x="1098" y="692" font-size="8.5" fill="#475569">/v1·/v2/flow · /degrade · /authority · /system</text>
+    <text x="1098" y="706" font-size="8.5" fill="#475569">/paramFlow · /gateway/* · /cluster/*</text>
+    <text x="1098" y="724" font-size="8.5" fill="#64748b" font-style="italic">浏览器 CRUD → 调 SentinelApiClient → 客户端 CommandCenter</text>
   </g>
   <text x="1290" y="822" text-anchor="middle" font-size="9.5" fill="#3730a3" opacity="0.85">↑ 控制台主动发起: 监控拉取 / 规则回查与下发 / 资源树</text>
 
