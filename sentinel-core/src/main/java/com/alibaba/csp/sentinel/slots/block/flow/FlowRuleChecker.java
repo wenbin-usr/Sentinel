@@ -148,11 +148,13 @@ public class FlowRuleChecker {
                                             boolean prioritized) {
         try {
             TokenService clusterService = pickClusterService();
-            if (clusterService == null) {
+            if (clusterService == null) {  // 如果TokenService为空，退化成本地local模式
                 return fallbackToLocalOrPass(rule, context, node, acquireCount, prioritized);
             }
             long flowId = rule.getClusterConfig().getFlowId();
+            // 向Token Server服务端发起请求
             TokenResult result = clusterService.requestToken(flowId, acquireCount, prioritized);
+            // 根据响应结果决定如何控制当前请求
             return applyTokenResult(result, rule, context, node, acquireCount, prioritized);
             // If client is absent, then fallback to local mode.
         } catch (Throwable ex) {
