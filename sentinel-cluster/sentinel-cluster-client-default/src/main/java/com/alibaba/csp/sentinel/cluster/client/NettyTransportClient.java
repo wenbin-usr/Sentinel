@@ -212,7 +212,7 @@ public class NettyTransportClient implements ClusterTransportClient {
         if (!validRequest(request)) {
             throw new SentinelClusterException(ClusterErrorMessages.BAD_REQUEST);
         }
-        int xid = getCurrentId();
+        int xid = getCurrentId();  // 自增id
         try {
             request.setId(xid);
 
