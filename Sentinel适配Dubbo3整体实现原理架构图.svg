@@ -341,19 +341,19 @@
 
   <!-- 第二行: EntryType & ResourceType 说明 -->
   <g filter="url(#shadow)">
-    <rect x="60" y="958" width="470" height="50" rx="9" fill="#f8fafc" stroke="#818cf8" stroke-width="1"/>
-    <text x="295" y="978" text-anchor="middle" font-size="11" font-weight="700" fill="#3730a3">EntryType 流向语义</text>
-    <text x="295" y="995" text-anchor="middle" font-size="9.5" fill="#4f46e5">IN（Provider 入站 · 计入系统负载） · OUT（Consumer 出站 · 计入依赖调用）</text>
+    <rect x="60" y="970" width="470" height="40" rx="9" fill="#f8fafc" stroke="#818cf8" stroke-width="1"/>
+    <text x="295" y="982" text-anchor="middle" font-size="11" font-weight="700" fill="#3730a3">EntryType 流向语义</text>
+    <text x="295" y="996" text-anchor="middle" font-size="9.5" fill="#4f46e5">IN（Provider 入站 · 计入系统负载） · OUT（Consumer 出站 · 计入依赖调用）</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="548" y="958" width="470" height="50" rx="9" fill="#f8fafc" stroke="#818cf8" stroke-width="1"/>
-    <text x="783" y="978" text-anchor="middle" font-size="11" font-weight="700" fill="#3730a3">ResourceType = COMMON_RPC (2)</text>
-    <text x="783" y="995" text-anchor="middle" font-size="9.5" fill="#4f46e5">标识 Dubbo RPC 资源 · 监控/规则按 RPC 维度区分</text>
+    <rect x="548" y="970" width="470" height="40" rx="9" fill="#f8fafc" stroke="#818cf8" stroke-width="1"/>
+    <text x="783" y="982" text-anchor="middle" font-size="11" font-weight="700" fill="#3730a3">ResourceType = COMMON_RPC (2)</text>
+    <text x="783" y="996" text-anchor="middle" font-size="9.5" fill="#4f46e5">标识 Dubbo RPC 资源 · 监控/规则按 RPC 维度区分</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="1036" y="958" width="464" height="50" rx="9" fill="#f8fafc" stroke="#818cf8" stroke-width="1"/>
-    <text x="1268" y="978" text-anchor="middle" font-size="11" font-weight="700" fill="#3730a3">规则热更新</text>
-    <text x="1268" y="995" text-anchor="middle" font-size="9.5" fill="#4f46e5">DataSource 监听 → RuleManager.loadRules() · Slot 校验时按需读取</text>
+    <rect x="1036" y="970" width="464" height="40" rx="9" fill="#f8fafc" stroke="#818cf8" stroke-width="1"/>
+    <text x="1268" y="982" text-anchor="middle" font-size="11" font-weight="700" fill="#3730a3">规则热更新</text>
+    <text x="1268" y="996" text-anchor="middle" font-size="9.5" fill="#4f46e5">DataSource 监听 → RuleManager.loadRules() · Slot 校验时按需读取</text>
   </g>
 
   <!-- Filter -> Core 入口箭头 -->
