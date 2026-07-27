@@ -303,27 +303,27 @@
     <text x="513" y="941" text-anchor="middle" font-size="8.5" fill="#e0e7ff">构建调用树</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="582" y="906" width="118" height="44" rx="9" fill="url(#gCore)"/>
-    <text x="641" y="925" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">StatisticSlot</text>
-    <text x="641" y="941" text-anchor="middle" font-size="8.5" fill="#e0e7ff">实时统计</text>
+    <rect x="593" y="906" width="118" height="44" rx="9" fill="url(#gCore)"/>
+    <text x="652" y="925" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">StatisticSlot</text>
+    <text x="652" y="941" text-anchor="middle" font-size="8.5" fill="#e0e7ff">实时统计</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="710" y="906" width="118" height="44" rx="9" fill="url(#gCore)"/>
-    <text x="769" y="925" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">FlowSlot</text>
-    <text x="769" y="941" text-anchor="middle" font-size="8.5" fill="#fef3c7">限流校验</text>
+    <rect x="728" y="906" width="110" height="44" rx="9" fill="url(#gCore)"/>
+    <text x="780" y="925" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">FlowSlot</text>
+    <text x="780" y="941" text-anchor="middle" font-size="8.5" fill="#fef3c7">限流校验</text>
   </g>
   <g filter="url(#shadow)">
-    <rect x="838" y="906" width="118" height="44" rx="9" fill="url(#gCore)"/>
-    <text x="897" y="925" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">DegradeSlot</text>
-    <text x="897" y="941" text-anchor="middle" font-size="8.5" fill="#fef3c7">熔断校验</text>
+    <rect x="855" y="906" width="110" height="44" rx="9" fill="url(#gCore)"/>
+    <text x="909" y="925" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">DegradeSlot</text>
+    <text x="909" y="941" text-anchor="middle" font-size="8.5" fill="#fef3c7">熔断校验</text>
   </g>
-  <text x="965" y="931" font-size="13" fill="#6b7280">…</text>
+  <text x="975" y="931" font-size="13" fill="#6b7280">…</text>
   <g stroke="#4f46e5" stroke-width="1.6" fill="none" marker-end="url(#arrI)" opacity="0.7">
-    <path d="M240 928 H258"/>
-    <path d="M432 928 H450"/>
-    <path d="M572 928 H580"/>
-    <path d="M700 928 H708"/>
-    <path d="M828 928 H836"/>
+    <path d="M240 928 H261"/>
+    <path d="M432 928 H453"/>
+    <path d="M572 928 H593"/>
+    <path d="M710 928 H728"/>
+    <path d="M836 928 H855"/>
   </g>
   <text x="595" y="963" text-anchor="middle" font-size="9.5" fill="#4338ca" opacity="0.85">ProcessorSlotChain 责任链 · fireEntry 正向递归 · 抛 BlockException 即拦截</text>
 
