@@ -358,12 +358,12 @@
 
   <!-- Filter -> Core 入口箭头 -->
   <g stroke="#2563eb" stroke-width="1.6" fill="none" marker-end="url(#arrB)" opacity="0.6" stroke-dasharray="4,3">
-    <path d="M250 735 V820 H150 V904"/>
+    <path d="M250 700 V862 H150 V904"/>
   </g>
   <g stroke="#7c3aed" stroke-width="1.6" fill="none" marker-end="url(#arrV)" opacity="0.6" stroke-dasharray="4,3">
-    <path d="M1140 735 V820 H150 V904"/>
+    <path d="M1140 700 V862 H150 V904"/>
   </g>
-  <text x="158" y="836" font-size="8.5" fill="#2563eb" opacity="0.9">SphU.entry</text>
+  <text x="100" y="865" font-size="8.5" fill="#2563eb" opacity="0.9">SphU.entry</text>
 
   <!-- ============ ⑤ 整体调用时序 ============ -->
   <rect x="40" y="1035" width="1480" height="98" rx="14" fill="#f0fdfa" opacity="0.85" stroke="#5eead4" stroke-width="1"/>
