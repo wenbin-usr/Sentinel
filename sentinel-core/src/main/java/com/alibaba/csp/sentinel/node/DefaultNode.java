@@ -126,7 +126,9 @@ public class DefaultNode extends StatisticNode {
 
     @Override
     public void increaseThreadNum() {
+        // 本身的curThreadNum数加一
         super.increaseThreadNum();
+        // clusterNode的curThreadNum数加一
         this.clusterNode.increaseThreadNum();
     }
 
