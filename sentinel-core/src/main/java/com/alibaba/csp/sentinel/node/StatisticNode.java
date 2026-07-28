@@ -244,7 +244,9 @@ public class StatisticNode implements Node {
 
     @Override
     public void addPassRequest(int count) {
+        // 秒级滑动窗口，pass数加一
         rollingCounterInSecond.addPass(count);
+        // 分钟级滑动窗口，pass数加一
         rollingCounterInMinute.addPass(count);
     }
 
