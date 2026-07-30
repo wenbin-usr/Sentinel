@@ -47,14 +47,15 @@ public class AuthoritySlot extends AbstractLinkedProcessorSlot<DefaultNode> {
     }
 
     void checkBlackWhiteAuthority(ResourceWrapper resource, Context context) throws AuthorityException {
-
+        // 获取授权规则
         List<AuthorityRule> rules = AuthorityRuleManager.getRules(resource.getName());
         if (rules == null) {
             return;
         }
-
+        // 遍历规则并判断
         for (AuthorityRule rule : rules) {
             if (!AuthorityRuleChecker.passCheck(rule, context)) {
+                // 规则不通过，直接抛出异常
                 throw new AuthorityException(context.getOrigin(), rule);
             }
         }
