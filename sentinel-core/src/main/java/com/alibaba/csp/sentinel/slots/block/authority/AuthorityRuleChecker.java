@@ -39,7 +39,6 @@ final class AuthorityRuleChecker {
         // rule.getLimitApp()得到的就是白名单或黑名单的字符串，这里先用indexOf方法判断
         int pos = rule.getLimitApp().indexOf(requester);
         boolean contain = pos > -1;
-
         if (contain) {
             boolean exactlyMatch = false;
             // 如果包含origin，还要进一步做精确判断，把名单列表以","分割，逐个判断
@@ -58,12 +57,11 @@ final class AuthorityRuleChecker {
         if (strategy == RuleConstant.AUTHORITY_BLACK && contain) {
             return false;
         }
-
         // 如果是白名单，并且不包含origin，则返回false
         if (strategy == RuleConstant.AUTHORITY_WHITE && !contain) {
             return false;
         }
-
+        // 其它情况返回true
         return true;
     }
 
