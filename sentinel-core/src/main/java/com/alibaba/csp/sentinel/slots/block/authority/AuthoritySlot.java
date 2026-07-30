@@ -37,7 +37,9 @@ public class AuthoritySlot extends AbstractLinkedProcessorSlot<DefaultNode> {
     @Override
     public void entry(Context context, ResourceWrapper resourceWrapper, DefaultNode node, int count, boolean prioritized, Object... args)
         throws Throwable {
+        // 校验黑白名单
         checkBlackWhiteAuthority(resourceWrapper, context);
+        // 执行下一个Slot
         fireEntry(context, resourceWrapper, node, count, prioritized, args);
     }
 
