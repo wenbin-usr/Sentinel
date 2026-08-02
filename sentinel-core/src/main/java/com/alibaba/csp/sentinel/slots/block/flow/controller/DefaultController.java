@@ -47,8 +47,10 @@ public class DefaultController implements TrafficShapingController {
 
     @Override
     public boolean canPass(Node node, int acquireCount, boolean prioritized) {
+        // 计算目前为止滑动窗口内已经存在的请求量
         int curCount = avgUsedTokens(node);
-        if (curCount + acquireCount > count) {
+        // 判断：已使用请求量 + 需要的请求量（1）是否大于窗口的请求阈值
+        if (curCount + acquireCount > count) {  // 大于，说明超出阈值，返回false
             if (prioritized && grade == RuleConstant.FLOW_GRADE_QPS) {
                 long currentTime;
                 long waitInMs;
@@ -65,6 +67,7 @@ public class DefaultController implements TrafficShapingController {
             }
             return false;
         }
+        // 小于等于，说明在阈值范围内，返回true
         return true;
     }
 
