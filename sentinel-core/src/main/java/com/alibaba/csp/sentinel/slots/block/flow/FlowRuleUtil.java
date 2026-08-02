@@ -131,7 +131,8 @@ public final class FlowRuleUtil {
     }
 
     private static TrafficShapingController generateRater(/*@Valid*/ FlowRule rule) {
-        if (rule.getGrade() == RuleConstant.FLOW_GRADE_QPS) {
+        if (rule.getGrade() == RuleConstant.FLOW_GRADE_QPS) {  // 如果限流阈值类型为QPS
+            // 流控效果，0. default(reject directly), 1. warm up, 2. rate limiter, 3. warm up + rate limiter
             switch (rule.getControlBehavior()) {
                 case RuleConstant.CONTROL_BEHAVIOR_WARM_UP:
                     return new WarmUpController(rule.getCount(), rule.getWarmUpPeriodSec(),
